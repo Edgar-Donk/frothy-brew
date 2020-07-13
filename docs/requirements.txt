@@ -1,0 +1,8 @@
+sphinx
+numpydoc
+PIL
+numpy
+math
+functools
+csv
+pydata_sphinx_theme
