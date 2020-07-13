@@ -1,6 +1,6 @@
 sphinx
 numpydoc
-PIL
+Pillow
 numpy
 math
 functools
