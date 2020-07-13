@@ -2,5 +2,4 @@ sphinx
 numpydoc
 Pillow
 numpy
-functools
 pydata_sphinx_theme
