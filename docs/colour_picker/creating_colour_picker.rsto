@@ -1,0 +1,17 @@
+========================
+Creating a Colour Picker
+========================
+
+In itself a colour picker is maybe not too useful, since there are a load
+around that should be more professional than I could create. On the other
+hand there are a lot of useful lessons to be learnt.
+
+Let's use the colour picker in paint.net as an example, with the aid of the
+website `Create a Scale widget with a gradient background in Tkinter <https://samclane.github.io/Gradient-Scale-Python/>`_. 
+As a first start let's keep it simple, use the canvas to display our 
+gradient, then use a scale underneath the canvas and a spinbox to show the
+value of the scale. If both the scale and its associated spinbox point to 
+the same tk variable we should be able to adjust either and see the effect
+on the other widget. At the same time the gradient should change as the 
+values change. As can be seen we will need to copy our widgets so that
+we have three gradients, scales and spinboxes.
