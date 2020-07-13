@@ -7,7 +7,6 @@
 from tkinter import Tk,Canvas,IntVar,Frame,PhotoImage,StringVar
 from tkinter.ttk import LabelFrame,Scale,Style,Entry,Spinbox,Label
 from PIL import Image,ImageDraw,ImageTk
-from functools import partial
 from colour_tools import rgb2hash,circle,yiq_to_rgb,rgb_to_yiq,\
 draw_gradient,draw_agradient,\
 vdraw_gradient,yiq_okay,is_okay,sb_okay,hash2rgb
@@ -384,8 +383,10 @@ class RgbYiqSelect:
             self.rgbcans.append(Canvas(lf1, height=self.canvas_h, width=self.canvas_w,
                 bd=0, highlightthickness=0))
             self.rgbcans[ix].grid(row=3*ix, column=1, sticky='ew', padx=self.sliderlength//2)
-            self.rgbcans[ix].bind("<Configure>", partial(self.resize,
-                can= self.rgbcans[ix]))
+            def handler_rgb(event, self=self, ix=ix):
+                return self, self.resize(event, can=self.rgbcans[ix])
+            self.rgbcans[ix].bind("<Configure>", handler_rgb)
+                #can= self.rgbcans[ix]))
 
             TtkScale(lf1, self.scale_l, from_=0, to=255, variable=rgbvars[ix],
                 orient='horizontal', command=rgbhandles[ix],
@@ -467,8 +468,10 @@ class RgbYiqSelect:
             self.cans.append(Canvas(lf4, width=self.canvas_w, height=self.canvas_h,
                 bd=0, highlightthickness=0))
             self.cans[ix].grid(row=3*ix, column=1, sticky='ew', padx=self.sliderlength//2)
-            self.cans[ix].bind("<Configure>", partial(self.resize_yiq,
-                can=self.cans[ix]))
+            def handler_yiq(event, self=self, ix=ix):
+                return self, self.resize_yiq(event, can=self.cans[ix])
+            self.cans[ix].bind("<Configure>", handler_yiq)
+                #can=self.cans[ix]))
             TtkScale(lf4, from_=froms[ix], to=100, variable=tkvars[ix],
                 orient='horizontal', length=self.scale_l, command=handles[ix],
                 tickinterval=ticks[ix]).grid(row=1+3*ix, column=1, sticky='new')
