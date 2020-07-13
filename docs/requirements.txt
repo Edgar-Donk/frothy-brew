@@ -2,7 +2,6 @@ sphinx
 numpydoc
 Pillow
 numpy
-math
 functools
 csv
 pydata_sphinx_theme
