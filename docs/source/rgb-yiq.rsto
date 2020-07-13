@@ -1,0 +1,86 @@
+yiq package
+===========
+
+Submodules
+----------
+
+yiq.01basicyiq module
+---------------------
+
+.. automodule:: yiq.01basicyiq
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+yiq.02yiq\_colour\_space module
+-------------------------------
+
+.. automodule:: yiq.02yiq_colour_space
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+yiq.03yiqspaceadded module
+--------------------------
+
+.. automodule:: yiq.03yiqspaceadded
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+yiq.04rgbandyiq module
+----------------------
+
+.. automodule:: yiq.04rgbandyiq
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+yiq.convert module
+------------------
+
+.. automodule:: yiq.convert
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+yiq.test\_entry module
+----------------------
+
+.. automodule:: yiq.test_entry
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+yiq.test\_entry2 module
+-----------------------
+
+.. automodule:: yiq.test_entry2
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+yiq.test\_gradient module
+-------------------------
+
+.. automodule:: yiq.test_gradient
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+yiq.test\_regex module
+----------------------
+
+.. automodule:: yiq.test_regex
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: yiq
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,56 @@
+scripts package
+===============
+
+Submodules
+----------
+
+scripts.colour\_tools module
+----------------------------
+
+.. automodule:: scripts.colour_tools
+   :members: rgb2hash,circle,yiq_to_rgb,rgb_to_yiq,draw_gradient,draw_agradient,
+        vdraw_gradient,yiq_okay,isOkay,sb_okay,hash2rgb,polar2cart,cart2polar,
+        hue_gradient,hsv_to_rgb,rgb_to_hsv
+   :undoc-members:
+   :show-inheritance:
+
+scripts.entry\_class\_5 module
+------------------------------
+
+.. automodule:: scripts.entry_class_5
+   :members: StringEntry, IntegerEntry, FloatEntry
+   :undoc-members:
+   :show-inheritance:
+
+scripts.rgbandhsv module
+------------------------
+
+.. automodule:: scripts.rgbandhsv
+   :members: RgbHsvSelect,colour_tools
+   :undoc-members:
+   :show-inheritance:
+
+scripts.rgbandyiq module
+------------------------
+
+.. automodule:: scripts.rgbandyiq
+   :members: RgbYiqSelect,colour_tools
+   :undoc-members:
+   :show-inheritance:
+
+scripts.tree\_class module
+--------------------------
+
+.. automodule:: scripts.tree_class
+   :members: Tree
+   :undoc-members:
+   :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: scripts
+   :members: tree_class,rgbandyiq,rgbandhsv,entry_class_5,colour_tools
+   :undoc-members:
+   :show-inheritance:
