@@ -1,0 +1,8 @@
+'Colours'; 'Hash'; 'RGB'; 'Extra long header'
+'red'; '#FF0000'; (255,0,0));
+'yellow'; '#FFFF00'; (255,255,0);
+'blue'; '#0000FF'; (0,0,255);
+'green'; '#00FF00'; (0,255,0);
+'magenta'; '#FF00FF'; (255,0,255);
+'cyan'; '#00FFFF'; (0,255,255);
+'foo'; 'bar'; 'bong'; 'ding a ling ping'
