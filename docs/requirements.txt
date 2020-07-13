@@ -3,5 +3,4 @@ numpydoc
 Pillow
 numpy
 functools
-csv
 pydata_sphinx_theme
