@@ -23,7 +23,7 @@ Repository
 
 You should find all the python examples and their widget images here.
 
-`Putting on the Style! <https://github.com/Edgar-Donk/tkinter.ttk.style/tree/master>`_
+`frothy-brew! <https://github.com/Edgar-Donk/frothy-brew>`_
 
 
 Read the Docs
@@ -31,6 +31,6 @@ Read the Docs
 
 Where you'll find the explanations.
 
-`Read the Docs <https://tkinterttkstyle.readthedocs.io/en/latest/index.html>`_
+`Read the Docs <https://frothy-brew.readthedocs.io/en/latest/index.html>`_
 
 
