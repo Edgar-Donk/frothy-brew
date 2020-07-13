@@ -1,4 +1,4 @@
-Set Header and column Widths
+Set Header and Column Widths
 ============================
 
 You will notice that the header and column sizes are not set, therefore they
