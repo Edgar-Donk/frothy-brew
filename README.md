@@ -1,5 +1,6 @@
 # frothy-brew
-tkinter odds and ends
+tkinter odds and ends.
+
 An overview of the tkinter themed widgets treeview, notebook and entry.
 
 Create a small application to show colour values in RGBA and HSV formats,
