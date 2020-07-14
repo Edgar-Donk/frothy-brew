@@ -285,9 +285,9 @@ class TtkScale(Scale):
         self.digits = digits
         self.length = length
 
-        self.build(parent, from_, to, sliderlength, tickinterval)
+        self.build(parent, from_, to, sliderlength, tickinterval, length)
 
-    def build(self, parent, from_, to, sliderlength, tickinterval):
+    def build(self, parent, from_, to, sliderlength, tickinterval, length):
         """Create ticks
 
         Parameters
@@ -310,8 +310,8 @@ class TtkScale(Scale):
             for i in range(from_, to + 2, tickinterval):
                 item = Label(parent, text=i, bg='#EFFEFF')
                 item.place(in_=self, bordermode='outside',
-                           relx=sliderlength / sc_range / 2 + i /
-                           sc_range * (1 - sliderlength / sc_range),
+                           relx=sliderlength / length / 2 + i /
+                           sc_range * (1 - sliderlength / length),
                            rely=1, anchor='n')
 
 

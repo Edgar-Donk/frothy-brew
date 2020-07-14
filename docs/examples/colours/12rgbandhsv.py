@@ -574,9 +574,9 @@ class TtkScale(Scale):
         self.digits = digits
         self.length = length
 
-        self.build(parent, from_, to, sliderlength, tickinterval)
+        self.build(parent, from_, to, sliderlength, tickinterval, length)
 
-    def build(self, parent, from_, to, sliderlength, tickinterval):
+    def build(self, parent, from_, to, sliderlength, tickinterval, length):
         """Create ticks
 
         Parameters
@@ -599,8 +599,8 @@ class TtkScale(Scale):
             for i in range(from_, to + 2, tickinterval):
                 item = Label(parent, text=i)
                 item.place(in_=self, bordermode='outside',
-                           relx=sliderlength / sc_range / 4 +
-                           i / sc_range * (1 - sliderlength / sc_range / 2),
+                           relx=sliderlength / length / 2 +
+                           i / sc_range * (1 - sliderlength / length),
                            rely=1, anchor='n')
 
 
@@ -633,7 +633,7 @@ class RgbHsvSelect:
         self.sliderlength = 16
         self.canvas_w = self.scale_l-self.sliderlength
         self.canvas_h = 26
-        
+
         self.wheel_w = 317
         self.wheel_iw = 299
         self.ring_radius = 10
