@@ -48,16 +48,3 @@ complete any cursor movement could result in wrongly sized gradients.
         *Show/Hide Code* 05relatedyiqlist.py
 
     .. literalinclude:: ../examples/yiq/05relatedyiqlist.py
-
-.. warning:: Using functools partial
-
-    Using functools works fine on most computers, but Read the Docs does an
-    in depth check on each import and found problems that prevented the 
-    website from being built. Changing the method for passing a variable in
-    the bind function for resizing with a ``lambda``
-    function, only worked for the last gradient in the loop. Use an extra
-    argument trick as found in 
-    `Tkinter 8.5 reference a GUI for Python <https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/tkinter.pdf>`_ 
-    under 54. Events: responding to stimuli.
-    
-    This has been used in the file rgbandyiq.py found in scripts.
