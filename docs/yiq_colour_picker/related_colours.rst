@@ -41,6 +41,14 @@ components need to be found before the gradients are drawn. Just as before
 we need to update the default Canvas width, otherwise once the resizing is 
 complete any cursor movement could result in wrongly sized gradients.
 
+.. container:: toggle
+
+    .. container:: header
+
+        *Show/Hide Code* 05relatedyiqlist.py
+
+    .. literalinclude:: ../examples/yiq/05relatedyiqlist.py
+
 .. warning:: Using functools partial
 
     Using functools works fine on most computers, but Read the Docs does an

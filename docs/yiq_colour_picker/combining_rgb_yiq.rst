@@ -58,12 +58,4 @@ have all the speed advantages and can use straight python.
 
     .. literalinclude:: ../examples/yiq/04rgbandyiqlist.py
 
-Modifying Tick Intervals
-------------------------
-
-Using our original algorithm most of the scale tick values sit reasonably 
-well together with the gradients but the Y (luma) scale starts too late
-and finishes too early. Change the tickinterval placing by changing the first
-component to a quarter of the slider length and the final component to half
-the slider length. Overall the tick values look better with this change. 
 
