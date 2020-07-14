@@ -475,9 +475,9 @@ class TtkScale(Scale):
         self.digits = digits
         self.length = length
 
-        self.build(parent, from_, to, sliderlength, tickinterval)
+        self.build(parent, from_, to, sliderlength, tickinterval, length)
 
-    def build(self, parent, from_, to, sliderlength, tickinterval):
+    def build(self, parent, from_, to, sliderlength, tickinterval, length):
         """Create ticks
 
         Parameters
@@ -501,8 +501,8 @@ class TtkScale(Scale):
                 item = Label(parent, text=i)
                 j = (i if from_ > 0 else i - from_)
                 item.place(in_=self, bordermode='outside',
-                           relx=sliderlength / sc_range / 2 +
-                           j / sc_range * (1 - sliderlength / sc_range),
+                           relx=sliderlength / length / 2 +
+                           j / sc_range * (1 - sliderlength / length),
                            rely=1, anchor='n')
 
 
@@ -530,9 +530,10 @@ class RgbYiqSelect:
         self.evar = StringVar()
 
         self.scale_l = 300
-        self.canvas_w = self.scale_l
+        self.sliderlength = 16
+        self.canvas_w = self.scale_l - self.sliderlength
         self.canvas_h = 26
-        self.cursor_w = 16
+
         self.space = 301
         self.ring_radius = 10
         self.ring_width = 3
@@ -786,9 +787,9 @@ class RgbYiqSelect:
             Label(lf1).grid(row=2+3*ix, column=2)
             self.rgbcans.append(Canvas(lf1, height=self.canvas_h, width=self.canvas_w,
                 bd=0, highlightthickness=0))
-            self.rgbcans[ix].grid(row=3*ix, column=1, sticky='ew')
+            self.rgbcans[ix].grid(row=3*ix, column=1, sticky='ew', padx=self.sliderlength//2)
             self.rgbcans[ix].bind("<Configure>", partial(self.resize,
-                can= self.rgbcans[ix]))
+                can = self.rgbcans[ix]))
 
             TtkScale(lf1, self.scale_l, from_=0, to=255, variable=rgbvars[ix],
                 orient='horizontal', command=rgbhandles[ix],
@@ -869,7 +870,7 @@ class RgbYiqSelect:
             Label(lf4).grid(row=2+3*ix, column=2)
             self.cans.append(Canvas(lf4, width=self.canvas_w, height=self.canvas_h,
                 bd=0, highlightthickness=0))
-            self.cans[ix].grid(row=3*ix, column=1, sticky='ew')
+            self.cans[ix].grid(row=3*ix, column=1, sticky='ew', padx=self.sliderlength//2)
             self.cans[ix].bind("<Configure>", partial(self.resize_yiq,
                 can=self.cans[ix]))
             TtkScale(lf4, from_=froms[ix], to=100, variable=tkvars[ix],
