@@ -51,9 +51,9 @@ class  TtkScale(Scale):
         self.digits = digits
         self.length = length
 
-        self.build(parent, from_, to, sliderlength, tickinterval)
+        self.build(parent, from_, to, sliderlength, tickinterval, length)
 
-    def build(self, parent, from_, to, sliderlength, tickinterval):
+    def build(self, parent, from_, to, sliderlength, tickinterval, length):
         """Create ttk Scale ticks.
 
         Parameters
@@ -77,7 +77,7 @@ class  TtkScale(Scale):
                 item = Label(parent, text=i)
                 j = (i if from_ > 0 else i - from_)
                 item.place(in_=self, bordermode='outside',
-                    relx=sliderlength/scRange/4+j/scRange*(1-sliderlength/scRange/2),
+                    relx=sliderlength/length/2+j/scRange*(1-sliderlength/length),
                     rely=1, anchor='n')
 
 class RgbYiqSelect:
