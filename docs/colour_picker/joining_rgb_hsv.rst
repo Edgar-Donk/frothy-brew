@@ -211,15 +211,6 @@ so add horizontal padding, half the slider length, to the canvas.
     
     Combined RGB and HSV with Related Colours
 
-Tick Scale Alignment
---------------------
-
-It became apparent that the alignment of the tick scale was not good enough 
-for the saturation and value components. If we adjust the build of TtkScale
-by using a quarter of the slider length and not a half, then adjust the end 
-point by subtracting half the slider length (not the whole slider length) 
-then the tick scale sits better.
-
 .. container:: toggle
 
     .. container:: header

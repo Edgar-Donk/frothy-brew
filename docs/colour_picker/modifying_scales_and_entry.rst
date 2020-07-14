@@ -142,13 +142,13 @@ This should give us::
             self.digits=digits
             self.length=length
         
-            self.build(parent,from_,to,sliderlength,tickinterval)
+            self.build(parent,from_,to,sliderlength,tickinterval, length)
 
 As we wish to position the range values just below the trough, it is 
 probably best to build them as part of the scale widget and use the ``place``
 layout manager, so these act as a built-in feature of the widget::
 
-    def build(self, parent, from_, to, sliderlength, tickinterval):
+    def build(self, parent, from_, to, sliderlength, tickinterval, length):
         # create ticks
         scRange = to-from_
         
@@ -156,8 +156,8 @@ layout manager, so these act as a built-in feature of the widget::
             for i in range(from_, to + 2, tickinterval):
                 item = Label(parent, text=i, bg='#EFFEFF')
                 item.place(in_=self, bordermode='outside',
-                           relx=sliderlength / sc_range / 2 + i /
-                           sc_range * (1 - sliderlength / sc_range),
+                           relx=sliderlength / length / 2 + i /
+                           sc_range * (1 - sliderlength / length),
                            rely=1, anchor='n')
 
 The first tick value is positioned just below the centre of the slider when
@@ -167,8 +167,7 @@ border. This means that the first tick is half a slider length inside the
 border, and the last tick is half a slider length inside the opposite border.
 Other ticks are equally spaced between these two extremes.
 
-You may be wondering about the fact that the scale length does not show, 
-that has been accounted for in ``relx``, it is an x scale relative to the
+``relx``is an x scale relative to the
 parent size, and ranges from 0 to 1, hence the need to normalise the values.
 
 Now change all the Scales to TtkScale, altering any attributes as necessary.
