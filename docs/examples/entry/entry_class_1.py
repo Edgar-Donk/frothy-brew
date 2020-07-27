@@ -83,7 +83,7 @@ class StringEntry:
         -------
         None
         """
-        vcmd = root.register(self.is_okay)
+        vcmd = self.lf1.register(self.is_okay)
 
         self.ent1 = ent1 = Entry(self.lf1, validate='key',
                                  validatecommand=(vcmd, '%P', '%S', '%i'),

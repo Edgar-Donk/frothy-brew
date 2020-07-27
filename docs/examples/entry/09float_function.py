@@ -89,7 +89,7 @@ def entry_float(parent,lf_text,l_limit,u_limit, mess_text, out_var):
             return False
         return True
 
-    vcmd = root.register(is_okay)
+    vcmd = lf0.register(is_okay)
 
     entsv = DoubleVar()
     ent0 = Entry(lf0, validate='key', validatecommand=(vcmd, '%P'),

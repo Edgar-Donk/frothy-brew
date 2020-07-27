@@ -74,7 +74,7 @@ def entry_string(parent, lf_text, mess_text, out_var):
         else:
             return bool((text.isupper() or text == "") and index == 0)
 
-    vcmd = root.register(is_okay)
+    vcmd = lf0.register(is_okay)
 
     entsv = StringVar()
     ent0 = Entry(lf0, validate='key', textvariable=entsv,

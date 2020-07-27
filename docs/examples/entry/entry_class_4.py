@@ -76,7 +76,6 @@ class StringEntry:
         self.messlbl = Label(self.lf0, style='brown.TLabel')  # removed text
         self.messlbl.grid(row=2, column=0, pady=10, padx=10)
 
-        self.vcmd = root.register(self.is_okay)  # new
         self.make_entry()
 
     def make_entry(self):
@@ -90,7 +89,7 @@ class StringEntry:
         -------
         None
         """
-        vcmd = root.register(self.is_okay)
+        vcmd = self.lf0.register(self.is_okay)
 
         self.ent0 = ent0 = Entry(self.lf0, validate='key',
                                  validatecommand=(vcmd, '%P', '%S', '%i'),

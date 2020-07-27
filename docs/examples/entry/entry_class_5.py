@@ -81,7 +81,6 @@ class StringEntry(LabelFrame):  # changed
         self.messlbl = Label(self, style='brown.TLabel')  # self.lf1
         self.messlbl.grid(row=2, column=0, pady=10, padx=10)
 
-        self.vcmd = root.register(self.is_okay)
         self.make_entry()
 
     def make_entry(self):
@@ -95,11 +94,11 @@ class StringEntry(LabelFrame):  # changed
         -------
         None
         """
-        vcmd = root.register(self.is_okay)
+        vcmd = self.register(self.is_okay)
 
         self.ent0 = ent0 = Entry(self, validate='key',
                                  validatecommand=(
-                                     vcmd, '%P', '%S'),  # self.lf1
+                                     vcmd, '%P', '%S', '%i'),  # self.lf1
                                  textvariable=self.out_var)
         ent0.bind("<Return>", self.end_input)
         ent0.grid(row=1, column=0, padx=10)
@@ -185,6 +184,7 @@ class StringEntry(LabelFrame):  # changed
         -------
         boolean
         """
+        ind = int(ind)
         if (inp.isalnum() or inp in (",", ".", "'", " ")) and ind > 0:
             return True
         else:
@@ -225,7 +225,7 @@ class IntegerEntry(StringEntry):
         #self.mod = mod
         #self.colour = colour
         '''
-        super().__init__(fr, lf_text, def_inp, colour, mod)  # added
+        super().__init__(parent, lf_text, def_inp, colour, mod)  # added
 #       StringEntry.__init__(self,fr,lf_text,def_inp,colour,mod)
         self.l_limit = l_limit
         self.u_limit = u_limit
@@ -337,7 +337,7 @@ class FloatEntry(IntegerEntry):
         #self.l_limit = l_limit
         #self.u_limit = u_limit
         '''
-        super().__init__(fr, lf_text, l_limit, u_limit, def_inp, colour, mod)
+        super().__init__(parent, lf_text, l_limit, u_limit, def_inp, colour, mod)
 
         self.out_var = DoubleVar()
         self.out_var.set(def_inp)
