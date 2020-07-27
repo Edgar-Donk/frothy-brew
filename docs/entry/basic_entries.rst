@@ -16,7 +16,9 @@ function and options we are using, in this case we are using ``'%P'`` which
 is the allowed text. As the input is entered the contents of ``'%P'`` 
 increases with each correct keystroke, this is shown in our print output. 
 The callback function ``is_okay`` needs to be registered using the hook 
-``vcmd`` before it can be used::
+``vcmd`` before it can be used. As root is the parent widget it is used for
+registration in this example, later on we can use other widgets such as a
+Frame::
 
     from tkinter import Tk
     from tkinter.ttk import Entry, Style
