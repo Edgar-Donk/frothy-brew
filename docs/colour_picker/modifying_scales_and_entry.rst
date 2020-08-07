@@ -167,7 +167,7 @@ border. This means that the first tick is half a slider length inside the
 border, and the last tick is half a slider length inside the opposite border.
 Other ticks are equally spaced between these two extremes.
 
-``relx``is an x scale relative to the
+``relx`` is an x scale relative to the
 parent size, and ranges from 0 to 1, hence the need to normalise the values.
 
 Now change all the Scales to TtkScale, altering any attributes as necessary.
