@@ -2,7 +2,7 @@
 Binding to Notebook
 ===================
 
-.. figure:: ../figures/nbstate.webp
+.. figure:: ../figures/tab_bind.png
     :width: 245
     :height: 216
     :alt: ttk notebook tag binding
