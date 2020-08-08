@@ -47,6 +47,28 @@ StringVar::
     from tkinter import Tk, StringVar
     from tkinter.ttk import Frame, Treeview, Style, Label
 
+.. topic:: Selecting an Item in Treeview
+
+    The event handler uses only two lines to find and select the selected
+    data, let's unpick this a bit. The first line uses the inbuilt widget
+    function ``focus()``, this gives us the ``tagOrId`` of the item that has
+    focus - in other words treeview automatically assigns a unique identifier
+    to each row and we are picking up on this. The next line uses ``item``, 
+    an inbuilt treeview function, we are retrieving the values from our row.
+    
+    If we had used an alternative method that uses ``evt`` (event variable),
+    we would have needed to find the name of the item, then query this item
+    to find the dictionary to show us the row values::
+
+        sender = evt.widget
+        itm = sender.selection()[0]
+        rowdata = sender.item(itm)
+    
+    So the focus function replaces the fist two steps. You can experiment
+    with the above, and find that if you print rowdata it will print the
+    row dictionary, where you will find the key ``values``, along with ``text``
+    and ``image``.
+
 Create a function ``select_item`` where we pick up "values" from the dictionary,
 place this function just after ``s.theme_use('default')``. This function is
 our Event Handler. By selecting a row in the tree's data we have given it 
