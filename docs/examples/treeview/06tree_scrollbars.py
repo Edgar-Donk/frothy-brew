@@ -29,11 +29,11 @@ st1.theme_use('default')
 st1.map('Treeview', foreground=fixed_map('foreground'),
             background=fixed_map('background'))
 
-if font.Font(family="Times", size=12, weight="bold").measure('Test') == 66:
-    st1.configure('Treeview', rowheight=45) #  ide being used
+fact = font.Font(font="TkDefaultFont").metrics('linespace')
+st1.configure('font.Treeview', rowheight=fact,
+              font=font.nametofont("TkDefaultFont"))
 
 # determine Heading font based on TkDefaultFont
-st1.configure('font.Treeview', font='TkDefaultFont')
 def_font = font.nametofont('TkDefaultFont')
 font_family = def_font.actual()['family']
 font_size = def_font.actual()['size'] + 1

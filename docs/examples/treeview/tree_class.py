@@ -1,4 +1,4 @@
-﻿from tkinter import Tk, StringVar, font
+from tkinter import Tk, StringVar, font
 from tkinter.ttk import Frame, Treeview, Style, Label, Scrollbar, Button
 import csv
 
@@ -40,16 +40,16 @@ class Tree:
         st1.map('Treeview', foreground=self.fixed_map('foreground'),
             background=self.fixed_map('background'))
 
-        if font.Font(family="Times", size=12, weight="bold").measure('Test') == 66:
-            st1.configure('Treeview', rowheight=45) #
+        fact = font.Font(font="TkDefaultFont").metrics('linespace')
+        st1.configure('font.Treeview', rowheight=fact,
+                      font=font.nametofont("TkDefaultFont"))
 
-        st1.configure('font.Treeview', font='TkDefaultFont')
         # determine Heading font based on TkDefaultFont
-        st1.configure('font.Treeview', font='TkDefaultFont')
         def_font = font.nametofont('TkDefaultFont')
         self.font_family = def_font.actual()['family']
         self.font_size = def_font.actual()['size'] + 1
-        st1.configure('font.Treeview.Heading', font=(self.font_family,self.font_size,'bold'))
+        st1.configure('font.Treeview.Heading', font=(self.font_family,
+                      self.font_size,'bold'))
 
         with open(self.csv_file, newline='', encoding='utf-8-sig') as csvfile:
             treeCsv = csv.reader(csvfile, delimiter=self.csv_delimiter)
