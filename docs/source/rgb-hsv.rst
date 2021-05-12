@@ -1,7 +1,7 @@
 RGB HSV Colour Picker
 =====================
 
-rgbandhsv class
+rgb-hsv class
 ---------------
 
 .. automodule:: rgbandhsv

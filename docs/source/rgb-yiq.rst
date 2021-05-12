@@ -1,7 +1,7 @@
 RGB YIQ Colour Picker
 =====================
 
-rgbandyiq class
+rgb-yiq class
 ---------------
 
 .. automodule:: rgbandyiq

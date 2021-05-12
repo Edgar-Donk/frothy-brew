@@ -19,6 +19,22 @@ activate google or numpy docstrings::
     import os
     import sys
     sys.path.insert(0, os.path.abspath('../../scripts/'))
+    html_theme = "pydata_sphinx_theme"
+    html_sidebars = {
+    "contributing": ["sidebar-search-bs.html", "custom-template.html"],
+    "changelog": [],
+    }
+    ## older version
+    '''
+    html_sidebars = {
+        '**': [
+        'about.html',
+        'navigation.html',
+        'relations.html',  # needs 'show_related': True theme option to display
+        'searchbox.html'
+        ]
+    ]
+    '''
     # add the dependancies within extensions for autodoc and napolean
     extensions =["sphinx.ext.autodoc",
         'sphinx.ext.napoleon',
@@ -84,8 +100,8 @@ these are not part of the documentation do not include them as a module.
 .. toctree::
    :maxdepth: 4
 
-   tree
    notebook
+   tree
    entry
    rgb-hsv
    rgb-yiq
