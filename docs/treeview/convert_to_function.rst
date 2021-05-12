@@ -43,7 +43,7 @@ being imported.
        *Show/Hide Code* tree_function.py
 
    .. literalinclude:: ../examples/treeview/tree_function.py
-      :emphasize-lines: 37,136-145
+      :emphasize-lines: 37,134-143
 
 .. note:: Almost every line has been changed due to indentation, only those
     lines that have a content change or have been transposed have been

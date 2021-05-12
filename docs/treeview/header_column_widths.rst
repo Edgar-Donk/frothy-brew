@@ -2,7 +2,7 @@ Set Header and Column Widths
 ============================
 
 You will notice that the header and column sizes are not set, therefore they
-display a default width of 200 for an ide or 450 in Idle (python 3.7). Let's 
+display a default width of 200 for an IDE or 450 in Idle (python 3.7). Let's 
 see what happens when stretch is set to 'yes', we need to add a *tree.column* 
 clause just after the tree.heading clause when creating the headings::
 
@@ -29,7 +29,7 @@ This should return::
     {'width': 150, 'minwidth': 20, 'stretch': 0, 'anchor': 'w', 'id': 'Hash'}
     {'width': 200, 'minwidth': 20, 'stretch': 0, 'anchor': 'w', 'id': 'RGB'}
 
-If we had used an ide such as Thonny or Spyder then the result will have the 
+If we had used an IDE such as Thonny or Spyder then the result will have the 
 correct widths, but the rows would be unreadable since the row heights were
 too small. So Idle and running python from the console has a width problem
 but the row height is better (Python 3.7 in Windows).
@@ -61,7 +61,7 @@ Add the following line just after st1.theme_use('default')::
     st1.configure('Treeview', rowheight=45)
 
 This sorts out the row problem, but looking at the magenta row we see that
-width of 100 is not large enough. Staying with our ide let's automatically
+width of 100 is not large enough. Staying with our IDE let's automatically
 adjust the widths. Change the column line to make it remove the manual 
 settings and stretch::
 
@@ -75,9 +75,9 @@ the column attributes::
     ....
     tree.column(col, width=font.Font().measure(col.title()) + 10,stretch=True)
 
-Both the ide and console measured wrongly, but because Idle and the console 
+Both the IDE and console measured wrongly, but because Idle and the console 
 incorrectly displayed much larger widths it did not look too bad. The 
-measured width for the column ``Colours`` was 67 in the ide, but Idle had 
+measured width for the column ``Colours`` was 67 in the IDE, but Idle had 
 200. 
 
 .. note:: 10 pixels have been added to our measure to give a clearance
@@ -107,9 +107,9 @@ measurement with TkDefaultFont or TkHeadingFont::
     tree.column(col,width=font.nametofont('TkHeadingFont').measure(col.title()) + 10,
                 stretch=False)
 
-The appearances of the ide and Idle displays now look similar, but notice 
-that the measurements are different, the ide had 91 for ``Colours`` while
-Idle had 41. This bodes well. The ide is accurate, so continue to work with 
+The appearances of the IDE and Idle displays now look similar, but notice 
+that the measurements are different, the IDE had 91 for ``Colours`` while
+Idle had 41. This bodes well. The IDE is accurate, so continue to work with 
 this. 
 
 .. figure:: ../figures/tree_gui_tkdefaultfont.webp
@@ -143,14 +143,18 @@ column of data ``('foo', 'bar', 'bong', 'ding a ling ping pong')``.
         print (default_font.actual())
 
 It was noticed that Windows 10 had used Segoe UI 9 font for both the heading 
-and default fonts. In the ide widths and height look reasonable, but 
+and default fonts. In the IDE widths and height look reasonable, but 
 switching to the command line the spacing between rows looks too large. 
-There is no simple test to tell whether the script was run from Idle or the
-command line, so devising our own relies on the measured result with the 
-Times font (remember TkDefaultFont can change from system to system)::
+Provided there is a valid font, TkDefaultFont will do, we can test the font
+metrics for linespace, this varies according to the type of IDE. For instance
+Windows TkDefaultFont Idle has a linespace of 15 and Thonny 37.::
 
-    if font.Font(family="Times", size=12, weight="bold").measure('Test') == 66:
-        st1.configure('Treeview', rowheight=45)
+    fact = font.Font(font="TkDefaultFont").metrics('linespace')
+    st1.configure('fact.Treeview', rowheight=fact,
+                  font=font.nametofont("TkDefaultFont"))
+
+When the Treeview style is configured change the rowheight to the linespace
+size and the font is changed to that required.
 
 Replace the rowheight statement with the above test. Since we require cross 
 platform compatability our column font should always be TkDefaultFont and
@@ -188,4 +192,4 @@ There are some optional commented lines used for testing.
         *Show/Hide Code* 05tree_widths_height.py
 
     .. literalinclude:: ../examples/treeview/05tree_widths_height.py
-        :emphasize-lines: 7, 29-38, 64, 72, 80, 89-93, 101-107
+        :emphasize-lines: 7, 29-38, 64, 74, 80, 89-93, 101-107

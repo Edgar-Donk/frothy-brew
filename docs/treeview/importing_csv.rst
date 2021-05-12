@@ -52,7 +52,7 @@ After all that you should have the following:-
        *Show/Hide Code* 07tree_csv.py
 
    .. literalinclude:: ../examples/treeview/07tree_csv.py
-      :emphasize-lines: 10, 77-79, 82-89
+      :emphasize-lines: 10, 76-78, 81-88
 
 You should find that the first row of the csv file corresponds to our column
 names, and the succeeding rows are the data, each row ordered as our columns.

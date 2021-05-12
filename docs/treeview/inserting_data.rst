@@ -9,6 +9,11 @@ Inserting Data
     
     Treeview, default theme, displayed in Idle
 
+.. note::
+    We are using treeview exclusively as a method to display column and
+    row data similar to a database table and not as a heirarchical set of 
+    data as in a file system.
+
 Treeview has two display areas, the first is for column headings the second 
 is for data, in other words the first row is the header, subsequent rows 
 are the data. The display can be compared to a database table rather than a 
@@ -84,3 +89,10 @@ hide the script)
         *Show/Hide Code* 01tree.py
 
     .. literalinclude:: ../examples/treeview/01tree.py
+
+.. warning:: 
+    If the data is all squashed up vertically and cannot be read, open the
+    script with Idle or PyScripter or run directly from the OS prompt. The
+    problem in Windows lies with the use of Ultra High Definition monitor 
+    with a change in pixel size. The problem is addressed in the chapter on 
+    "Set Header and Column Widths".
