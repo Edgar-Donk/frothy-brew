@@ -1,12 +1,15 @@
 .. _foamy-brew:
 
-==========
-Foamy Brew
-==========
+===========
+Frothy Brew
+===========
 
 .. topic:: What to Expect
 
-    An overview of the tkinter themed widgets treeview, notebook and entry.
+    Before inspecting individual tkinter widgets a quick word about modern
+    monitor resolutions and how it affects widgets and their applications.
+
+    An overview of the tkinter themed widgets notebook, treeview and entry.
     Create a small application to show colour values in RGBA and HSV formats,
     this should look like the colour picker in paint.net. Build upon this 
     to produce a YIQ colour picker.
@@ -21,7 +24,26 @@ Foamy Brew
     :maxdepth: 3
     
     authors.rst
+    dpi_aware
 
+
+Notebook
+========
+
+.. image:: figures/nb_import.webp
+    :width: 243
+    :height: 200
+    :align: center
+    :alt: ttk notebook with disable, sizing and import
+
+Not every application sits comfortably with a menu driven system.
+The themed widget notebook that creates the tabbed method of layout. Other
+widgets would then sit within the tabs.
+
+.. toctree::
+    :maxdepth: 3
+    
+    notebook/index_notebook
 
 Treeview
 ========
@@ -40,23 +62,6 @@ useful when choosing data from tables of information.
     :maxdepth: 3
     
     treeview/index_treeview
-
-Notebook
-========
-
-.. image:: figures/nb_import.webp
-    :width: 243
-    :height: 200
-    :align: center
-    :alt: ttk notebook with disable, sizing and import
-
-Not every application sits comfortably with a menu driven system.
-The themed widget notebook that creates the tabbed method of layout. 
-
-.. toctree::
-    :maxdepth: 3
-    
-    notebook/index_notebook
 
 Entry
 =====

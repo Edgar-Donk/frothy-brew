@@ -80,18 +80,21 @@ html_theme_options = {
 }
 
 html_sidebars = {
-    '**': [
+'''    '**': [
         'about.html',
         'navigation.html',
         'relations.html',  # needs 'show_related': True theme option to display
         'searchbox.html'
 
     ]
+'''
+    "contributing": ["sidebar-search-bs.html", "custom-template.html"],
+    "changelog": [],
 }
 
 # option for show/hide code
 def setup(app):
-    app.add_stylesheet('custom.css')
+    app.add_css_file('custom.css') # stylesheet
 
 html_logo = '_static/ben2.png'
 html_favicon = '_static/ben1.ico'
