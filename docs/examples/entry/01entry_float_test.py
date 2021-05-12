@@ -9,7 +9,7 @@ root = Tk()
 s = Style()
 s.theme_use('default')
 
-def isOkay(act, inp, text):
+def isOkay(act, inp, text): # 
     print(inp)
     #if act == '1':
     '''
@@ -49,7 +49,7 @@ def isOkay(act, inp, text):
 #        return True
     
 
-vcmd = root.register(isOkay)
+vcmd = root.register(isOkay) # 
 en = Entry(root,validate = "key",validatecommand=(vcmd, '%d', '%P', '%S'))
 en.pack(padx=10)
 

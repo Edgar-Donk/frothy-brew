@@ -2,7 +2,7 @@
     optional range checking
 """
 from tkinter import Tk
-from tkinter.ttk import Entry, Style
+from tkinter.ttk import Entry, Style, Label
 
 root = Tk()
 style = Style()
@@ -35,6 +35,8 @@ def is_okay(text):
 
 vcmd = root.register(is_okay)
 
+lab = Label(root, text= 'Integer input, a range exists')
+lab.pack(padx=10, pady=10)
 ent0 = Entry(root, validate="key", validatecommand=(vcmd, "%P"))
 ent0.pack(padx=10)
 

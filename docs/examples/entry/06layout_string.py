@@ -28,7 +28,7 @@ def end_input(evt):
     else:
         mess_lbl['text'] = "Should be at least 6 characters long"
 
-def is_okay(text, input, index):
+def is_okay(text, inp, index):
     """ validation function
 
     Parameters
@@ -48,7 +48,7 @@ def is_okay(text, input, index):
         return True
     if input in (",", ".", "'", " ") and index > 0:
         return True
-    if input.isalnum() and index > 0:
+    if inp.isalnum() and index > 0:
         return True
     if text == "":
         return True

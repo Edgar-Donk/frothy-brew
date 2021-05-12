@@ -10,7 +10,7 @@ Returns
 None
 """
 from tkinter import Tk, font
-from tkinter.ttk import Entry, Style, Label
+from tkinter.ttk import Spinbox, Style, Label
 
 root = Tk()
 style = Style()
@@ -44,7 +44,7 @@ def is_okay(text):
 vcmd = root.register(is_okay)
 lab = Label(root, text= 'Float input, negative allowed, no limit')
 lab.pack(padx=10, pady=10)
-ent0 = Entry(root, validate="key", validatecommand=(vcmd, '%P'),
+ent0 = Spinbox(root, validate="key", validatecommand=(vcmd, '%P'),
            font=(font_family, font_size, 'bold'))
 ent0.pack(padx=10)
 

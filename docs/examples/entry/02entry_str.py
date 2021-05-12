@@ -2,7 +2,7 @@
     the logic in the validation function will be improved
 """
 from tkinter import Tk
-from tkinter.ttk import Entry, Style
+from tkinter.ttk import Entry, Style, Label
 
 root = Tk()
 style = Style()
@@ -35,6 +35,8 @@ def is_okay(text, input):
 
 vcmd = root.register(is_okay)
 
+lab = Label(root, text= 'String input, starts with Capital letter')
+lab.pack(padx=10, pady=10)
 ent0 = Entry(root, validate='key', validatecommand=(vcmd, '%P', '%S'))
 ent0.pack(padx=10)
 
