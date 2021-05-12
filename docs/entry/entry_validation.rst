@@ -23,7 +23,7 @@ Validate Options
 Validate has the following options.
 
 .. csv-table::
-   :file: ../csv/validate_options.csv
+   :file: ../csv_data/validate_options.csv
    :header-rows: 1
    :widths: 10, 65
 
@@ -37,7 +37,7 @@ The commands can take the following substitution codes, as enhancements to
 the callback function.
 
 .. csv-table::
-   :file: ../csv/command_options.csv
+   :file: ../csv_data/command_options.csv
    :header-rows: 1
    :delim: ;
    :widths: 15, 65
