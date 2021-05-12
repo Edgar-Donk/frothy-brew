@@ -2,7 +2,7 @@
     width adjustments
   """
 
-from tkinter import Tk, Frame
+from tkinter import Tk, Frame, font
 from tkinter.ttk import Notebook, Button, Style
 
 root = Tk()
@@ -15,6 +15,8 @@ st1.configure(
 st1.map('green.TNotebook.Tab', background=[
         ('disabled', '#d9d9d9'), ('selected', '#bceebc')])
 
+test_size = font.Font(family="Times", size=12, weight="bold").measure('Test')
+mult = int(test_size / 30)
 
 def tab_changed(event):
     """notebook handler changes width and height after a tab is selected
@@ -33,9 +35,9 @@ def tab_changed(event):
 
 nb1 = Notebook(root, style='green.TNotebook')
 nb1.bind("<<NotebookTabChanged>>", tab_changed)
-page1 = Frame(root, background='red', height=20)
-page2 = Frame(root, background='yellow', height=20)
-page3 = Frame(root, background='alice blue', height=20)
+page1 = Frame(root, height=20*mult) # background='red',
+page2 = Frame(root, background='yellow', height=20*mult)
+page3 = Frame(root, background='alice blue', height=20*mult)
 nb1.grid(row=0, column=0)
 nb1.add(page1, text='one', underline=0, padding=2)
 nb1.add(page2, text='two', underline=1, padding=2, state='disabled')
