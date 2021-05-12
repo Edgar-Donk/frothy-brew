@@ -53,12 +53,12 @@ In the upper left hand corner is an icon and logo, click on this and you will
 be in the home or start page. From here navigate to the website sections.
 In our image a sea captain and ``frothy brew``.
 
-Sections
+Parts
 --------
 
-Across the top of the page are the various sections, click on one of these 
-and land on the section index page, normally with a brief description and
-links to the various chapters or parts of the section. The current section
+Across the top of the page are the various parts of the site, click on one 
+of these and land on the part index page, normally with a brief description 
+and links to the various chapters or parts of the site. The current part
 is highlighed in bold. In our image ``Colour Picker``.
 
 Chapters
@@ -66,7 +66,7 @@ Chapters
 
 On the left hand are the various chapters of this section. The current 
 chapter is in bold. Click on any one of these to go to the relevant chapter.
-In our image ``Modifying Scale, Spinbox and Entry``.
+In our image ``Modifying Scale, Spinbox and Entry`` is the current chapter.
 
 Sections
 --------
@@ -74,7 +74,7 @@ Sections
 A chapter may be subdivided into sections, which are to be found on the right
 hand side. The current section is shown in bold and a vertical line also
 indicates this section. Click on any one of the sections to go there. In our
-image ``User Input in Entry andSpinboxes``.
+image ``User Input in Entry andSpinboxes`` is the current section.
 
 Previous and Next
 -----------------
