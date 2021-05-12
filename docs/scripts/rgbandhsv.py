@@ -1,11 +1,10 @@
-"""Using tkinter Canvas to display rgba  and hsv colour gradients.
+"""Using tkinter Canvas to display rgba  and hsv colour gradients:-
 
-    Added an hsv colour wheel with ring cursor to show hue and saturation.
-    All linked together using numpy arrays to draw gradients and chequers
-    with alpha (opacity), the resulting arrays are imported as PPM images
-    into tkinter.
-
-    The themed Scale has been changed so that the trough is transparent and
+* Added an hsv colour wheel with ring cursor to show hue and saturation.
+* All linked together using numpy arrays to draw gradients and chequers
+    with alpha (opacity).
+* Resulting arrays are imported into tkinter as PPM images.
+* The themed Scale has been changed so that the trough is transparent and
     the slider changed to an upward arrow.
 """
 

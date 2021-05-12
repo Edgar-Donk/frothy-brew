@@ -1,7 +1,7 @@
 """Construction four gradients in rgba three gradients in yiq.
 
-    using PPM image spinbox validation, working with modified Scale
-    and colour space
+* Using PPM image spinbox validation
+* Working with modified Scale and colour space
 """
 
 from tkinter import Tk,Canvas,IntVar,Frame,PhotoImage,StringVar

@@ -1,14 +1,13 @@
 ﻿"""Module containing class Tree, based upon tkinter.ttk treeview.
 
-    The following properties are set:-
-    Inserting Data
-    Data Selection
-    Using Tags
-    Sorting Rows by Columns - followed by a reverse sort
-    Adding Scrollbars
-    Importing Data Headers and Data as a CSV File
-
-    includes workaround for python 3.7 tag colour display.
+* The following properties are set:-
+* Inserting Data
+* Data Selection
+* Using Tags
+* Sorting Rows by Columns - followed by a reverse sort
+* Adding Scrollbars
+* Importing Data Headers and Data as a CSV File
+* Includes workaround for python 3.7 tag colour display
 
 """
 
@@ -51,12 +50,11 @@ class Tree:
         s.map('Treeview', foreground=self.fixed_map('foreground'),
             background=self.fixed_map('background'))
 
-        if font.Font(family="Times", size=12, weight="bold").measure('Test') == 66:
-            s.configure('Treeview', rowheight=45) #
+        fact = font.Font(font="TkDefaultFont").metrics('linespace')
+        s.configure('font.Treeview', rowheight=fact,
+                      font=font.nametofont("TkDefaultFont"))
 
-        s.configure('font.Treeview', font='TkDefaultFont')
         # determine Heading font based on TkDefaultFont
-        s.configure('font.Treeview', font='TkDefaultFont')
         def_font = font.nametofont('TkDefaultFont')
         self.font_family = def_font.actual()['family']
         self.font_size = def_font.actual()['size'] + 1
@@ -199,7 +197,7 @@ class Tree:
 
 if __name__ == "__main__":
     root = Tk()
-    csvFile = '../csv/test.csv'
+    csvFile = '../csv_data/test.csv'
     csvDelimiter = ';'
     page1 = Frame(root)
     page1.pack(fill='both', expand=False)

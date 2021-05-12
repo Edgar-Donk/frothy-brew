@@ -1,5 +1,9 @@
-"""Basic notebook with 3 tabs, binding, disabled state, height and
-    width adjustments, import treewiew with selection
+"""Basic notebook with 3 tabs:-
+
+* binding
+* disabled state
+* height and width adjustments
+* import treewiew with selection
 """
 
 from tkinter import Tk, Frame, StringVar, Label

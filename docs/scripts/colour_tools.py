@@ -1,5 +1,6 @@
 """ Tools for colourpickers
-        rgb, hsv and yiq colour systems
+
+* rgb, hsv and yiq colour systems
 """
 
 from tkinter import PhotoImage

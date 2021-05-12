@@ -41,8 +41,10 @@ def Tree(fr,outVar):
     s.map('Treeview', foreground=fixed_map(s,'foreground'),
             background=fixed_map(s,'background'))
 
-    if font.Font(family="Times", size=12, weight="bold").measure('Test') == 66:
-        s.configure('Treeview', rowheight=45)
+    test_length = font.Font(family="Times", size=12, weight="bold").measure('Test')
+    fact = int(test_length / 30 * 20.45) # 30 is the length of Test in Idle
+
+    s.configure('Treeview', rowheight= fact)
 
     s.configure('font.Treeview', font='TkDefaultFont')
     # determine Heading font based on TkDefaultFont
