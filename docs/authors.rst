@@ -36,7 +36,7 @@ Where you'll find the explanations.
 Navigation
 ==========
 
-.. figure:: /figures/pydata.png
+.. figure:: figures/pydata.png
     :width: 697
     :height: 377
     :align: center
