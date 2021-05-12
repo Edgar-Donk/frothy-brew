@@ -37,4 +37,4 @@ distinguish which tab was being pressed.
         *Show/Hide Code* 06nb_tag_bind.py
 
     .. literalinclude:: ../examples/notebook/06nb_tag_bind.py
-        :emphasize-lines: 5, 35-44, 51-53
+        :emphasize-lines: 5, 38-47, 54-56

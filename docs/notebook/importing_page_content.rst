@@ -42,15 +42,15 @@ is, add the definitions of CSV_FILE and CSV_DELIMITER together with
 ``OUT_VAR`` StringVar. Call Tree and its variables from the second page, 
 then add a Label to the third page to read our OUT_VAR variable::
 
-    from tkinter import Tk, Frame, StringVar
-    from tkinter.ttk import Notebook, Button, Style, Label
+    from tkinter import Tk, Frame, StringVar, font, Label
+    from tkinter.ttk import Notebook, Button, Style
     import sys
     sys.path.insert(1, '../treeview/')
     from tree_function import Tree
     .........
     # second page
     .........
-    CSV_FILE = '../../csv/test.csv'
+    CSV_FILE = '../../csv_data/test.csv'
     CSV_DELIMITER = ';'
     OUT_VAR = StringVar()
     OUT_VAR.set("First make your selection in page two") 
@@ -79,4 +79,4 @@ selection and check the third page.
         *Show/Hide Code* 05nb_import.py
 
     .. literalinclude:: ../examples/notebook/05nb_import.py
-        :emphasize-lines: 5, 7-9, 54-58, 65-71
+        :emphasize-lines: 5, 7-9, 56-60, 67-73

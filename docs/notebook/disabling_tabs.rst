@@ -22,7 +22,7 @@ when creating it, later it can be changed back to **normal** using the
 First of all disable the second tab, we can then enable it by pressing a
 button tied to an event::
 
-    nb.add(page2, text = 'two', underline=1, padding=2, state='disabled')
+    nb1.add(page2, text = 'two', underline=1, padding=2, state='disabled')
     .....
     enabler = Button(page1, text='Enable Tab two\n Test it out', 
         command=lambda : nb.tab(1, state='normal'))
@@ -53,4 +53,4 @@ When creating the Notebook use the style hook ``green.Notebook`` (without
         *Show/Hide Code* 03nb_state.py
 
     .. literalinclude:: ../examples/notebook/03nb_state.py
-        :emphasize-lines: 4, 9-14, 16, 22, 26-28
+        :emphasize-lines: 4, 9-14, 19, 25, 29-31

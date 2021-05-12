@@ -34,4 +34,4 @@ pressing <alt> <w> we activate the second tab and so on.
         *Show/Hide Code* 02nb_bind.py
 
     .. literalinclude:: ../examples/notebook/02nb_bind.py
-        :emphasize-lines: 15-18
+        :emphasize-lines: 18-21

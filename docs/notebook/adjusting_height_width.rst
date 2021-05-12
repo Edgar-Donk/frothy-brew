@@ -20,7 +20,7 @@ virtual event ``<<NotebookTabChanged>>`` bound to a function::
             width=t.winfo_reqwidth())
         
         ...........
-    nb.bind("<<NotebookTabChanged>>", tab_changed)
+    nb1.bind("<<NotebookTabChanged>>", tab_changed)
 
 If we run the above we see that the size of the panel content changes, but 
 only after a tab has been clicked. On opening our application the button in
