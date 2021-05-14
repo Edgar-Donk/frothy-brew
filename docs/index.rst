@@ -16,14 +16,25 @@ Frothy Brew
     
     In all cases we start simply then develop by stages. 
 
-.. important:: All images have been made in Webp as it can save up to three
+.. important:: Many images have been made in Webp as it can save up to three
     quarters of the image size. If you cannot see them - sorry - please use 
     another browser.
+
+
+Contributors and Navigation
+===========================
 
 .. toctree::
     :maxdepth: 3
     
     authors.rst
+
+Pixel Size Aware
+===================
+
+.. toctree::
+    :maxdepth: 3
+
     dpi_aware
 
 
