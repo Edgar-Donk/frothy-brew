@@ -75,7 +75,7 @@ orientations, The name is without a preceding number so that it can be used
 as an external module in a script.
 
 In `Roll your own <https://tkinterttkstyle.readthedocs.io/en/latest/06roll_your_own.html>`_ 
-and `The Tird Theme <https://tkinterttkstyle.readthedocs.io/en/latest/10lime_theme.html>`_
+and `The Third Theme <https://tkinterttkstyle.readthedocs.io/en/latest/10lime_theme.html>`_
 we can replace the Scale widget with the new widget, the Labels with the 
 range values are also replaced. This highlights the problem with different
 themes the ``sliderlength`` changes and this is critical when placing the
