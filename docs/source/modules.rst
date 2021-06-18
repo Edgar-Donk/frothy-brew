@@ -103,6 +103,7 @@ these are not part of the documentation do not include them as a module.
    notebook
    tree
    entry
+   scale
    rgb-hsv
    rgb-yiq
    colour-tools
