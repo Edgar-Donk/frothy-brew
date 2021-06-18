@@ -92,6 +92,24 @@ validation methods can be used for the combo- and spinboxes as well.
     
     entry/index_entry
 
+Scale
+=====
+
+.. image:: figures/gen_scale_class.png
+    :align: center
+    :width: 546
+    :height: 207
+    :alt: horizontal and vertical Scales as class
+
+This widget is available in both the basic tkinter and ttk, however in ttk
+the widget is missing several useful options for an annotated scale. Both
+horizontal and vertical scales are addressed.
+
+.. toctree::
+    :maxdepth: 3
+    
+    scale/index_scale
+
 Colour Picker
 =============
 
