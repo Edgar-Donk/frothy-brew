@@ -352,7 +352,7 @@ between the movement and new writing then the old value remains.
     
     After the length is adjusted
     
-    Using adjustable window size and inding to configure.
+    Using adjustable window size and binding to configure.
 
 The Scale length is altered by the window sizing, all other values remain 
 constant, so when recalculating the new Scale length must be found::
