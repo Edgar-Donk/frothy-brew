@@ -20,19 +20,21 @@ def start_s(evt):
     print(X,Y, 'X,Y')
     print(sc.identify(X,Y)) # -->slider or trough
 
-    while str(comp) == 'slider':
-        X -= 1
-        comp = sc.identify(X,Y)
-        print(X, comp)
-    print('X', X, 'comp', sc.identify(X,Y))
-    comp = 'slider'
-    while str(comp) == 'slider':
+    if comp == 'slider':
+        while str(comp) == 'slider':
+            X -= 1
+            comp = sc.identify(X,Y)
+            print(X, comp)
 
-        X += 1
-        comp = sc.identify(X,Y)
-        print(X, comp)
+        print('X', X, 'comp', sc.identify(X,Y))
+        comp = 'slider'
 
-    print('X', X, 'comp', sc.identify(X,Y), 'theme', theme)
+        while str(comp) == 'slider':
+            X += 1
+            comp = sc.identify(X,Y)
+            print(X, comp)
+
+        print('X', X, 'comp', sc.identify(X,Y), 'theme', theme)
 
 
 sc = Scale(root, from_=0, to =100, length = 200)
