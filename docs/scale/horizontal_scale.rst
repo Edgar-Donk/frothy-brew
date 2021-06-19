@@ -451,17 +451,19 @@ its minimum position, there is a bind to the release of the mouse click::
 
 Position the cursor on the slider, be careful not to move the slider, then 
 release the left hand mouse button, which will generate some output. The 
-bound function returns positin of the cursor release as ``evt.x`` and ``evt.y``
-which are relative to the Scale local position (since the bind was made on the
-Scale sc). Given our known x, y position we can interogate the Scale and find
+bound function returns the position of the cursor release as ``evt.x`` and 
+``evt.y`` which are relative to the Scale local position (since the bind was 
+made on the
+Scale sc). Given our known x, y position we can interrogate the Scale and find
 out which component **'slider'** or **'trough'** we are at, if slider then 
-the function will run. While we are on the slider reduce the x position, when
-the ''identify`` function finds the trough the while loop stops. Restart a new
-while loop, this time increasing the x value until the trough is identified.
+the function will run. The function reduces the slider x-position , then once
+the ``identify`` function finds the trough the while loop stops. Finally the 
+function restarts a new
+while loop, this time increasing the x-value until the trough is identified.
 
 Look at the print output, the first part is the position moving to the leftmost 
-slider border, when the trough shows itself. Thereater the x positions increase 
-until the rightmost border is found and trough once again is identified.
+slider border, until the trough is reached. Thereafter the x-positions increase 
+until the rightmost border is found and the trough once again is identified.
 
 The output after the first while loop will show something like::
 
@@ -475,12 +477,12 @@ The output after the first while loop will show something like::
     X 31 comp trough theme default
 
 The default slider is 30 pixels long (inclusive count). The slider was at 
-its minimum travel extent so we have trough at 0 x value (the border width was 
+its minimum travel extent so we have trough at 0 x-value (the border width was 
 1). If you try on other themes, such as alt, clam and classic, an answer is 
-obtained. On a windows box vista and xpnative does not react as expected, 
+obtained. On a windows box vista and xpnative do not react as expected, 
 whereas winnative gives an answer, also expect that themes from ttkthemes not
-to produce results, although one can look up the images used in their 
-construction.
+to produce results, although here one can look up the images used in their 
+construction and so find the slider length.
 
 .. container:: toggle
 
