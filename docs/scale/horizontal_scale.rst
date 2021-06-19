@@ -416,6 +416,67 @@ for calculation.
 Calibration
 ===========
 
+Slider Length
+-------------
+
+.. figure:: ../figures/10slider_size.png
+    :align: center
+    :width: 440
+    :height: 80
+    :alt: horizontal ttk Scale, no range
+    
+    Finding ttk Scale length at minimum slider position.
+
+Before calibrating the range use this script to find the slider length. All 
+we are doing is displaying a horizontal scale which will have the slider in
+its minimum position, there is a bind to the release of the mouse click::
+
+    sc.bind('<ButtonRelease-1>', start_s)
+
+Position the cursor on the slider, be careful not to move the slider, then 
+release the left hand mouse button, which will generate some output. The 
+bound function returns positin of the cursor release as ``evt.x`` and ``evt.y``
+which are relative to the Scale local position (since the bind was made on the
+Scale sc). Given our known x, y position we can interogate the Scale and find
+out which component **'slider'** or **'trough'** we are at, if slider then 
+the function will run. While we are on the slider reduce the x position, when
+the ''identify`` function finds the trough the while loop stops. Restart a new
+while loop, this time increasing the x value until the trough is identified.
+
+Look at the print output, the first part is the position moving to the leftmost 
+slider border, when the trough shows itself. Thereater the x positions increase 
+until the rightmost border is found and trough once again is identified.
+
+The output after the first while loop will show something like::
+
+    X 0 comp trough
+    1 slider
+    2 slider
+    ....
+    29 slider
+    30 slider
+    31 trough
+    X 31 comp trough theme default
+
+The default slider is 30 pixels long (inclusive count). The slider was at 
+its minimum travel extent so we have trough at 0 x value (the border width was 
+1). If you try on other themes, such as alt, clam and classic, an answer is 
+obtained. On a windows box vista and xpnative does not react as expected, 
+whereas winnative gives an answer, also expect that themes from ttkthemes not
+to produce results, although one can look up the images used in their 
+construction.
+
+.. container:: toggle
+
+    .. container:: header
+
+        *Show/Hide Code* 10_slider_size.py
+
+    .. literalinclude:: ../examples/scale/10_slider_size.py
+
+Calibration
+-----------
+
 .. figure:: ../figures/10calibrate.png
     :align: center
     :width: 556
@@ -469,7 +530,8 @@ to::
     <Windows Accessories> / <System Tools>.
 
 First try to calibrate the range at the ``from_`` position where only the 
-trough borderwidth slider width and size of the line are involved. Then 
+trough borderwidth slider width and size of the line are involved. Use the 
+slider length obtained in the previous section if possible. Then 
 calibrate at the ``to`` position. The to position involves the Scale length
 which is being changed to accommodate the value range sizes so make sure that
 the changes are reflected in your calculations.
@@ -480,6 +542,16 @@ A tkinter Scale works with the same settings as the ttk Scale so that one can
 see what the Scale looks like when the adjustments are correct. The 
 calibration script has a few differences to the previous examples mainly that 
 the actual ``x`` values are used as opposed to relative x.
+
+.. container:: toggle
+
+    .. container:: header
+
+        *Show/Hide Code* 10ttk_range_calibrate.py
+
+    .. literalinclude:: ../examples/scale/10ttk_range_calibrate.py
+        :emphasize-lines: 20, 34, 39-40, 46, 48-57, 59-61, 65-66, 69-70, 73,
+                        75, 77-84, 88, 91-94, 98, 100, 103
 
 Slider Length
 -------------
