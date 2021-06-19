@@ -419,6 +419,22 @@ Calibration
 Slider Length
 -------------
 
+.. figure:: ../figures/default_slider.png
+    :align: center
+    :width: 270
+    :height: 107
+    :alt: ttk default theme slider
+    
+    Slider from ttk Scale when default theme
+    
+    Slider border shows highlights and shadow as does the central line.
+
+The ``sliderlength`` should be an even number for the default theme (and most
+others). This is because the central line is 2 pixels wide, whilst the border
+width is 1 pixel wide. The measurements are taken from the left outside edge
+to the outside right edge for slider length, and the centre is taken as the 
+edge between the shadow and highlight, or the right edge of the dark line.
+
 .. figure:: ../figures/10slider_size.png
     :align: center
     :width: 440
@@ -553,25 +569,6 @@ the actual ``x`` values are used as opposed to relative x.
         :emphasize-lines: 20, 34, 39-40, 46, 48-57, 59-61, 65-66, 69-70, 73,
                         75, 77-84, 88, 91-94, 98, 100, 103
 
-Slider Length
--------------
-
-.. figure:: ../figures/default_slider.png
-    :align: center
-    :width: 270
-    :height: 107
-    :alt: ttk default theme slider
-    
-    Slider from ttk Scale when default theme
-    
-    Slider border shows highlights and shadow as does the central line.
-
-The ``sliderlength`` should be an even number for the default theme (and most
-others). This is because the central line is 2 pixels wide, whilst the border
-width is 1 pixel wide. The measurements are taken from the left outside edge
-to the outside right edge for slider length, and the centre is taken as the 
-edge between the shadow and highlight, or the right edge of the dark line.
- 
 Automatic Range
 ---------------
 
