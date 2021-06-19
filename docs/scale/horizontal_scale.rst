@@ -465,7 +465,7 @@ Look at the print output, the first part is the position moving to the leftmost
 slider border, until the trough is reached. Thereafter the x-positions increase 
 until the rightmost border is found and the trough once again is identified.
 
-The output after the first while loop will show something like::
+The output after the function runs will show something like::
 
     X 0 comp trough
     1 slider
