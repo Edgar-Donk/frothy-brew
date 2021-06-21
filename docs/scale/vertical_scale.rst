@@ -37,8 +37,6 @@ and increases to the maximum value at the bottom.
         *Show/Hide Code* 12vert_range_calibrate.py
 
     .. literalinclude:: ../examples/scale/12vert_range_calibrate.py
-        :emphasize-lines: 23-25, 27, 31, 36, 38-39, 41, 44-45, 52-53, 55,
-                      58-60, 64-65, 72-73, 76-77, 83, 87, 90-92, 95, 97, 102
 
 Vertical Scale Class
 ====================
@@ -53,8 +51,6 @@ a class is straightforward.
         *Show/Hide Code* 13vert_scale_class.py
 
     .. literalinclude:: ../examples/scale/13vert_scale_class.py
-        :emphasize-lines: 6, 27, 45, 47, 49, 61, 72-74, 78, 80, 82, 86-90, 
-                    94, 96, 110-111, 113, 128, 131, 133, 135-136
 
 General Scale Class
 ===================
