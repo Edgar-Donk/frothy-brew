@@ -28,9 +28,24 @@ space_size = len_rvs * 3
 sizes = data_size + space_size
 len_val = (sizes if sizes % 50 == 0 else sizes + 50 - sizes % 50)
 
+theme_sl = {'alt': 9, 'clam': 30, 'classic': 30, 'default': 30,
+                    'lime': 9, 'winnative': 9}
+
+theme_bw = {'alt': 0, 'clam': 1, 'classic': 2, 'default': 1,
+                    'lime': 6, 'winnative': 0}
+
 root.geometry("200x"+str(len_val+200)+"+500+300")
 s = ttk.Style()
-s.theme_use('default')
+############################
+s.theme_use('alt') # default
+###############################
+
+theme_used = s.theme_use()
+if theme_used in ('alt', 'clam', 'classic', 'default', 'lime', 'winnative'):
+    bw_val = theme_bw[theme_used]
+    slider_val = theme_sl[theme_used]
+else:
+    bw_val = 1
 
 fr = ttk.Frame(root)
 fr.pack(fill='y', expand=1)
@@ -73,8 +88,8 @@ scth = ttk.Scale(fr, from_=from_val, to=to_val, length=len_val,
 scth.grid(row=0, column=1, sticky='ns', pady=5, padx=15)
 scth.bind("<Button-1>", resolve)
 
-y_min = slider_val/2 - bw_val
-y_max = len_val - slider_val/2 - bw_val
+y_min = slider_val // 2 + bw_val
+y_max = len_val - slider_val // 2 - bw_val
 
 if range_vals[-1] == to_val:
     pass
@@ -99,6 +114,6 @@ display_value(scth.get())
 
 sbh = ttk.Spinbox(fr, from_=from_val, to=to_val, textvariable=act_var,
                   width=5, increment=res_val)
-sbh.grid(row=0, column=2, sticky='ew')
+sbh.grid(row=0, column=2, sticky='ew', padx=5)
 
 root.mainloop()
