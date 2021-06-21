@@ -84,10 +84,23 @@ class  TtkScale(Scale):
         self.resolution = resolution
         self.sliderlength = sliderlength # = 32
 
-        # set sliderlength
+        theme_sl = {'alt': 9, 'clam': 30, 'classic': 30, 'default': 30,
+                    'lime': 9, 'winnative': 9}
+
+        theme_bw = {'alt': 0, 'clam': 1, 'classic': 2, 'default': 1,
+                    'lime': 6, 'winnative': 0}
+
+        # set trough borderwidth
         st = Style(self)
-        self.bw_val = bw_val = st.lookup(('Horizontal' if self.orient=='horizontal'
-                else 'Vertical') +'.Scale.trough','borderwidth', default=1)
+        theme_used = st.theme_use()
+        if theme_used in ('alt', 'clam', 'classic', 'default','lime', 'winnative'):
+            self.bw_val = bw_val = theme_bw[theme_used]
+            self.sliderlength = sliderlength = theme_sl[theme_used]
+        else:
+            self.bw_val = bw_val = 1
+
+        if showvalue:
+            self.configure(command=self.display_value)
 
         if showvalue:
             self.configure(command=self.display_value)
@@ -111,9 +124,10 @@ class  TtkScale(Scale):
         min_len = (sizes if sizes % 50 == 0 else sizes + 50 - sizes % 50)
         self.len_val = len_val = min_len if length < min_len else length
         self.configure(length=len_val)
-        #print('sliderlength', sliderlength, 'bw_val', bw_val, 'len_val', len_val)
-        self.rel_min = rel_min = (sliderlength / 2 + bw_val) / len_val
-        self.rel_max = rel_max = 1 - (sliderlength /2 - bw_val) / len_val
+
+        self.rel_min = rel_min = (sliderlength // 2 + bw_val) / len_val
+        self.rel_max = rel_max = 1 - (sliderlength // 2 - bw_val) / len_val
+
         if range_vals[-1] == to:
             pass
         else:
@@ -203,7 +217,7 @@ class  TtkScale(Scale):
                 (self.to - self.from_) + l_min)
 
     def display_value(self, value):
-        """Position (in pixel) of the center of the slider.
+        """Position (in pixel) of the centre of the slider.
 
         Parameters
         ----------
