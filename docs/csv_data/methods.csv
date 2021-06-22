@@ -1,0 +1,8 @@
+﻿Common Methods ttk Widgets;Special ttk Scale;Original Scale
+.cget();;
+.configure();;
+;;.coords()
+;.get();
+identify(x,y);;identify(x,y)
+.instate();;
+;.set();
