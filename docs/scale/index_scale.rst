@@ -20,5 +20,15 @@ of interest.
    :maxdepth: 1
    
    comparison_scales
-   horizontal_scale
+   current_values
+   tickinterval
+   place
+   special_ranges
+   moving_current_value
+   adjust_window
+   calculate_length
+   calibrate
+   auto_range
+   resolution
+   scale_class
    vertical_scale

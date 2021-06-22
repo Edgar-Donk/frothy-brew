@@ -26,7 +26,7 @@ Base the vertical script on the calibration script 10ttk_range_calibrate.py.
 The calibrating line is an ``Em Dash`` U2014.
 
 Be careful when positioning the range and display values, also ensure that 
-the padding added to the layout manager must is wide enough for the display 
+the padding added to the layout manager is wide enough for the display 
 values. Make sure that the minimum value is at the top
 and increases to the maximum value at the bottom.
 
