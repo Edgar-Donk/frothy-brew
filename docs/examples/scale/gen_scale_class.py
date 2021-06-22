@@ -43,11 +43,6 @@ class  TtkScale(Scale):
             self.configure(command=self.display_value)
 
         def_font = font.nametofont('TkDefaultFont')
-        # if from_ more than to swap values
-        if from_ < to:
-            pass
-        else:
-            from_, to = to, from_
 
         data = np.arange(from_, (to+1 if tickinterval >=1 else to+tickinterval),
                         tickinterval)
@@ -78,9 +73,9 @@ class  TtkScale(Scale):
 
         self.bind("<Button-1>", self.resolve)
 
-        self.build(from_, to, rel_min, rel_max, range_vals, len_rvs)
+        self.build(to, rel_min, rel_max, range_vals, len_rvs)
 
-    def build(self, from_, to, rel_min, rel_max, range_vals, len_rvs):
+    def build(self, to, rel_min, rel_max, range_vals, len_rvs):
         if self.orient == 'horizontal':
             for i, rv in enumerate(range_vals):
                 item = Label(self.parent, text=rv)
@@ -117,7 +112,7 @@ class  TtkScale(Scale):
                 (self.to - self.from_) + l_min)
 
     def display_value(self, value):
-        # position (in pixel) of the center of the slider
+        # position (in pixel) of the centre of the slider
         rel_l = self.convert_to_rel(float(value))
         self.disp_lab.config(text=value) # text=""
         if self.orient == 'horizontal':
