@@ -9,10 +9,11 @@ Frothy Brew
     Before inspecting individual tkinter widgets a quick word about modern
     monitor resolutions and how it affects widgets and their applications.
 
-    An overview of the tkinter themed widgets notebook, treeview and entry.
-    Create a small application to show colour values in RGBA and HSV formats,
-    this should look like the colour picker in paint.net. Build upon this 
-    to produce a YIQ colour picker.
+    An overview of the tkinter themed widgets notebook, treeview, entry and
+    scale. An explanation of moving objects in canvas prior to creating a 
+    small application to show colour values in RGBA and HSV 
+    formats, this should look like the colour picker in paint.net. Build 
+    upon this to produce a YIQ colour picker.
     
     In all cases we start simply then develop by stages. 
 
@@ -20,6 +21,9 @@ Frothy Brew
     quarters of the image size. If you cannot see them - sorry - please use 
     another browser.
 
+.. tip:: It's best to download the examples and run them on the computer to 
+    see how the script looks, a static picture on the web isn't the whole 
+    story.
 
 Contributors and Navigation
 ===========================
@@ -110,6 +114,23 @@ horizontal and vertical scales are addressed.
     
     scale/index_scale
 
+Move in Canvas
+==============
+
+.. image:: figures/move/05handles_to_rectangle_split.png
+    :align: center
+    :width: 431
+    :height: 356
+    :alt: rectangle with handles on corners
+
+Canvas tkinter widget using one of its many facets, moving objects. This is 
+a prelude to Colour Picker and YIQ Colour Picker.
+
+.. toctree::
+    :maxdepth: 3
+    
+    move/index_move
+
 Colour Picker
 =============
 
@@ -137,8 +158,7 @@ YIQ Colour Picker
     :alt: rgba and yiq scales with gradients, yiq colour space
 
 There are relatively few YIQ colour pickers around, so just for fun let's 
-create one. YIQ is one of the easiest colour schemes most people to
-understand.
+create one. YIQ is one of the most understandable colour schemes.
 
 .. toctree::
     :maxdepth: 3
