@@ -84,3 +84,38 @@ previous and next page, shown with their page names, rather than just
 previous and next. In our image previous is ``Adding Alpha and Colour 
 Result`` and next is ``Starting with HSV``.
 
+More
+====
+
+Styling with tkinter.ttk
+------------------------
+
+.. _style: https://tkinterttkstyle.readthedocs.io/en/latest/index.html
+
+.. image:: _static/ben_style.png
+   :target: style_
+
+Creating your own theme using Style.
+
+Linking Python to Arduino
+-------------------------
+
+.. _ard: https://electronic-python.readthedocs.io/en/latest/index.html
+
+.. image:: _static/arduino.png
+   :target: ard_
+
+Basics and working with VPython, then create a digital gauge.
+
+.. |car| image:: _static/flying_carpet2.png
+
+Basics and working with VPython, then create a digital gauge.
+
+.. hint:: 
+
+    Just click on one of the images |car| 
+    
+    to get whisked away on the html magic carpet.
+
+    
+
