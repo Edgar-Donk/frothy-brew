@@ -44,6 +44,13 @@ Navigation
 
     Example page showing navigation aids
 
+.. raw:: html
+
+   <details>
+   <summary><a>Show/Hide <b>Navigation</b> on the webpage</a></summary>
+
+
+
 This sphinx module has been created by the PyData Sphinx Team. 
 
 Home
@@ -84,8 +91,45 @@ previous and next page, shown with their page names, rather than just
 previous and next. In our image previous is ``Adding Alpha and Colour 
 Result`` and next is ``Starting with HSV``.
 
+.. raw:: html
+
+   </details>
+
+
+
 More
 ====
+
+.. raw:: html
+
+   <head>
+   <link rel="stylesheet" href="_static/imagehover_min.css">
+   <style type="text/css">
+   .aligncenter {
+         text-align: left;
+   }
+   figure, figurecaption {
+
+      display: block;
+      font-family: Aladdin, Seagull, Vivaldi, Times;
+      /*font-style: italic;
+      font-variant: small-caps;*/
+
+   }
+   </style>
+   </head>
+   <p class="aligncenter">
+   Hover over the carpet
+   <figure class="imghvr-zoom-out-right">
+      <img src="_static/flying_carpet1.png">
+         <figcaption>
+            Just click on one of the images  
+            to get whisked away on the html magic carpet.
+         </figcaption>
+   </figure>
+   </p>
+   </body>
+
 
 Styling with tkinter.ttk
 ------------------------
@@ -107,15 +151,4 @@ Linking Python to Arduino
 
 Basics and working with VPython, then create a digital gauge.
 
-.. |car| image:: _static/flying_carpet2.png
-
-Basics and working with VPython, then create a digital gauge.
-
-.. hint:: 
-
-    Just click on one of the images |car| 
-    
-    to get whisked away on the html magic carpet.
-
-    
 
