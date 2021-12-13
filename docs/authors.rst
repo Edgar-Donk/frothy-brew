@@ -100,35 +100,33 @@ Result`` and next is ``Starting with HSV``.
 More
 ====
 
+.. hint:: Try flying the carpet - it's magic afterall!
+
 .. raw:: html
 
    <head>
    <link rel="stylesheet" href="_static/imagehover_min.css">
    <style type="text/css">
-   .aligncenter {
-         text-align: left;
-   }
+   
    figure, figurecaption {
 
       display: block;
       font-family: Aladdin, Seagull, Vivaldi, Times;
+      font-size: 32px;
       /*font-style: italic;
       font-variant: small-caps;*/
+      text-align: center;
 
    }
    </style>
    </head>
-   <p class="aligncenter">
-   Hover over the carpet
    <figure class="imghvr-zoom-out-right">
-      <img src="_static/flying_carpet1.png">
+      <img src="_static/magic_carpet3.png" class="center">
          <figcaption>
-            Just click on one of the images  
-            to get whisked away on the html magic carpet.
+            Just click on one of the images<br>  
+            to get whisked away<br> on the html magic carpet.
          </figcaption>
    </figure>
-   </p>
-   </body>
 
 
 Styling with tkinter.ttk
@@ -151,4 +149,15 @@ Linking Python to Arduino
 
 Basics and working with VPython, then create a digital gauge.
 
+
+Adding dimensions to PIL
+------------------------
+
+.. _dims: https://pil-dimensions.readthedocs.io/en/latest/index.html
+
+.. image:: _static/ben_dim.png
+   :target: dims_
+
+Add dimensions with either arrows or tailed lines, dashed lines and all
+made with antialiasing if required.
 
