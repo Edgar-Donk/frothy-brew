@@ -21,7 +21,7 @@ effect of moving and clicking::
 There are some standard points to note, the user presses on the slider which
 has feedback to show it is pressed. Movement is limited by the trough, so a
 vertical trough only allows movement in the y-direction, a horizontal trough 
-allows x-movemnt. Click outside the trough, nothing happens, but clicking 
+allows x-movement. Click outside the trough, nothing happens, but clicking 
 inside the trough moves the slider. Dragging only occurs when the mouse is
 over the object and the mouse button is pressed. The slider looks as though
 it is moving, in reality it has been redrawn in a new position.
