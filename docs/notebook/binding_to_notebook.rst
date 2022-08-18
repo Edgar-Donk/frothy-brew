@@ -6,6 +6,7 @@ Binding to Notebook
     :width: 245
     :height: 216
     :alt: ttk notebook tag binding
+    :align: center
     
     Binding to Tabs is enabled by a Tk Script
 

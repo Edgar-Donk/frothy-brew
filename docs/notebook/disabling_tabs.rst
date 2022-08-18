@@ -5,6 +5,7 @@ Disabling a Tab
     :width: 198
     :height: 138
     :alt: ttk notebook state options
+    :align: center
 
     Page1 Notebook with Page2 Disabled
     
