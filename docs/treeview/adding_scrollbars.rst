@@ -11,7 +11,7 @@ Adding Scrollbars
     
     Adjust the window size to see the scrollbars activate.
 
-Sometimes there is too much data to display in the current window, this ia
+Sometimes there is too much data to display in the current window, this is
 when it is necessary to use Scrollbars. Import 
 Scrollbar in ttk, insert them just after the Treeview clause. 
 Configure Treeview to take the scrollbars then give equal weight to both 
