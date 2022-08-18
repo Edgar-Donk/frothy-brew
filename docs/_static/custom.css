@@ -18,11 +18,11 @@ rem units based on 16px base html size
 }
 
 .toggle .header:after {
-    content: "▼";
+    content: "▶";
 }
 
 .toggle .header.open:after {
-    content: "►";
+    content: "▼";
 }
 
 div.topic {
@@ -63,7 +63,12 @@ div.sphinxsidebarwrapper ul {
     padding-left: 1em;
 }
 
-a:link {color:#7787D2;
+a:link {color:#4DC3D1;
         hover:#4B61AA;
 } 
+
+table.align-center {
+    margin-left: auto;
+    margin-right: auto;
+}
 
