@@ -96,5 +96,14 @@ html_sidebars = {
 def setup(app):
     app.add_css_file('custom.css') # stylesheet
 
-html_logo = '_static/ben2.png'
+# html_logo = '_static/ben2.png'
+
+html_theme_options = {
+   "logo": {
+      "text": "tkinter odds and ends",
+      "image_light": 'bigbenc.png',
+      "image_dark": "bigbencneon.png",
+   }
+}
+
 html_favicon = '_static/ben1.ico'
