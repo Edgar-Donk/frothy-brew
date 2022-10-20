@@ -2,6 +2,9 @@ import tkinter as tk
 from tkinter import font
 import tkinter.ttk as ttk
 import numpy as np
+import ctypes
+
+ctypes.windll.shcore.SetProcessDpiAwareness(1)
 
 from_val = -1
 to_val = 1
@@ -17,6 +20,11 @@ def selh(val):
     sbh.config(text=round(float(scth.get())+0.0049,2))
 
 root = tk.Tk()
+ORIGINAL_DPI = 96
+current_dpi = root.winfo_fpixels('1i')
+SCALE = current_dpi / ORIGINAL_DPI
+# when current_dpi is 192 SCALE becomes 2.0
+root.tk.call('tk', 'scaling', SCALE)
 
 root.geometry(str(len_val+150)+"x200+500+500")
 s = ttk.Style()

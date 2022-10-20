@@ -2,6 +2,11 @@ import tkinter as tk
 from tkinter import font
 import tkinter.ttk as ttk
 import numpy as np
+import ctypes
+
+ctypes.windll.shcore.SetProcessDpiAwareness(1)
+
+# needed to update root.geometry and add pady to tk slider and spinbox
 
 from_val = -1
 to_val = 1
@@ -13,26 +18,48 @@ bw_val = 1 # trough border width
 slider_val = 36
 sc_range = abs(to_val - from_val) # scale range
 
+
 def selh(val):
     sbh.config(text=round(float(scth.get())+0.0049,2))
 
-root = tk.Tk()
+def place_ticks(evt):
+    len_val = scth['length']
+    rel_min = ((slider_val - from_size) / 2 + bw_val) / len_val
+    rel_max = 1 - ((slider_val - to_size )/ 2 - bw_val) / len_val
+    data = np.arange(from_val, to_val+tick_val, tick_val)
+    data = np.round(data,1)
+    range_vals = tuple(data)
+    len_rvs = len(range_vals)
 
-root.geometry(str(len_val+150)+"x200+500+500")
+    for i, rv in enumerate(range_vals):
+        rel_x=(rel_min + i / (len_rvs - 1) * (rel_max - rel_min))
+        item.place_configure(relx=rel_x)
+
+root = tk.Tk()
+ORIGINAL_DPI = 96
+current_dpi = root.winfo_fpixels('1i')
+SCALE = current_dpi / ORIGINAL_DPI
+# when current_dpi is 192 SCALE becomes 2.0
+root.tk.call('tk', 'scaling', SCALE)
+
+root.geometry(str(len_val+150)+"x250+500+500")
 s = ttk.Style()
 s.theme_use('default')
+
+fr = ttk.Frame(root)
+fr.pack(fill='x')
 
 def_font = font.nametofont('TkDefaultFont')
 from_size = def_font.measure(from_val)
 to_size = def_font.measure(to_val)
 
-sch = tk.Scale(root, from_=from_val, to=to_val, label='Bogusstuinuous', orient='horizontal',
+sch = tk.Scale(fr, from_=from_val, to=to_val, label='Bogusstuinuous', orient='horizontal',
             resolution=res_val, showvalue=1, tickinterval=tick_val, digits=dig_val,
             length=len_val)
-sch.grid(sticky='ew')
+sch.pack(fill='x', pady=5)
 
-sep = ttk.Separator(root, orient='horizontal')
-sep.grid(row=1, column=0, columnspan=2)
+sep = ttk.Separator(fr, orient='horizontal')
+sep.pack(fill='x')
 
 def convert_to_relx(curr_val):
     return ((curr_val - from_val) * (rel_max - rel_min) / (to_val - from_val) \
@@ -42,19 +69,19 @@ def display_value(value):
     # position (in pixel) of the center of the slider
     rel_x = convert_to_relx(float(value))
     disp_lab.place_configure(relx=rel_x)
-    my_precision = '{:.{}f}'.format
-    disp_lab.configure(text=my_precision(float(value), int(dig_val)))
+    disp_lab.configure(text=f'{float(value):.{dig_val}f}')
 
 slider = tk.StringVar()
 slider.set('0.00')
 
-scth = ttk.Scale(root, from_=from_val, to=to_val, length=len_val,
-        command=display_value)
+scth = ttk.Scale(fr, from_=from_val, to=to_val, length=len_val,
+        command=display_value, variable=slider)
+scth.pack(fill='x', padx=5, pady=15)
 
-scth.grid(row=2, column=0, sticky='ew', padx=5, pady=15)
+scth.bind('<Configure>', place_ticks)
 
 rel_min = ((slider_val - from_size) / 2 + bw_val) / len_val
-rel_max = 1 - (slider_val /2 - bw_val) / len_val
+rel_max = 1 - ((slider_val - to_size) / 2 - bw_val) / len_val
 
 # using numpy arange instead of range so tick intervals less than 1 can be used
 data = np.arange(from_val, to_val+tick_val, tick_val)
@@ -63,18 +90,18 @@ range_vals = tuple(data)
 len_rvs = len(range_vals)
 
 for i, rv in enumerate(range_vals):
-    item = ttk.Label(root, text=rv)
+    item = ttk.Label(fr, text=rv)
     item.place(in_=scth, bordermode='outside',
                 relx=(rel_min + i / (len_rvs - 1) * (rel_max - rel_min)) ,
                 rely=1, anchor='n')
 
-disp_lab = ttk.Label(root, textvariable = slider)
+disp_lab = ttk.Label(fr)
 disp_lab.place(in_=scth, bordermode='outside',
                 relx=0.5, rely=0, anchor='s')
 display_value(scth.get())
 
-sbh = ttk.Spinbox(root, from_=from_val, to=to_val, textvariable=slider,
+sbh = ttk.Spinbox(fr, from_=from_val, to=to_val, textvariable=slider,
                   width=5, increment=res_val)
-sbh.grid(row=2, column=1)
+sbh.pack(pady=10)
 
 root.mainloop()

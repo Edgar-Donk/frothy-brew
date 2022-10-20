@@ -2,11 +2,6 @@ import tkinter as tk
 from tkinter import font
 import tkinter.ttk as ttk
 import numpy as np
-import ctypes
-
-# increased geometry in x and padx for ttk scale and spinbox
-
-ctypes.windll.shcore.SetProcessDpiAwareness(1)
 
 ###############################################
 from_val = 0   # from_
@@ -19,6 +14,11 @@ slider_val = 32 # sliderlength
 #################################################
 
 root = tk.Tk()
+ORIGINAL_DPI = 96
+current_dpi = root.winfo_fpixels('1i')
+SCALE = current_dpi / ORIGINAL_DPI
+# when current_dpi is 192 SCALE becomes 2.0
+root.tk.call('tk', 'scaling', SCALE)
 
 def_font = font.nametofont('TkDefaultFont')
 # using numpy arange instead of range so tick intervals less than 1 can be used
@@ -39,7 +39,7 @@ theme_sl = {'alt': 9, 'clam': 30, 'classic': 30, 'default': 30,
 theme_bw = {'alt': 0, 'clam': 1, 'classic': 2, 'default': 1,
                     'lime': 6, 'winnative': 0}
 
-root.geometry("350x"+str(len_val+200)+"+500+300")
+root.geometry("200x"+str(len_val+200)+"+500+300")
 s = ttk.Style()
 ############################
 s.theme_use('alt') # default
@@ -90,7 +90,7 @@ act_var.set('0.00')
 
 scth = ttk.Scale(fr, from_=from_val, to=to_val, length=len_val,
         command=display_value, variable=act_var, orient='vertical')
-scth.grid(row=0, column=1, sticky='ns', pady=5, padx=25)
+scth.grid(row=0, column=1, sticky='ns', pady=5, padx=15)
 scth.bind("<Button-1>", resolve)
 
 y_min = slider_val // 2 + bw_val
@@ -119,6 +119,6 @@ display_value(scth.get())
 
 sbh = ttk.Spinbox(fr, from_=from_val, to=to_val, textvariable=act_var,
                   width=5, increment=res_val)
-sbh.grid(row=0, column=2, sticky='ew', padx=15)
+sbh.grid(row=0, column=2, sticky='ew', padx=5)
 
 root.mainloop()
