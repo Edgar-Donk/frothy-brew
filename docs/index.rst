@@ -25,22 +25,52 @@ Frothy Brew
     see how the script looks, a static picture on the web isn't the whole 
     story.
 
-Contributors and Navigation
-===========================
+Contributors
+============
 
 .. toctree::
     :maxdepth: 3
     
     authors.rst
 
-Pixel Size Aware
+Be DPI Aware
 ===================
+
+How to mitigate or correct the effects of changing monitor resolution. These
+were tested on an ultra high definition (UHD) monitor on windows. Check that
+all is as expected on your own setup before accepting the methods. 
 
 .. toctree::
     :maxdepth: 3
 
-    dpi_aware
+    dpi/index_dpi
 
+Scaleable Buttons
+=================
+
+.. tabularcolumns:: |>{\centering\arraybackslash}\X{1}{5}|>{\centering\arraybackslash}\X{1}{5}
+
+.. list-table::
+    :header-rows: 1
+
+    * - DPI unaware unscaled using altflex theme
+      - DPI aware scaled using altflex theme
+
+    * - .. figure:: figures/buttons/pyscripter_testaltflex.png
+                    :width: 243
+                    :height: 196
+
+      - .. figure:: figures/buttons/thonny_testaltflex.png
+                    :width: 116
+                    :height: 171
+
+Check and radio buttons are reasonably straightforward except that those in
+the **alt** theme cannot be easily adjusted for dpi awareness.
+
+.. toctree::
+    :maxdepth: 3
+    
+    buttons/index_buttons
 
 Notebook
 ========
@@ -163,7 +193,7 @@ create one. YIQ is one of the most understandable colour schemes.
 .. toctree::
     :maxdepth: 3
     
-    yiq_colour_picker/yiq_index
+    yiq_picker/yiq_index
 
 Sources for Documentation
 =========================
