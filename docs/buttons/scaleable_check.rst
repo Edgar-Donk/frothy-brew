@@ -70,7 +70,7 @@ python window::
 
 As shown before there is no element that can be used to change the widget
 size. Since the element names for the indicator are known, we should be able 
-to find out the colours used in various states, using **s.lookup**, but most
+to find out the colours used in various states using **s.lookup**, but most
 refuse to show or change for the various states. 
 
 Using a screen capture on the alt theme find out the widget shapes, sizes and 
