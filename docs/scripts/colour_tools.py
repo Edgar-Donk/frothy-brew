@@ -1,6 +1,28 @@
-""" Tools for colourpickers
+﻿""" Tools for colourpickers
 
 * rgb, hsv and yiq colour systems
+
+rgb2hash
+generate_gradient
+check
+draw_gradient
+draw_agradient
+vcheck
+vgenerate_gradient
+vdraw_gradient
+hash2rgb
+hsv_to_rgb
+hue_gradient
+circle
+polar2cart
+cart2polar
+rgb_to_hsv
+is_okay
+sb_okay
+rgb_to_yiq
+yiq_okay
+yiq_to_rgb
+
 """
 
 from tkinter import PhotoImage
@@ -8,67 +30,26 @@ from PIL import Image, ImageDraw, ImageTk
 import numpy as np
 from math import pi, atan2, degrees, hypot, cos, sin
 
-def  cart2polar(x, y, outer_w, inner_w):
-    """Conversion cartesian to polar coordinates
-        output hue, ssaturation of hsv; s adjusted
+def  rgb2hash(red, green, blue):
+    """Convert rgb to hexadecimal
 
     Parameters
     ----------
-    x : int
-        horiz coord
-    y : int
-        vert coord
-    outer_w : int
-        outside width of colour wheelimage
-    inner_w : int
-        inner width of colour wheelimage
+    red : int
+        red component
+    green : int
+        green component
+    blue : int
+        blue component
 
     Returns
     -------
-    degc, sc : float
-        degrees, length
+    hash : str
+        hexadecimal colour
     """
 
-    centre = outer_w//2, outer_w//2
-    inner = inner_w, inner_w
-    radius = min(inner)//2
-
-    dx = x - centre[0]
-    dy = y - centre[1]
-    deg = int(0.5+degrees(atan2(dy, dx)))
-    if deg < 0: deg = 360 + deg
-    ray = int(0.5 + hypot(dx, dy) * 100 / radius)
-    ray = min(max(ray, 0), 100)
-    deg = min(max(deg, 0), 360)
-
-    return deg, ray
-
-def  check(width, height, square_size=4):
-    """Draw chequers in numpy as array
-        chequer value to grey or white depends on x position
-
-    Parameters
-    ----------
-    width : int
-        canvas width
-    height : int
-        canvas height
-    square_size : int
-        size each square
-
-    Returns
-    -------
-    array : int
-        array of integers
-    """
-
-    array = np.zeros([height, width, 3], dtype=np.uint8)
-    for x in range(width):
-        for y in range(height):
-            if (x % square_size * 2) // square_size ==\
-               (y % square_size * 2) // square_size:
-                array[y, x] = 127 - int(0.5 + 127 / width * x)
-    return array
+    rgb = (red, green, blue)
+    return '#%02x%02x%02x' % rgb
 
 def  circle(canvas, x, y, radius, width=None, tags=None, outline=None,
             activeoutline=None):
@@ -92,68 +73,15 @@ def  circle(canvas, x, y, radius, width=None, tags=None, outline=None,
         colour outside ring
     activeoutline : str
         colour outside ring when mouse on ring
+
+    Returns
+    -------
+    canvas circle
     """
 
     return canvas.create_oval(x + radius, y + radius, x - radius, y - radius,
                               width=width, tags=tags,
                               activeoutline=activeoutline, outline=outline)
-
-def  draw_agradient(canvas, colour1, colour2, width, height=26):
-    """Calls generate_gradient and check, then imports alpha gradient
-        into tkinter
-
-    Parameters
-    ----------
-    canvas : str
-        parent widget
-    colour1 : tuple of int
-        start colour
-    colour2 : tuple of int
-        end colour
-    steps : int
-        number steps in gradient
-    width : int
-        canvas width
-    height : int
-        canvas height
-    """
-
-    arr = generate_gradient(colour1, colour2, height, width)
-    arr1 = check(width, height)
-    xdata = 'P6 {} {} 255 '.format(
-        width, height).encode() + (arr + arr1).tobytes()
-    gradient = PhotoImage(width=width, height=height, data=xdata, format='PPM')
-    canvas.create_image(0, 0, anchor="nw", image=gradient)
-    canvas.image = gradient
-
-def  draw_gradient(canvas, colour1, colour2, width, height=26):
-    """Calls generate_gradient, then imports gradient into tkinter
-
-    Parameters
-    ----------
-    canvas : str
-        parent widget
-    colour1 : tuple of int
-        start colour
-    colour2 : tuple of int
-        end colour
-    steps : int
-        number steps in gradient
-    width : int
-        canvas width
-    height : int
-        canvas height
-
-    Returns
-    -------
-    None
-    """
-
-    arr = generate_gradient(colour1, colour2, height, width)
-    xdata = 'P6 {} {} 255 '.format(width, height).encode() + arr.tobytes()
-    gradient = PhotoImage(width=width, height=height, data=xdata, format='PPM')
-    canvas.create_image(0, 0, anchor="nw", image=gradient)
-    canvas.image = gradient
 
 def  generate_gradient(from_colour, to_colour, height, width):
     """Draw gradient in numpy as array
@@ -174,11 +102,208 @@ def  generate_gradient(from_colour, to_colour, height, width):
     array : int
         array of integers
     """
-
-    new_ch = [np.tile(np.linspace(from_colour[i], to_colour[i], width,
-                                  dtype=np.uint8),
-                      [height, 1]) for i in range(len(from_colour))]
+    new_ch = [
+        np.tile(
+            np.linspace(
+                from_colour[i], to_colour[i], width, dtype=np.uint8), [
+                    height, 1]) for i in range(
+                        len(from_colour))]
     return np.dstack(new_ch)
+
+def check(width, height, enlargement, square_size=4):
+    """Draw chequers in numpy as array
+        chequer value to grey or white depends on x position
+
+    Parameters
+    ----------
+    width : int
+        canvas width
+    height : int
+        canvas height
+    enlargement : int
+        dpi enlargement factor
+    square_size : int
+        size each square
+
+    Returns
+    -------
+    array : int
+        array of integers
+    """
+
+    sqe = square_size * enlargement
+    array = np.zeros([height, width, 3], dtype=np.uint8)
+    for x in range(width):
+        for y in range(height):
+            if (x %
+                sqe * 2) // sqe == (y %
+                    sqe * 2) // sqe:
+                array[y, x] = 127 - int(0.5 + 127 / width * x)
+    return array
+
+def draw_gradient(canvas, colour1, colour2, width=300, height=26):
+    """Import gradient into tkinter
+
+    Parameters
+    ----------
+    canvas : str
+        parent widget
+    colour1 : tuple of int
+        start colour
+    colour2 : tuple of int
+        end colour
+    width : int
+        canvas width
+    height : int
+        canvas height
+
+    Returns
+    -------
+    None
+    """
+
+    arr = generate_gradient(colour1, colour2, height, width)
+    xdata = 'P6 {} {} 255 '.format(width, height).encode() + arr.tobytes()
+    gradient = PhotoImage(width=width, height=height, data=xdata, format='PPM')
+    canvas.create_image(0, 0, anchor="nw", image=gradient)
+    canvas.image = gradient
+
+def draw_agradient(canvas, colour1, colour2, enlargement, width=300, height=26):
+    """Import alpha gradient into tkinter
+
+    Parameters
+    ----------
+    canvas : str
+        parent widget
+    colour1 : tuple of int
+        start colour
+    colour2 : tuple of int
+        end colour
+    enlargement : int
+        dpi enlargement factor
+    steps : int
+        number steps in gradient
+    width : int
+        canvas width
+    height : int
+        canvas height
+
+    Returns
+    -------
+    None
+    """
+
+    arr = generate_gradient(colour1, colour2, height, width)
+    arr1 = check(width, height, enlargement)
+    xdata = 'P6 {} {} 255 '.format(
+        width, height).encode() + (arr + arr1).tobytes()
+    gradient = PhotoImage(width=width, height=height, data=xdata, format='PPM')
+    canvas.create_image(0, 0, anchor="nw", image=gradient)
+    canvas.image = gradient
+
+def vcheck(width, height, enlargement, alpha, square_size=4):
+    """Draw vertical chequers in numpy as array
+        chequer value to grey or white depends on y position
+
+    Parameters
+    ----------
+    width : int
+        canvas width
+    height : int
+        canvas height
+    enlargement : int
+        dpi enlargement factor
+    alpha : int
+        opacity
+    square_size : int
+        size each square
+
+    Returns
+    -------
+    array : int
+        array of integers
+    """
+    sqe = square_size * enlargement
+    al0 = 127 - alpha // 2
+    ah0 = al0 / height
+    array = np.zeros([height, width, 3], dtype=np.uint8)
+    for y in range(height):
+        for x in range(width):
+            if (x % sqe * 2) // sqe == (y % sqe * 2) \
+                    // sqe:
+                array[y, x] = int(0.5 + ah0 * y)
+    return array
+
+def  vgenerate_gradient(to_colour, alpha, height, width):
+    """Draw vertical gradient in numpy as array
+
+    Parameters
+    ----------
+    to_colour : tuple of int
+        end colour
+    alpha : int
+        opacity
+    height : int
+        canvas height
+    width : int
+        canvas width
+
+    Returns
+    -------
+    array : int
+        array of integers
+    """
+
+    al0 = alpha / 255
+    res0 = 1 - al0
+    from_colour = (int(to_colour[0] * al0 + 127 * res0),
+                   int(to_colour[1] * al0 + 127 * res0),
+                   int(to_colour[2] * al0 + 127 * res0))  # changing from_colour
+    new_ch = [np.tile(np.linspace(to_colour[i], from_colour[i], height,
+                                  dtype=np.uint8),
+                      [width, 1]).T for i in range(3)]
+    return np.dstack(new_ch)
+
+def vdraw_gradient(canvas, colour1, enlargement, alpha=255, width=30, height=30):
+    """Either fill in background
+        or import vertical gradient into tkinter
+
+    Parameters
+    ----------
+    canvas : str
+        parent widget
+    colour1 : tuple of int
+        start colour
+    enlargement : int
+        dpi enlargement factor
+    alpha : int
+        opacity
+    width : int
+        canvas width
+    height : int
+        canvas height
+
+    Returns
+    -------
+    None
+    """
+
+    if alpha > 240:
+        hash_value = rgb2hash(colour1[0], colour1[1], colour1[2])
+        canvas['background'] = hash_value
+        canvas.background = hash_value
+    else:
+        arr = vgenerate_gradient(colour1, alpha, height, width)
+        arr1 = vcheck(width, height, enlargement, alpha)
+        xdata = 'P6 {} {} 255 '.format(
+            width, height).encode() + (arr + arr1).tobytes()
+        gradient = PhotoImage(
+            width=width,
+            height=height,
+            data=xdata,
+            format='PPM')
+        canvas.create_image(0, 0, anchor="nw", image=gradient)
+        canvas.image = gradient
 
 def  hash2rgb(hash_):
     """Conversion hash colour to rgb
@@ -260,49 +385,22 @@ def  hue_gradient(canvas, width=300, height=26, steps=360):
     """
 
     image = Image.new("RGB", (width, height), "#FFFFFF")
-    draw = ImageDraw.Draw(image)
+    hdraw = ImageDraw.Draw(image)
 
     for i in range(steps):
         x0 = int(float(width * i)/steps)
         x1 = int(float(width * (i+1))/steps)
-        draw.rectangle((x0, 0, x1, height), fill=hsv_to_rgb(i, 100, 100))
+        hdraw.rectangle((x0, 0, x1, height), fill=hsv_to_rgb(i, 100, 100))
     gradient = ImageTk.PhotoImage(image)
     canvas.create_image(0, 0, anchor="nw", image=gradient)
     canvas.image = gradient
-
-def  is_okay(index, text, input_):  # '%i','%P','%S'
-    """Validation for hash, which cannot be removed,
-        hex check on input after hash
-
-    Parameters
-    ----------
-    index : str
-        index
-    text : str
-        text if accepted
-    input_ : str
-        current input
-
-    Returns
-    -------
-    various : bool
-    """
-
-    index = int(index)  # index is string!
-    if index == 0 and text == '#':
-        return True
-    try:
-        int(input_, 16)
-        return bool(0 < index < 7)
-    except ValueError:  # not a hex
-        return False
 
 def  polar2cart(phi, ray, outer_w, inner_w):
     """Conversion polar to cartesian coordinates
         original image 317x317 using inner 299x299 working area,
         ring can be on outer edge wheel, so allow a space around image
-        image size used in calculating phi, t from x,y
-        phi,t is h,s of hsv, t adjusted
+        image size used in calculating phi, ray from x,y
+        phi,ray is h,s of hsv, ray adjusted
 
     Parameters
     ----------
@@ -333,26 +431,40 @@ def  polar2cart(phi, ray, outer_w, inner_w):
 
     return int(x+0.5), int(y+0.5)
 
-def  rgb2hash(red, green, blue):
-    """Convert rgb to hexadecimal
+def  cart2polar(x, y, outer_w, inner_w):
+    """Conversion cartesian to polar coordinates
+        output hue, saturation of hsv; s adjusted
 
     Parameters
     ----------
-    red : int
-        red component
-    green : int
-        green component
-    blue : int
-        blue component
+    x : int
+        horiz coord
+    y : int
+        vert coord
+    outer_w : int
+        outside width of colour wheelimage
+    inner_w : int
+        inner width of colour wheelimage
 
     Returns
     -------
-    hash : str
-        hexadecimal colour
+    degc, sc : float
+        degrees, length
     """
 
-    rgb = (red, green, blue)
-    return '#%02x%02x%02x' % rgb
+    centre = outer_w//2, outer_w//2
+    inner = inner_w, inner_w
+    radius = min(inner)//2
+
+    dx = x - centre[0]
+    dy = y - centre[1]
+    deg = int(0.5+degrees(atan2(dy, dx)))
+    if deg < 0: deg = 360 + deg
+    ray = int(0.5 + hypot(dx, dy) * 100 / radius)
+    ray = min(max(ray, 0), 100)
+    deg = min(max(deg, 0), 360)
+
+    return deg, ray
 
 def  rgb_to_hsv(red, green, blue):
     """convert rgb to hsv
@@ -393,33 +505,32 @@ def  rgb_to_hsv(red, green, blue):
     hue = (hue / 6.0) % 1.0
     return int(hue * 360 + 0.5), sat, int(value * 100 + 0.5)
 
-def  rgb_to_yiq(red, green, blue):
-    """Converts rgb to yiq
+def  is_okay(index, text, input_):  # '%i','%P','%S'
+    """Validation for hash, which cannot be removed,
+        hex check on input after hash
 
     Parameters
     ----------
-    red : int
-        red
-    green : int
-        green
-    blue : int
-        blue
+    index : str
+        index
+    text : str
+        text if accepted
+    input_ : str
+        current input
 
     Returns
     -------
-    yiq : float
-        tuple of floats
+    various : bool
     """
 
-    red = red/255
-    green = green/255
-    blue = blue/255
-    y = 0.30*red + 0.59*green + 0.11*blue
-    i = 0.74*(red-y) - 0.27*(blue-y)
-    q = 0.48*(red-y) + 0.41*(blue-y)
-    i = i/0.599
-    q = q/0.5251
-    return (y*100, i*100, q*100)
+    index = int(index)  # index is string!
+    if index == 0 and text == '#':
+        return True
+    try:
+        int(input_, 16)
+        return bool(0 < index < 7)
+    except ValueError:  # not a hex
+        return False
 
 def  sb_okay(action, text, input_, lower, upper):  # '%P','%S'
     """Validation for colour components
@@ -448,102 +559,33 @@ def  sb_okay(action, text, input_, lower, upper):  # '%P','%S'
         return False
     return True
 
-def  vcheck(width, height, alpha, square_size=4):
-    """Draw vertical chequers in numpy as array
-        chequer value to grey or white depends on y position
+def  rgb_to_yiq(red, green, blue):
+    """Converts rgb to yiq
 
     Parameters
     ----------
-    width : int
-        canvas width
-    height : int
-        canvas height
-    alpha : int
-        opacity
-    square_size : int
-        size each square
+    red : int
+        red
+    green : int
+        green
+    blue : int
+        blue
 
     Returns
     -------
-    array : int
-        array of integers
+    yiq : float
+        tuple of floats
     """
 
-    al0 = 127 - alpha // 2
-    ah0 = al0 / height
-    array = np.zeros([height, width, 3], dtype=np.uint8)
-    for y in range(height):
-        for x in range(width):
-            if (x % square_size * 2) // square_size == (y % square_size * 2) \
-                    // square_size:
-                array[y, x] = int(0.5 + ah0 * y)
-    return array
-
-def  vdraw_gradient(canvas, colour1, alpha=255, width=30, height=30):
-    """Either background fill
-        or call vgenerate_gradient then vcheck, import vertical gradient
-        into tkinter
-
-    Parameters
-    ----------
-    canvas : str
-        parent widget
-    colour1 : tuple of int
-        start colour
-    alpha : int
-        opacity
-    width : int
-        canvas width
-    height : int
-        canvas height
-    """
-
-    if alpha > 240:
-        hash_value = rgb2hash(colour1[0], colour1[1], colour1[2])
-        canvas['background'] = hash_value
-        canvas.background = hash_value
-    else:
-        arr = vgenerate_gradient(colour1, alpha, height, width)
-        arr1 = vcheck(width, height, alpha)
-        xdata = 'P6 {} {} 255 '.format(
-            width, height).encode() + (arr + arr1).tobytes()
-        gradient = PhotoImage(
-            width=width,
-            height=height,
-            data=xdata,
-            format='PPM')
-        canvas.create_image(0, 0, anchor="nw", image=gradient)
-        canvas.image = gradient
-
-def  vgenerate_gradient(to_colour, alpha, height, width):
-    """Draw vertical gradient in numpy as array
-
-    Parameters
-    ----------
-    to_colour : tuple of int
-        end colour
-    alpha : int
-        opacity
-    height : int
-        canvas height
-    width : int
-        canvas width
-
-    Returns
-    -------
-    array : int
-        array of integers
-    """
-
-    al0 = alpha / 255
-    res0 = 1 - al0
-    from_colour = (int(to_colour[0] * al0 + 127 * res0),
-                   int(to_colour[1] * al0 + 127 * res0),
-                   int(to_colour[2] * al0 + 127 * res0))  # changing from_colour
-    new_ch = [np.tile(np.linspace(to_colour[i], from_colour[i], height,
-                                  dtype=np.uint8),
-                      [width, 1]).T for i in range(3)]
-    return np.dstack(new_ch)
+    red = red/255
+    green = green/255
+    blue = blue/255
+    y = 0.30*red + 0.59*green + 0.11*blue
+    i = 0.74*(red-y) - 0.27*(blue-y)
+    q = 0.48*(red-y) + 0.41*(blue-y)
+    i = i/0.599
+    q = q/0.5251
+    return (y*100, i*100, q*100)
 
 def  yiq_okay(action, text, input_, lower, upper):
     """Validation for yiq colour components

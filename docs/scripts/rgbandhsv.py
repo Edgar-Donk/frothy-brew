@@ -43,9 +43,9 @@ class  TtkScale(Scale):
         procedure called when slider moves
     """
 
-    def  __init__(self, parent, length, from_=0, to=255,
-                   orient='horizontal', variable=0, digits=None,
-                   tickinterval=None, sliderlength=16, command=None):
+    def __init__(self, parent, length, from_=0, to=255, orient='horizontal',
+                 variable=0, digits=None, tickinterval=None, sliderlength=16,
+                 command=None, enlargement=1):
         self.from_=from_
         self.to=to
         self.variable=variable
@@ -55,6 +55,7 @@ class  TtkScale(Scale):
 
         self.digits=digits
         self.length=length
+        self.e = enlargement
 
         self.build(parent, from_, to, sliderlength, tickinterval, length)
 
@@ -93,10 +94,14 @@ class  RgbHsvSelect:
     fr0 : str
         parent widget
 
+    Returns
+    -------
+    None
     """
 
-    def  __init__(self, fr0):
+    def __init__(self, fr0, enlargement):
         self.fr0 =fr0
+        self.e = enlargement
 
         self.rvar = IntVar()
         self.gvar = IntVar()
@@ -107,15 +112,16 @@ class  RgbHsvSelect:
         self.svar = IntVar()
         self.vvar = IntVar()
 
-        self.scale_l = 300
-        self.sliderlength = 16
+        self.scale_l = 300*self.e
+        self.sliderlength = 16*self.e
         self.canvas_w = self.scale_l-self.sliderlength
-        self.canvas_h = 26
+        self.canvas_h = 26*self.e
+        self.canvas_b = 30*self.e
 
-        self.wheel_w = 317
-        self.wheel_iw = 299
-        self.ring_radius = 10
-        self.ring_width = 3
+        self.wheel_w = 317*self.e
+        self.wheel_iw = 299*self.e
+        self.ring_radius = 10*self.e
+        self.ring_width = 3*self.e
 
         self.build()
 
@@ -135,19 +141,24 @@ class  RgbHsvSelect:
         ----------
         evt : str
             command handle
+
+        Results
+        -------
+        None
         """
 
         red = self.rvar.get()
         green = self.gvar.get()
         blue = self.bvar.get()
         alpha = self.avar.get()
-        draw_gradient(self.gcan, (red, 0, blue),
-                      (red, 255, blue), width=self.canvas_w)
-        draw_gradient(self.bcan, (red, green, 0),
-                      (red, green, 255), width=self.canvas_w)
-        draw_agradient(self.acan, (127, 127, 127),
-                       (red, green, blue), width=self.canvas_w)
-        vdraw_gradient(self.cmcan, (red, green, blue), alpha=alpha)
+        draw_gradient(self.gcan, (red, 0, blue), (red, 255, blue),
+                      width=self.canvas_w, height=self.canvas_h)
+        draw_gradient(self.bcan, (red, green, 0), (red, green, 255),
+                      width=self.canvas_w, height=self.canvas_h)
+        draw_agradient(self.acan, (127, 127, 127), (red, green, blue),
+                       self.e, width=self.canvas_w, height=self.canvas_h)
+        vdraw_gradient(self.cmcan, (red, green, blue), self.e, alpha=alpha,
+                        width=self.canvas_b, height=self.canvas_b)
         self.evar.set(rgb2hash(red, green, blue))
         self.overlord(rgb=(red, green, blue))
 
@@ -164,13 +175,14 @@ class  RgbHsvSelect:
         green = self.gvar.get()
         blue = self.bvar.get()
         alpha = self.avar.get()
-        draw_gradient(self.rcan, (0, green, blue),
-                      (255, green, blue), width=self.canvas_w)
-        draw_gradient(self.bcan, (red, green, 0),
-                      (red, green, 255), width=self.canvas_w)
-        draw_agradient(self.acan, (127, 127, 127),
-                       (red, green, blue), width=self.canvas_w)
-        vdraw_gradient(self.cmcan, (red, green, blue), alpha=alpha)
+        draw_gradient(self.rcan, (0, green, blue), (255, green, blue),
+                      width=self.canvas_w, height=self.canvas_h)
+        draw_gradient(self.bcan, (red, green, 0), (red, green, 255),
+                      width=self.canvas_w, height=self.canvas_h)
+        draw_agradient(self.acan, (127, 127, 127), (red, green, blue), self.e,
+                       width=self.canvas_w, height=self.canvas_h)
+        vdraw_gradient(self.cmcan, (red, green, blue), self.e, alpha=alpha,
+                        width=self.canvas_b, height=self.canvas_b)
         self.evar.set(rgb2hash(red, green, blue))
         self.overlord(rgb=(red, green, blue))
 
@@ -187,13 +199,14 @@ class  RgbHsvSelect:
         green = self.gvar.get()
         blue = self.bvar.get()
         alpha = self.avar.get()
-        draw_gradient(self.rcan, (0, green, blue),
-                      (255, green, blue), width=self.canvas_w)
-        draw_gradient(self.gcan, (red, 0, blue),
-                      (red, 255, blue), width=self.canvas_w)
-        draw_agradient(self.acan, (127, 127, 127),
-                       (red, green, blue), width=self.canvas_w)
-        vdraw_gradient(self.cmcan, (red, green, blue), alpha=alpha)
+        draw_gradient(self.rcan, (0, green, blue), (255, green, blue),
+                      width=self.canvas_w, height=self.canvas_h)
+        draw_gradient(self.gcan, (red, 0, blue), (red, 255, blue),
+                      width=self.canvas_w, height=self.canvas_h)
+        draw_agradient(self.acan, (127, 127, 127), (red, green, blue),
+                       self.e, width=self.canvas_w, height=self.canvas_h)
+        vdraw_gradient(self.cmcan, (red, green, blue), self.e, alpha=alpha,
+                        width=self.canvas_b, height=self.canvas_b)
         self.evar.set(rgb2hash(red, green, blue))
         self.overlord(rgb=(red, green, blue))
 
@@ -211,7 +224,8 @@ class  RgbHsvSelect:
         blue = self.bvar.get()
         alpha = self.avar.get()
         self.avar.set(alpha)
-        vdraw_gradient(self.cmcan, (red, green, blue), alpha=alpha)
+        vdraw_gradient(self.cmcan, (red, green, blue), self.e, alpha=alpha,
+                        width=self.canvas_b, height=self.canvas_b)
 
     def  hhandle(self, evt=None):
         """Command callback for hue.
@@ -228,10 +242,12 @@ class  RgbHsvSelect:
         value = self.vvar.get()
         from_colour = hsv_to_rgb(*(hue, 0, value))
         to_colour = hsv_to_rgb(*(hue, 100, value))
-        draw_gradient(self.scan, from_colour, to_colour, width=self.canvas_w)
+        draw_gradient(self.scan, from_colour, to_colour,
+                      width=self.canvas_w, height=self.canvas_h)
         from_colour = hsv_to_rgb(*(hue, sat, 0))
         to_colour = hsv_to_rgb(*(hue, sat, 100))
-        draw_gradient(self.vcan, from_colour, to_colour, width=self.canvas_w)
+        draw_gradient(self.vcan, from_colour, to_colour,
+                      width=self.canvas_w, height=self.canvas_h)
         X, Y = polar2cart(hue, sat, self.wheel_w, self.wheel_iw)
         ring_radius = self.ring_radius
         for i in self.can_hsv.find_withtag("ring"):
@@ -258,10 +274,12 @@ class  RgbHsvSelect:
         value = self.vvar.get()
         from_colour = hsv_to_rgb(*(hue, 0, value))
         to_colour = hsv_to_rgb(*(hue, 100, value))
-        draw_gradient(self.scan, from_colour, to_colour, width=self.canvas_w)
+        draw_gradient(self.scan, from_colour, to_colour,
+                      width=self.canvas_w, height=self.canvas_h)
         from_colour = hsv_to_rgb(*(hue, sat, 0))
         to_colour = hsv_to_rgb(*(hue, sat, 100))
-        draw_gradient(self.vcan, from_colour, to_colour, width=self.canvas_w)
+        draw_gradient(self.vcan, from_colour, to_colour,
+                      width=self.canvas_w, height=self.canvas_h)
         X, Y = polar2cart(hue, sat, self.wheel_w, self.wheel_iw)
         ring_radius = self.ring_radius
         for i in self.can_hsv.find_withtag("ring"):
@@ -288,10 +306,12 @@ class  RgbHsvSelect:
         self.vvar.set(int(0.5 + value))
         from_colour = hsv_to_rgb(*(hue, 0, value))
         to_colour = hsv_to_rgb(*(hue, 100, value))
-        draw_gradient(self.scan, from_colour, to_colour, width=self.canvas_w)
+        draw_gradient(self.scan, from_colour, to_colour,
+                      width=self.canvas_w, height=self.canvas_h)
         from_colour = hsv_to_rgb(*(hue, sat, 0))
         to_colour = hsv_to_rgb(*(hue, sat, 100))
-        draw_gradient(self.vcan, from_colour, to_colour, width=self.canvas_w)
+        draw_gradient(self.vcan, from_colour, to_colour,
+                      width=self.canvas_w, height=self.canvas_h)
         self.overlord(hsv=(hue, sat, value))
 
     def  door_bell(self,ring):
@@ -307,10 +327,12 @@ class  RgbHsvSelect:
         value = self.vvar.get()
         from_colour = hsv_to_rgb(*(hue, 0, value))
         to_colour = hsv_to_rgb(*(hue, 100, value))
-        draw_gradient(self.scan, from_colour, to_colour, width=self.canvas_w)
+        draw_gradient(self.scan, from_colour, to_colour,
+                      width=self.canvas_w, height=self.canvas_h)
         from_colour = hsv_to_rgb(*(hue, sat, 0))
         to_colour = hsv_to_rgb(*(hue, sat, 100))
-        draw_gradient(self.vcan, from_colour, to_colour, width=self.canvas_w)
+        draw_gradient(self.vcan, from_colour, to_colour,
+                      width=self.canvas_w, height=self.canvas_h)
         self.overlord(hsv=(hue, sat, value))
 
     def  overlord(self, rgb=None, hsv=None):
@@ -337,14 +359,14 @@ class  RgbHsvSelect:
                 self.scan,
                 from_colour,
                 to_colour,
-                width=self.canvas_w)
+                width=self.canvas_w, height=self.canvas_h)
             from_colour = hsv_to_rgb(*(hue, sat, 0))
             to_colour = hsv_to_rgb(*(hue, sat, 100))
             draw_gradient(
                 self.vcan,
                 from_colour,
                 to_colour,
-                width=self.canvas_w)
+                width=self.canvas_w, height=self.canvas_h)
             self.hvar.set(hue)
             self.svar.set(sat)
             self.vvar.set(value)
@@ -362,16 +384,17 @@ class  RgbHsvSelect:
         elif hsv:
             hue, sat, value = hsv[0], hsv[1], hsv[2]
             red, green, blue = hsv_to_rgb(hue, sat, value)
-            draw_agradient(self.acan, (127, 127, 127),
-                           (red, green, blue), width=self.canvas_w)
+            draw_agradient(self.acan, (127, 127, 127), (red, green, blue),
+                           self.e, width=self.canvas_w, height=self.canvas_h)
             alpha = self.avar.get()
-            vdraw_gradient(self.cmcan, (red, green, blue), alpha=alpha)
-            draw_gradient(self.rcan, (0, green, blue),
-                          (255, green, blue), width=self.canvas_w)
-            draw_gradient(self.gcan, (red, 0, blue),
-                          (red, 255, blue), width=self.canvas_w)
-            draw_gradient(self.bcan, (red, green, 0),
-                          (red, green, 255), width=self.canvas_w)
+            vdraw_gradient(self.cmcan, (red, green, blue), self.e, alpha=alpha,
+                           width=self.canvas_b, height=self.canvas_b)
+            draw_gradient(self.rcan, (0, green, blue), (255, green, blue),
+                          width=self.canvas_w, height=self.canvas_h)
+            draw_gradient(self.gcan, (red, 0, blue), (red, 255, blue),
+                          width=self.canvas_w, height=self.canvas_h)
+            draw_gradient(self.bcan, (red, green, 0), (red, green, 255),
+                          width=self.canvas_w, height=self.canvas_h)
             self.evar.set(rgb2hash(red, green, blue))
             self.rvar.set(red)
             self.gvar.set(green)
@@ -426,8 +449,8 @@ class  RgbHsvSelect:
         red = self.rvar.get()
         green = self.gvar.get()
         blue = self.bvar.get()
-        draw_gradient(self.rcan, (0, green, blue),
-            (255, green, blue), width=W)
+        draw_gradient(self.rcan, (0, green, blue), (255, green, blue),
+                      width=W, height=self.canvas_h)
 
     def resize_gcan(self, event):
         """Bind function for green resizing
@@ -440,8 +463,8 @@ class  RgbHsvSelect:
         red = self.rvar.get()
         blue = self.bvar.get()
 
-        draw_gradient(self.gcan, (red, 0, blue),
-            (red, 255, blue), width=W)
+        draw_gradient(self.gcan, (red, 0, blue), (red, 255, blue),
+                      width=W, height=self.canvas_h)
 
     def resize_bcan(self, event):
         """Bind function for blue resizing
@@ -454,8 +477,8 @@ class  RgbHsvSelect:
         red = self.rvar.get()
         green = self.gvar.get()
 
-        draw_gradient(self.bcan, (red, green, 0),
-            (red, green, 255), width=W)
+        draw_gradient(self.bcan, (red, green, 0), (red, green, 255),
+                      width=W, height=self.canvas_h)
 
     def resize_acan(self, event):
         """Bind function for alpha resizing
@@ -468,8 +491,8 @@ class  RgbHsvSelect:
         red = self.rvar.get()
         green = self.gvar.get()
         blue = self.bvar.get()
-        draw_agradient(self.acan, (127, 127, 127),
-            (red, green, blue), width=W)
+        draw_agradient(self.acan, (127, 127, 127), (red, green, blue),
+                       self.e, width=W, height=self.canvas_h)
 
     def resize_hcan(self, event):
         """Bind function for hue resizing
@@ -480,7 +503,7 @@ class  RgbHsvSelect:
         """
         W = event.width
         self.canvas_w = W
-        hue_gradient(self.hcan, width=W, height=26, steps=360)
+        hue_gradient(self.hcan, width=W, height=self.canvas_h, steps=360)
 
     def resize_scan(self, event):
         """Bind function for saturation resizing
@@ -496,7 +519,8 @@ class  RgbHsvSelect:
 
         from_colour = hsv_to_rgb(*(hue, 0, value))
         to_colour = hsv_to_rgb(*(hue, 100, value))
-        draw_gradient(self.scan, from_colour, to_colour, width=W)
+        draw_gradient(self.scan, from_colour, to_colour,
+                      width=W, height=self.canvas_h)
 
     def resize_vcan(self, event):
         """Bind function for value resizing
@@ -512,7 +536,8 @@ class  RgbHsvSelect:
 
         from_colour = hsv_to_rgb(*(hue, sat, 0))
         to_colour = hsv_to_rgb(*(hue, sat, 100))
-        draw_gradient(self.vcan, from_colour, to_colour, width=W)
+        draw_gradient(self.vcan, from_colour, to_colour,
+                      width=W, height=self.canvas_h)
 
     def  build(self):
         """Widget construction."""
@@ -536,8 +561,7 @@ class  RgbHsvSelect:
         vcmdsb = root.register(sb_okay)
 
         rsb = Spinbox(lf1, from_=0, to=255, textvariable=self.rvar, validate='key',
-                      validatecommand=(vcmdsb, '%d', '%P', '%S', 255),
-                      command=self.rhandle, width=5)
+                      validatecommand=(vcmdsb, '%d', '%P', '%S', 255), command=self.rhandle, width=5)
         rsb.grid(column=2, row=1, sticky='nw')
         rsb.bind('<KeyRelease>', self.checksb)
 
@@ -558,8 +582,7 @@ class  RgbHsvSelect:
 
 
         gsb = Spinbox(lf1, from_=0, to=255, textvariable=self.gvar, validate='key',
-                      validatecommand=(vcmdsb, '%d', '%P', '%S', 255),
-                      command=self.ghandle, width=5)
+                      validatecommand=(vcmdsb, '%d', '%P', '%S', 255), command=self.ghandle, width=5)
         gsb.grid(column=2, row=4, sticky='nw')
         gsb.bind('<KeyRelease>', self.checksb)
 
@@ -589,11 +612,12 @@ class  RgbHsvSelect:
         lf3 = LabelFrame(self.fr0, text='colour mix')
         lf3.grid(column=1, row=0, sticky='nw')
 
-        self.cmcan = cmcan = Canvas(lf3, width=30, height=30, bd=0,
-                                    highlightthickness=0)
+        self.cmcan = cmcan = Canvas(lf3, width=self.canvas_b, height=self.canvas_b,
+                                    bd=0, highlightthickness=0)
         cmcan.grid(column=0, row=0, sticky='n', columnspan=2)
         cmcan.grid_propagate(0)
-        vdraw_gradient(self.cmcan, (255, 0, 0), alpha=255)
+        vdraw_gradient(self.cmcan, (255, 0, 0), self.e, alpha=255,
+                       width=self.canvas_b, height=self.canvas_b)
 
         cml = Label(lf3, text='hash\nvalue')
         cml.grid(column=0, row=1)
@@ -619,17 +643,17 @@ class  RgbHsvSelect:
             Label(lf5, text=stexts[ix]).grid(row=1+2*ix, column=0, sticky='n')
             self.srcls.append(Label(lf5))
             self.srcls[ix].grid(row=1+2*ix, column=1, sticky='n')
-            self.srccans.append(Canvas(lf5, width=30, height=30, bd=0,
-                             highlightthickness=0))
+            self.srccans.append(Canvas(lf5, width=self.canvas_b,
+                            height=self.canvas_b, bd=0, highlightthickness=0))
             self.srccans[ix].grid(row=2*ix, column=0, sticky='n', columnspan=2)
             Label(lf5, text=vtexts[ix]).grid(row=9+2*ix, column=0, sticky='n')
             self.vrcls.append(Label(lf5))
             self.vrcls[ix].grid(row=9+2*ix, column=1, sticky='n')
-            self.vrccans.append(Canvas(lf5, width=30, height=30, bd=0,
-                             highlightthickness=0))
+            self.vrccans.append(Canvas(lf5, width=self.canvas_b,
+                                height=self.canvas_b, bd=0, highlightthickness=0))
             self.vrccans[ix].grid(row=8+2*ix, column=0, sticky='n', columnspan=2)
 
-        self.cccan = Canvas(lf5, width=30, height=30, bd=0,
+        self.cccan = Canvas(lf5, width=self.canvas_b, height=self.canvas_b, bd=0,
                              highlightthickness=0)
         self.cccan.grid(column=0, row=17, sticky='n', columnspan=2)
 
@@ -652,21 +676,21 @@ class  RgbHsvSelect:
         asc.grid(column=1, row=11, sticky='new')
 
         asb = Spinbox(lf1, from_=0, to=255, textvariable=self.avar, validate='key',
-                      validatecommand=(vcmdsb, '%d', '%P', '%S', 255),
-                      command=self.ahandle, width=5)
+                      validatecommand=(vcmdsb, '%d', '%P', '%S', 255), command=self.ahandle, width=5)
         asb.grid(column=2, row=11, sticky='nw')
         asb.bind('<KeyRelease>', self.checksba)
 
         ael = Label(lf1, text=' ')
         ael.grid(column=2, row=12, sticky='s')
 
-        draw_gradient(self.rcan, (0, 0, 0), (255, 0, 0), width=self.canvas_w)
+        draw_gradient(self.rcan, (0, 0, 0), (255, 0, 0),
+                      width=self.canvas_w, height=self.canvas_h)
         draw_gradient(self.gcan, (255, 0, 0),
-                      (255, 0, 255), width=self.canvas_w)
+                      (255, 0, 255), width=self.canvas_w, height=self.canvas_h)
         draw_gradient(self.bcan, (255, 0, 0),
-                      (255, 255, 0), width=self.canvas_w)
+                      (255, 255, 0), width=self.canvas_w, height=self.canvas_h)
         draw_agradient(self.acan, (127, 127, 127),
-                       (255, 0, 0), width=self.canvas_w)
+                       (255, 0, 0), self.e, width=self.canvas_w, height=self.canvas_h)
 
         lf4 = LabelFrame(self.fr0, text='hsv')
         lf4.grid(column=2, row=0, sticky='news')
@@ -737,17 +761,19 @@ class  RgbHsvSelect:
         # assume initial setting 0,100,100 hsv
         to_colour = hsv_to_rgb(*(0, 100, 100))
 
-        hue_gradient(self.hcan, width=self.canvas_w)
+        hue_gradient(self.hcan, width=self.canvas_w, height=self.canvas_h)
         draw_gradient(self.scan, (255, 255, 255),
-                      to_colour, width=self.canvas_w)
-        draw_gradient(self.vcan, (0, 0, 0), to_colour, width=self.canvas_w)
+                      to_colour, width=self.canvas_w, height=self.canvas_h)
+        draw_gradient(self.vcan, (0, 0, 0), to_colour,
+                      width=self.canvas_w, height=self.canvas_h)
 
         self.can_hsv = can_hsv = Canvas(lf4, width=self.wheel_w,
                                         height=self.wheel_w, bg='#d9d9d9')
         can_hsv.grid(column=0, row=9, columnspan=3, pady=25, sticky='n')
-        self.hsv_gamut = PhotoImage(file='../figures/colour_wheel.png')
+        self.hsv_gamut = PhotoImage(file='../figures/colour_wheel'+str(self.e)+'.png')
         can_hsv.create_image(0, 0, anchor='nw', image=self.hsv_gamut)
-        self.ring = circle(can_hsv, 307, 158, self.ring_radius, width=self.ring_width,
+        self.ring = circle(can_hsv, 307*self.e, 158*self.e, self.ring_radius,
+                           width=self.ring_width,
                            outline='#555555', activeoutline='black', tags='ring')
 
         can_hsv.bind('<Button-1>', self.click_ring)
@@ -762,6 +788,10 @@ class  RgbHsvSelect:
         ----------
         evt : str
             bind handles
+
+        Results
+        -------
+        None
         """
 
         hash0 = self.ent0.get()
@@ -771,15 +801,16 @@ class  RgbHsvSelect:
             self.rvar.set(red)
             self.gvar.set(green)
             self.bvar.set(blue)
-            draw_agradient(self.acan, (127, 127, 127),
-                           (red, green, blue), width=self.canvas_w)
-            draw_gradient(self.rcan, (0, green, blue),
-                          (255, green, blue), width=self.canvas_w)
-            draw_gradient(self.gcan, (red, 0, blue),
-                          (red, 255, blue), width=self.canvas_w)
-            draw_gradient(self.bcan, (red, green, 0),
-                          (red, green, 255), width=self.canvas_w)
-            vdraw_gradient(self.cmcan, (red, green, blue), alpha=alpha)
+            draw_agradient(self.acan, (127, 127, 127), (red, green, blue),
+                           self.e, width=self.canvas_w, height=self.canvas_h)
+            draw_gradient(self.rcan, (0, green, blue), (255, green, blue),
+                          width=self.canvas_w, height=self.canvas_h)
+            draw_gradient(self.gcan, (red, 0, blue), (red, 255, blue),
+                          width=self.canvas_w, height=self.canvas_h)
+            draw_gradient(self.bcan, (red, green, 0), (red, green, 255),
+                          width=self.canvas_w, height=self.canvas_h)
+            vdraw_gradient(self.cmcan, (red, green, blue), self.e, alpha=alpha,
+                           width=self.canvas_b, height=self.canvas_b)
             self.overlord(rgb=(red, green, blue))
 
     def  click_ring(self, event):
@@ -829,7 +860,6 @@ class  RgbHsvSelect:
         X = event.x
         Y = event.y
         ring_radius = self.ring_radius
-
         cx = self.wheel_w // 2
         dx, dy = X - cx, Y - cx
         rad = self.wheel_iw // 2
@@ -851,13 +881,18 @@ class  RgbHsvSelect:
         ----------
         evt : str
             bind handles
+
+        Results
+        -------
+        None
         """
 
         alpha = self.avar.get()
         red = self.rvar.get()
         green = self.gvar.get()
         blue = self.bvar.get()
-        vdraw_gradient(self.cmcan, (red, green, blue), alpha=alpha)
+        vdraw_gradient(self.cmcan, (red, green, blue), self.e, alpha=alpha,
+                       width=self.canvas_b, height=self.canvas_b)
 
     def  checksb(self, evt=None):
         """Procedure called by rgb colour spinboxes.
@@ -866,21 +901,26 @@ class  RgbHsvSelect:
         ----------
         evt : str
             bind handles
+
+        Results
+        -------
+        None
         """
 
         alpha = self.avar.get()
         red = self.rvar.get()
         green = self.gvar.get()
         blue = self.bvar.get()
-        draw_agradient(self.acan, (127, 127, 127),
-                       (red, green, blue), width=self.canvas_w)
-        draw_gradient(self.rcan, (0, green, blue),
-                      (255, green, blue), width=self.canvas_w)
-        draw_gradient(self.gcan, (red, 0, blue),
-                      (red, 255, blue), width=self.canvas_w)
-        draw_gradient(self.bcan, (red, green, 0),
-                      (red, green, 255), width=self.canvas_w)
-        vdraw_gradient(self.cmcan, (red, green, blue), alpha=alpha)
+        draw_agradient(self.acan, (127, 127, 127), (red, green, blue),
+                       self.e, width=self.canvas_w, height=self.canvas_h)
+        draw_gradient(self.rcan, (0, green, blue), (255, green, blue),
+                      width=self.canvas_w, height=self.canvas_h)
+        draw_gradient(self.gcan, (red, 0, blue), (red, 255, blue),
+                      width=self.canvas_w, height=self.canvas_h)
+        draw_gradient(self.bcan, (red, green, 0), (red, green, 255),
+                      width=self.canvas_w, height=self.canvas_h)
+        vdraw_gradient(self.cmcan, (red, green, blue), self.e, alpha=alpha,
+                       width=self.canvas_b, height=self.canvas_b)
         self.evar.set(rgb2hash(red, green, blue))
         self.overlord(rgb=(red, green, blue))
 
@@ -898,10 +938,12 @@ class  RgbHsvSelect:
         value = self.vvar.get()
         from_colour = hsv_to_rgb(*(hue, 0, value))
         to_colour = hsv_to_rgb(*(hue, 100, value))
-        draw_gradient(self.scan, from_colour, to_colour, width=self.canvas_w)
+        draw_gradient(self.scan, from_colour, to_colour, width=self.canvas_w,
+                      height=self.canvas_h)
         from_colour = hsv_to_rgb(*(hue, sat, 0))
         to_colour = hsv_to_rgb(*(hue, sat, 100))
-        draw_gradient(self.vcan, from_colour, to_colour, width=self.canvas_w)
+        draw_gradient(self.vcan, from_colour, to_colour, width=self.canvas_w,
+                      height=self.canvas_h)
         self.overlord(hsv=(hue, sat, value))
 
     def  checksb100(self, event=None):
@@ -911,6 +953,10 @@ class  RgbHsvSelect:
         ----------
         event : str
             bind handles
+
+        Results
+        -------
+        None
         """
 
         hue = self.hvar.get()
@@ -918,22 +964,28 @@ class  RgbHsvSelect:
         value = self.vvar.get()
         from_colour = hsv_to_rgb(*(hue, 0, value))
         to_colour = hsv_to_rgb(*(hue, 100, value))
-        draw_gradient(self.scan, from_colour, to_colour, width=self.canvas_w)
+        draw_gradient(self.scan, from_colour, to_colour, width=self.canvas_w,
+                      height=self.canvas_h)
         from_colour = hsv_to_rgb(*(hue, sat, 0))
         to_colour = hsv_to_rgb(*(hue, sat, 100))
-        draw_gradient(self.vcan, from_colour, to_colour, width=self.canvas_w)
+        draw_gradient(self.vcan, from_colour, to_colour, width=self.canvas_w,
+                      height=self.canvas_h)
         self.overlord(hsv=(hue, sat, value))
 
 if __name__ == "__main__":
     root = Tk()
+    winsys = root.tk.call("tk", "windowingsystem")
+    BASELINE = 1.33398982438864281 if winsys != 'aqua' else 1.000492368291482
+    scaling = root.tk.call("tk", "scaling")
+    enlargement = e = int(scaling / BASELINE + 0.5)
 
-    img = Image.new("RGBA", (16, 10), '#00000000')
+    img = Image.new("RGBA", (16*e, 10*e), '#00000000')
     trough = ImageTk.PhotoImage(img)
 
     # constants for creating upward pointing arrow
-    WIDTH = 17
-    HEIGHT = 17
-    OFFSET = 5
+    WIDTH = 17*e
+    HEIGHT = 17*e
+    OFFSET = 5*e
     ST0 = WIDTH // 2, HEIGHT - 1 - OFFSET
     LIGHT = 'GreenYellow'
     MEDIUM = 'LawnGreen'
@@ -970,13 +1022,14 @@ if __name__ == "__main__":
                                      {'border': 3, 'sticky': 'n'})}})
 
     style.theme_use('default')
-    style.configure('Width.TLabelframe', width=60)
+    style.configure('Width.TLabelframe', width=60*e)
+    style.configure('TSpinbox', arrowsize=10*e)
     root.columnconfigure(0, weight=1)
 
     fr = Frame(root)
     fr.grid(row=0, column=0, sticky='nsew')
     fr.columnconfigure(0, weight=1)
     fr.columnconfigure(2, weight=1)
-    RgbHsvSelect(fr)
+    RgbHsvSelect(fr, enlargement)
     root.mainloop()
 
