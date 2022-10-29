@@ -19,6 +19,8 @@ with hue and saturation, leaving value to show its own component
 gradient. By keeping the hue constant and varying saturation one can easily
 obtain associated colours.
 
+.. _colour-wheel:
+
 The colour wheel probably is relatively slow to construct and need only be 
 made once if imported as an image file. For the sake of simplicity leave it 
 as a png file with a transparent background. Create a PIL image file then
@@ -33,7 +35,7 @@ all the while keeping ``value`` at 100.
         *Show/Hide Code* 09colour_wheel_pil.py
 
     .. literalinclude:: ../examples/colours/09colour_wheel_pil.py
-    
+
 Next we will add the colour wheel to the basic hsv part, then create 
 a moving cursor, test that these work together, then add the rgba part and 
 ensure that the two parts interreact.

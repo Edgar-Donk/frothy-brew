@@ -193,7 +193,6 @@ can easily see the empty labels.
         *Show/Hide Code* 06scalemod.py
 
     .. literalinclude:: ../examples/colours/06scalemod.py
-        :emphasize-lines: 8,248,275-315,334,476-477,494-495,512-513,548-549,563-603
 
 .. note:: Only major changes have been highlighted, grid changes have not 
     been shown.
@@ -279,9 +278,6 @@ After all that you should see something like the following:-
         *Show/Hide Code* 07entryscalemod.py
 
     .. literalinclude:: ../examples/colours/07entryscalemod.py
-        :emphasize-lines: 248,265-272,292,307-311,555,557-558,561,577-578,581,
-            598-599,601,619-620,622,638-639,642,655,668-683,685,698-702,704,
-            717-730
 
 Now that the rgba has been almost finalised as a standalone application we
 can develop the hsv as a standalone application along generally similar lines.

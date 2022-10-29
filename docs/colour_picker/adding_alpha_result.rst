@@ -305,11 +305,6 @@ just a placeholder, until we add an alpha component to the resulting colour.
         *Show/Hide Code* 04addingalpha.py
 
     .. literalinclude:: ../examples/colours/04addingalpha.py
-        :emphasize-lines: 5,37,55-62,92,114-120,150,171-172,194-195,217-218,
-            221,232-237,350-367
-
-.. note:: Only major changes are highlighted, there are changes caused by
-    adding labelframes and using these as the widgets parents.
 
 So far the rgb should look like this.
 
@@ -374,8 +369,6 @@ green are 0. Show full alpha, no transparency, so set alpha to 255.
         *Show/Hide Code* 05addingalphatofinalcolour.py
 
     .. literalinclude:: ../examples/colours/05addingalphatofinalcolour.py
-        :emphasize-lines: 3,144,164-173,176,195-205,208,229-244,273,297-298,
-            322-323,347-348,362-366,464-477,504-510
 
 This should produce:-
 

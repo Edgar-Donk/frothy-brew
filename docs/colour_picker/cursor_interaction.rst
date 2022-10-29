@@ -116,8 +116,6 @@ only when the mouse passes over the ring itself.
         *Show/Hide Code* 11user2ring.py
 
     .. literalinclude:: ../examples/colours/11user2ring.py
-        :emphasize-lines: 425-433,457-485,490,500-507,599-600,602,615-631,
-            633,646-662
 
 Now that the HSV part is operational we can join it to the RGB part, 
 modifying some of the original functions as necessary.

@@ -133,8 +133,8 @@ Run this and you should see the cursor move when either the hsv side or rgb
 side is altered. Any change to the rgb or hsv scales should result in 
 gradient and final colour changes on both sides - quite fun really.
 
-Related Colours
----------------
+Related RGB HSV Colours
+-----------------------
 
 When picking colours it often is useful to have related colours. Just using 
 RGB this would be a problem, with HSV we can use a constant hue, then adjust

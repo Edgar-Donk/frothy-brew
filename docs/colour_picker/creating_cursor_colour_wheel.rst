@@ -88,8 +88,6 @@ of (0,100,100).
         *Show/Hide Code* 10wheelhsv.py
 
     .. literalinclude:: ../examples/colours/10wheelhsv.py
-        :emphasize-lines: 8,34,59-61,119,138-147,223,246-256,259,279-292,
-            389-392,551-557
 
 Using this as our basis we can now make our cursor interact with the user.
 
