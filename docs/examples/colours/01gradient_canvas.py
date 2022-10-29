@@ -33,14 +33,22 @@ WIDTH = 300
 HEIGHT = 26
 
 root = Tk()
+winsys = root.tk.call("tk", "windowingsystem")
+BASELINE = 1.33398982438864281 if winsys != 'aqua' else 1.000492368291482
+scaling = root.tk.call("tk", "scaling")
+enlargement = int(scaling / BASELINE + 0.5)
+WIDTH = 300
+HEIGHT = 26
+we = WIDTH * enlargement
+he = HEIGHT * enlargement
 can = Canvas(root)
 can.pack(fill='both', expand=1)
 
 for i in range(STEPS):
-    x0 = int((WIDTH * i) / STEPS)
-    x1 = int((WIDTH * (i + 1)) / STEPS)
+    x0 = int((we * i) / STEPS)
+    x1 = int((we * (i + 1)) / STEPS)
 
-    can.create_rectangle((x0, 0, x1, HEIGHT), fill=lerp_hex(
+    can.create_rectangle((x0, 0, x1, he), fill=lerp_hex(
         COLOUR1, COLOUR2, i / (STEPS - 1)), outline='')
 
 root.mainloop()

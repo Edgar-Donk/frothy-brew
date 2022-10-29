@@ -3,246 +3,11 @@
     working with modified Scale
 """
 
-from tkinter import Tk, Canvas, Label, IntVar, Frame, PhotoImage, StringVar
+from tkinter import Tk, Canvas, Label, IntVar, Frame, StringVar
 from tkinter.ttk import LabelFrame, Scale, Style, Entry, Spinbox
 from PIL import Image, ImageDraw, ImageTk
-import numpy as np
-
-
-def rgb2hash(red, green, blue):
-    """Convert rgb to hexadecimal
-
-    Parameters
-    ----------
-    red : int
-        red component
-    green : int
-        green component
-    blue : int
-        blue component
-    Results
-    -------
-    string
-        hexadecimal colour
-    """
-
-    rgb = (red, green, blue)
-    return '#%02x%02x%02x' % rgb
-
-
-def generate_gradient(from_colour, to_colour, height, width):
-    """Draw gradient in numpy as array
-
-    Parameters
-    ----------
-    from_colour : tuple of int
-        start colour
-    to_colour : tuple of int
-        end colour
-    height : int
-        canvas height
-    width : int
-        canvas width
-
-    Returns
-    -------
-    array of integers
-    """
-
-    new_ch = [np.tile(np.linspace(from_colour[i], to_colour[i], width,
-                                  dtype=np.uint8),
-                      [height, 1]) for i in range(len(from_colour))]
-    return np.dstack(new_ch)
-
-
-def check(width, height, square_size=4):
-    """Draw chequers in numpy as array
-        chequer value to grey or white depends on x position
-
-    Parameters
-    ----------
-    width : int
-        canvas width
-    height : int
-        canvas height
-    square_size : int
-        size each square
-
-    Returns
-    -------
-    array of integers
-    """
-
-    # Set check value to grey or white depending on x position
-    array = np.zeros([height, width, 3], dtype=np.uint8)  # ,dtype=np.uint8
-    for x in range(width):
-        for y in range(height):
-            if (x % square_size * 2) // square_size ==\
-                    (y % square_size * 2) // square_size:
-                array[y, x] = 127 - int(0.5 + 127 / width * x)
-    return array
-
-
-def draw_gradient(canvas, colour1, colour2, width=300, height=26):
-    """Import gradient into tkinter
-
-    Parameters
-    ----------
-    canvas : str
-        parent widget
-    colour1 : tuple of int
-        start colour
-    colour2 : tuple of int
-        end colour
-    steps : int
-        number steps in gradient
-    width : int
-        canvas width
-    height : int
-        canvas height
-
-    Returns
-    -------
-    None
-    """
-
-    arr = generate_gradient(colour1, colour2, height, width)
-    xdata = 'P6 {} {} 255 '.format(width, height).encode() + arr.tobytes()
-    gradient = PhotoImage(width=width, height=height, data=xdata, format='PPM')
-    canvas.create_image(0, 0, anchor="nw", image=gradient)
-    canvas.image = gradient
-
-
-def draw_agradient(canvas, colour1, colour2, width=300, height=26):
-    """Import alpha gradient into tkinter
-
-    Parameters
-    ----------
-    canvas : str
-        parent widget
-    colour1 : tuple of int
-        start colour
-    colour2 : tuple of int
-        end colour
-    steps : int
-        number steps in gradient
-    width : int
-        canvas width
-    height : int
-        canvas height
-
-    Returns
-    -------
-    None
-    """
-
-    arr = generate_gradient(colour1, colour2, height, width)
-    arr1 = check(width, height)
-    xdata = 'P6 {} {} 255 '.format(
-        width, height).encode() + (arr + arr1).tobytes()
-    gradient = PhotoImage(width=width, height=height, data=xdata, format='PPM')
-    canvas.create_image(width//2, height//2, anchor='center', image=gradient)  #"nw" 0, 0,
-    canvas.image = gradient
-
-
-def vcheck(width, height, alpha, square_size=4):
-    """Draw vertical chequers in numpy as array
-        chequer value to grey or white depends on y position
-
-    Parameters
-    ----------
-    width : int
-        canvas width
-    height : int
-        canvas height
-    alpha : int
-        opacity
-    square_size : int
-        size each square
-
-    Returns
-    -------
-    array of integers
-    """
-
-    al0 = 127 - alpha // 2
-    ah0 = al0 / height
-    array = np.zeros([height, width, 3], dtype=np.uint8)
-    for y in range(height):
-        for x in range(width):
-            if (x % square_size * 2) // square_size == (y % square_size * 2) \
-                    // square_size:
-                array[y, x] = int(0.5 + ah0 * y)
-    return array
-
-
-def vgenerate_gradient(to_colour, alpha, height, width):
-    """Draw vertical gradient in numpy as array
-
-    Parameters
-    ----------
-    to_colour : tuple of int
-        end colour
-    alpha : int
-        opacity
-    height : int
-        canvas height
-    width : int
-        canvas width
-
-    Returns
-    -------
-    array of integers
-    """
-
-    al0 = alpha / 255
-    res0 = 1 - al0
-    from_colour = (int(to_colour[0] * al0 + 127 * res0),
-                  int(to_colour[1] * al0 + 127 * res0),
-                  int(to_colour[2] * al0 + 127 * res0))  # changing from_colour
-    new_ch = [np.tile(np.linspace(to_colour[i], from_colour[i], height,
-                                  dtype=np.uint8), [width, 1]).T for i in range(3)]
-    return np.dstack(new_ch)
-
-
-def vdraw_gradient(canvas, colour1, alpha=255, width=30, height=30):
-    """Either fill in background
-        or import vertical gradient into tkinter
-
-    Parameters
-    ----------
-    canvas : str
-        parent widget
-    colour1 : tuple of int
-        start colour
-    alpha : int
-        opacity
-    width : int
-        canvas width
-    height : int
-        canvas height
-
-    Returns
-    -------
-    None
-    """
-
-    if alpha > 240:
-        hash_value = rgb2hash(colour1[0], colour1[1], colour1[2])
-        canvas['background'] = hash_value
-        canvas.background = hash_value
-    else:
-        arr = vgenerate_gradient(colour1, alpha, height, width)
-        arr1 = vcheck(width, height, alpha)
-        xdata = 'P6 {} {} 255 '.format(
-            width, height).encode() + (arr + arr1).tobytes()
-        gradient = PhotoImage(
-            width=width,
-            height=height,
-            data=xdata,
-            format='PPM')
-        canvas.create_image(0, 0, anchor="nw", image=gradient)
-        canvas.image = gradient
+from colourTools import rgb2hash, draw_gradient, \
+    draw_agradient, vdraw_gradient
 
 
 class TtkScale(Scale):
@@ -252,6 +17,8 @@ class TtkScale(Scale):
     ----------
     parent : str
         parent widget
+    enlargement : int
+        dpi enlargement factor
     from_ : int
         start of scale
     to : int
@@ -274,14 +41,15 @@ class TtkScale(Scale):
 
     def __init__(self, parent, from_=0, to=255, length=300, orient='horizontal',
                  variable=0, digits=None, tickinterval=None, sliderlength=16,
-                 command=None):
+                 command=None, enlargement=1):
+
         self.from_ = from_
         self.to = to
         self.variable = variable
 
         super().__init__(parent, length=length + sliderlength,
                          variable=variable, from_=from_, to=to, command=command)
-
+        self.e = enlargement
         self.digits = digits
         self.length = length
 
@@ -310,8 +78,8 @@ class TtkScale(Scale):
             for i in range(from_, to + 2, tickinterval):
                 item = Label(parent, text=i, bg='#EFFEFF')
                 item.place(in_=self, bordermode='outside',
-                           relx=sliderlength / length / 2 + i /
-                           sc_range * (1 - sliderlength / length),
+                           relx=sliderlength*self.e / length*self.e / 2 + i /
+                           sc_range * (1 - sliderlength*self.e / length*self.e),
                            rely=1, anchor='n')
 
 
@@ -328,10 +96,11 @@ class RgbSelect:
     None
     """
 
-    def __init__(self, fr0):
+    def __init__(self, fr0, enlargement):
         self.fr0 = fr0
+        self.e = enlargement
 
-        self.cursor_w = 16
+        self.cursor_w = 16 * self.e
 
         self.rvar = IntVar()
         self.gvar = IntVar()
@@ -339,9 +108,10 @@ class RgbSelect:
         self.avar = IntVar()
         self.evar = StringVar()
 
-        self.scale_l = 300
+        self.scale_l = 300 * self.e
         self.canvas_w = self.scale_l
-        self.canvas_h = 26
+        self.canvas_h = 26 * self.e
+        self.canvas_b = 30 * self.e
         self.build()
 
         self.rvar.set(255)
@@ -366,13 +136,14 @@ class RgbSelect:
         green = self.gvar.get()
         blue = self.bvar.get()
         alpha = self.avar.get()
-        draw_gradient(self.gcan, (red, 0, blue),
-                      (red, 255, blue), width=self.canvas_w)
-        draw_gradient(self.bcan, (red, green, 0),
-                      (red, green, 255), width=self.canvas_w)
-        draw_agradient(self.acan, (127, 127, 127),
-                       (red, green, blue), width=self.canvas_w)
-        vdraw_gradient(self.cmcan, (red, green, blue), alpha=alpha)
+        draw_gradient(self.gcan, (red, 0, blue), (red, 255, blue),
+                      width=self.canvas_w, height=self.canvas_h)
+        draw_gradient(self.bcan, (red, green, 0), (red, green, 255),
+                      width=self.canvas_w, height=self.canvas_h)
+        draw_agradient(self.acan, (127, 127, 127), (red, green, blue),
+                       self.e, width=self.canvas_w, height=self.canvas_h)
+        vdraw_gradient(self.cmcan, (red, green, blue), self.e, alpha=alpha,
+                        width=self.canvas_b, height=self.canvas_b)
         self.evar.set(rgb2hash(red, green, blue))
 
     def ghandle(self, *args):
@@ -391,13 +162,14 @@ class RgbSelect:
         green = self.gvar.get()
         blue = self.bvar.get()
         alpha = self.avar.get()
-        draw_gradient(self.rcan, (0, green, blue),
-                      (255, green, blue), width=self.canvas_w)
-        draw_gradient(self.bcan, (red, green, 0),
-                      (red, green, 255), width=self.canvas_w)
-        draw_agradient(self.acan, (127, 127, 127),
-                       (red, green, blue), width=self.canvas_w)
-        vdraw_gradient(self.cmcan, (red, green, blue), alpha=alpha)
+        draw_gradient(self.rcan, (0, green, blue), (255, green, blue),
+                      width=self.canvas_w, height=self.canvas_h)
+        draw_gradient(self.bcan, (red, green, 0), (red, green, 255),
+                      width=self.canvas_w, height=self.canvas_h)
+        draw_agradient(self.acan, (127, 127, 127), (red, green, blue), self.e,
+                       width=self.canvas_w, height=self.canvas_h)
+        vdraw_gradient(self.cmcan, (red, green, blue), self.e, alpha=alpha,
+                        width=self.canvas_b, height=self.canvas_b)
         self.evar.set(rgb2hash(red, green, blue))
 
     def bhandle(self, *args):
@@ -416,13 +188,14 @@ class RgbSelect:
         green = self.gvar.get()
         blue = self.bvar.get()
         alpha = self.avar.get()
-        draw_gradient(self.rcan, (0, green, blue),
-                      (255, green, blue), width=self.canvas_w)
-        draw_gradient(self.gcan, (red, 0, blue),
-                      (red, 255, blue), width=self.canvas_w)
-        draw_agradient(self.acan, (127, 127, 127),
-                       (red, green, blue), width=self.canvas_w)
-        vdraw_gradient(self.cmcan, (red, green, blue), alpha=alpha)
+        draw_gradient(self.rcan, (0, green, blue), (255, green, blue),
+                      width=self.canvas_w, height=self.canvas_h)
+        draw_gradient(self.gcan, (red, 0, blue), (red, 255, blue),
+                      width=self.canvas_w, height=self.canvas_h)
+        draw_agradient(self.acan, (127, 127, 127), (red, green, blue),
+                       self.e, width=self.canvas_w, height=self.canvas_h)
+        vdraw_gradient(self.cmcan, (red, green, blue), self.e, alpha=alpha,
+                        width=self.canvas_b, height=self.canvas_b)
         self.evar.set(rgb2hash(red, green, blue))
 
     def ahandle(self, *args):
@@ -441,7 +214,8 @@ class RgbSelect:
         green = self.gvar.get()
         blue = self.bvar.get()
         alpha = self.avar.get()
-        vdraw_gradient(self.cmcan, (red, green, blue), alpha=alpha)
+        vdraw_gradient(self.cmcan, (red, green, blue), self.e, alpha=alpha,
+                        width=self.canvas_b, height=self.canvas_b)
 
     def build(self):
         """widget construction
@@ -466,7 +240,8 @@ class RgbSelect:
         self.rcan.grid(column=1, row=0, sticky='s')
 
         rsc = TtkScale(fr1, from_=0, to=255, variable=self.rvar, orient='horizontal',
-                       length=self.scale_l, command=self.rhandle, tickinterval=20)
+                       length=self.scale_l, command=self.rhandle, tickinterval=20,
+                       enlargement=self.e)
         rsc.grid(column=1, row=1, sticky='news')
 
         rsb = Spinbox(fr1, from_=0, to=255, textvariable=self.rvar,
@@ -484,7 +259,8 @@ class RgbSelect:
         self.gcan.grid(column=1, row=3, sticky='s')
 
         gsc = TtkScale(fr1, from_=0, to=255, variable=self.gvar, orient='horizontal',
-                       length=self.scale_l, command=self.ghandle, tickinterval=20)
+                       length=self.scale_l, command=self.ghandle, tickinterval=20,
+                       enlargement=self.e)
         gsc.grid(column=1, row=4, sticky='news')
 
         gsb = Spinbox(fr1, from_=0, to=255, textvariable=self.gvar,
@@ -502,7 +278,8 @@ class RgbSelect:
         self.bcan.grid(column=1, row=6, sticky='n')
 
         bsc = TtkScale(fr1, from_=0, to=255, variable=self.bvar, orient='horizontal',
-                       length=self.scale_l, command=self.bhandle, tickinterval=20)
+                       length=self.scale_l, command=self.bhandle, tickinterval=20,
+                       enlargement=self.e)
         bsc.grid(column=1, row=7, sticky='news')
 
         bsb = Spinbox(fr1, from_=0, to=255, textvariable=self.bvar,
@@ -515,11 +292,11 @@ class RgbSelect:
         fr3 = LabelFrame(self.fr0, text='colour mix')
         fr3.grid(column=1, row=0, sticky='nw')
 
-        self.cmcan = cmcan = Canvas(fr3, width=30, height=30, bd=0,
+        self.cmcan = cmcan = Canvas(fr3, width=30*self.e, height=30*self.e, bd=0,
                                     highlightthickness=0)
         cmcan.grid(column=0, row=0, sticky='n', columnspan=2)
         cmcan.grid_propagate(0)
-        vdraw_gradient(self.cmcan, (255, 0, 0), alpha=255)
+        vdraw_gradient(self.cmcan, (255, 0, 0), self.e, alpha=255)
 
         cml = Label(fr3, text='hash\nvalue')
         cml.grid(column=0, row=1)
@@ -538,7 +315,8 @@ class RgbSelect:
         self.acan.grid(column=1, row=0, sticky='n')
 
         asc = TtkScale(fr2, from_=0, to=255, variable=self.avar, orient='horizontal',
-                       length=self.scale_l, command=self.ahandle, tickinterval=20)
+                       length=self.scale_l, command=self.ahandle, tickinterval=20,
+                       enlargement=self.e)
         asc.grid(column=1, row=1, sticky='news')
 
         asb = Spinbox(fr2, from_=0, to=255, textvariable=self.avar,
@@ -548,25 +326,30 @@ class RgbSelect:
         ael = Label(fr2, text=' ', height=1)
         ael.grid(column=2, row=2, sticky='s')
 
-        draw_gradient(self.rcan, (0, 0, 0), (255, 0, 0), width=self.canvas_w)
-        draw_gradient(self.gcan, (255, 0, 0),
-                      (255, 255, 0), width=self.canvas_w)
-        draw_gradient(self.bcan, (255, 0, 0),
-                      (255, 0, 255), width=self.canvas_w)
-        draw_agradient(self.acan, (127, 127, 127),
-                       (255, 0, 0), width=self.canvas_w)
+        draw_gradient(self.rcan, (0, 0, 0), (255, 0, 0),
+                      width=self.canvas_w, height=self.canvas_h)
+        draw_gradient(self.gcan, (255, 0, 0), (255, 255, 0),
+                      width=self.canvas_w, height=self.canvas_h)
+        draw_gradient(self.bcan, (255, 0, 0), (255, 0, 255),
+                      width=self.canvas_w, height=self.canvas_h)
+        draw_agradient(self.acan, (127, 127, 127), (255, 0, 0),
+                       self.e, width=self.canvas_w, height=self.canvas_h)
 
 
 if __name__ == "__main__":
     root = Tk()
+    winsys = root.tk.call("tk", "windowingsystem")
+    BASELINE = 1.33398982438864281 if winsys != 'aqua' else 1.000492368291482
+    scaling = root.tk.call("tk", "scaling")
+    enlargement = e = int(scaling / BASELINE + 0.5)
 
-    img = Image.new("RGBA", (16, 10), '#00000000')
+    img = Image.new("RGBA", (16*e, 10*e), '#00000000')
     trough = ImageTk.PhotoImage(img)
 
     # constants for creating upward pointing arrow
-    WIDTH = 17
-    HEIGHT = 17
-    OFFSET = 5
+    WIDTH = 17*e
+    HEIGHT = 17*e
+    OFFSET = 5*e
     ST0 = WIDTH // 2, HEIGHT - 1 - OFFSET
     LIGHT = 'GreenYellow'
     MEDIUM = 'LawnGreen'
@@ -603,10 +386,10 @@ if __name__ == "__main__":
                                      {'border': 3, 'sticky': 'n'})}})
 
     style.theme_use('default')
-
+    style.configure('TSpinbox', arrowsize=10*e)
     fra0 = Frame(root)
     root.columnconfigure(0, weight=1)
     fra0.grid(row=0, column=0, sticky='nsew')
     fra0.columnconfigure(0, weight=1)
-    RgbSelect(fra0)
+    RgbSelect(fra0, enlargement)
     root.mainloop()

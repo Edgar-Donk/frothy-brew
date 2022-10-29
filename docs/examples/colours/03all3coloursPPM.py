@@ -42,6 +42,8 @@ def draw_gradient(canvas, colour1, colour2, width=300, height=26):
         start colour
     colour2 : tuple of int
         end colour
+    enlargement : int
+        dpi enlargement factor
     width : int
         canvas width
     height : int
@@ -70,22 +72,23 @@ class RgbSelect:
     None
     """
 
-    def __init__(self, fr0):
+    def __init__(self, fr0, enlargement):
         self.fr0 = fr0
+        self.e = enlargement
         self.rvar = IntVar()
         self.gvar = IntVar()
         self.bvar = IntVar()
 
-        self.scale_l = 300
-        self.canvas_w = self.scale_l - 30
-        self.canvas_h = 26
+        self.scale_l = 300 * self.e
+        self.canvas_w = self.scale_l - 30 * self.e
+        self.canvas_h = 26 * self.e
         self.build()
 
         self.rvar.set(255)
         self.gvar.set(0)
         self.bvar.set(0)
 
-    def rhandle(self, _evt):
+    def rhandle(self, evt=None):
         """command callback for red
 
         Parameters
@@ -100,13 +103,13 @@ class RgbSelect:
         red = self.rvar.get()
         green = self.gvar.get()
         blue = self.bvar.get()
-        draw_gradient(self.gcan, (red, 0, blue),
-                      (red, 255, blue), width=self.canvas_w)
-        draw_gradient(self.bcan, (red, green, 0),
-                      (red, green, 255), width=self.canvas_w)
+        draw_gradient(self.gcan, (red, 0, blue), (red, 255, blue),
+                      width=self.canvas_w, height=self.canvas_h)
+        draw_gradient(self.bcan, (red, green, 0), (red, green, 255),
+                      width=self.canvas_w, height=self.canvas_h)
         self.lab['background'] = self.rgbhash(red, green, blue)
 
-    def ghandle(self, _evt):
+    def ghandle(self, evt=None):
         """command callback for green
 
         Parameters
@@ -121,13 +124,13 @@ class RgbSelect:
         red = self.rvar.get()
         green = self.gvar.get()
         blue = self.bvar.get()
-        draw_gradient(self.rcan, (0, green, blue),
-                      (255, green, blue), width=self.canvas_w)
-        draw_gradient(self.bcan, (red, green, 0),
-                      (red, green, 255), width=self.canvas_w)
+        draw_gradient(self.rcan, (0, green, blue), (255, green, blue),
+                      width=self.canvas_w, height=self.canvas_h)
+        draw_gradient(self.bcan, (red, green, 0), (red, green, 255),
+                      width=self.canvas_w, height=self.canvas_h)
         self.lab['background'] = self.rgbhash(red, green, blue)
 
-    def bhandle(self, _evt):
+    def bhandle(self, evt=None):
         """command callback for blue
 
         Parameters
@@ -142,10 +145,10 @@ class RgbSelect:
         red = self.rvar.get()
         green = self.gvar.get()
         blue = self.bvar.get()
-        draw_gradient(self.rcan, (0, green, blue),
-                      (255, green, blue), width=self.canvas_w)
-        draw_gradient(self.gcan, (red, 0, blue),
-                      (red, 255, blue), width=self.canvas_w)
+        draw_gradient(self.rcan, (0, green, blue), (255, green, blue),
+                      width=self.canvas_w, height=self.canvas_h)
+        draw_gradient(self.gcan, (red, 0, blue), (red, 255, blue),
+                      width=self.canvas_w, height=self.canvas_h)
         self.lab['background'] = self.rgbhash(red, green, blue)
 
     def build(self):
@@ -175,7 +178,10 @@ class RgbSelect:
             length=self.scale_l,
             command=self.rhandle,
             tickinterval=20,
-            showvalue=0)
+            showvalue=0,
+            width=15*self.e,
+            sliderlength=30*self.e)
+        
         rsc.grid(column=1, row=1, sticky='nw')
 
         rsb = Spinbox(self.fr0, from_=0, to=255, textvariable=self.rvar,
@@ -197,7 +203,10 @@ class RgbSelect:
             length=self.scale_l,
             command=self.ghandle,
             tickinterval=20,
-            showvalue=0)
+            showvalue=0,
+            width=15*self.e,
+            sliderlength=30*self.e)
+        
         gsc.grid(column=1, row=3, sticky='nw')
 
         gsb = Spinbox(self.fr0, from_=0, to=255, textvariable=self.gvar,
@@ -219,7 +228,10 @@ class RgbSelect:
             length=self.scale_l,
             command=self.bhandle,
             tickinterval=20,
-            showvalue=0)
+            showvalue=0,
+            width=15*self.e,
+            sliderlength=30*self.e)
+        
         bsc.grid(column=1, row=5, sticky='nw')
 
         bsb = Spinbox(self.fr0, from_=0, to=255, textvariable=self.bvar,
@@ -255,7 +267,11 @@ class RgbSelect:
 
 if __name__ == "__main__":
     root = Tk()
+    winsys = root.tk.call("tk", "windowingsystem")
+    BASELINE = 1.33398982438864281 if winsys != 'aqua' else 1.000492368291482
+    scaling = root.tk.call("tk", "scaling")
+    enlargement = int(scaling / BASELINE + 0.5)
     fra1 = Frame(root)
     fra1.grid(row=0, column=0)
-    RgbSelect(fra1)
+    RgbSelect(fra1, enlargement)
     root.mainloop()

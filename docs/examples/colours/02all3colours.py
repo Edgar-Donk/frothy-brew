@@ -70,20 +70,21 @@ class RgbSelect:
     None
     """
 
-    def __init__(self, parent):
+    def __init__(self, parent, enlargement):
         self.parent = parent
+        self.e = enlargement
 
         self.rvar = IntVar()
         self.gvar = IntVar()
         self.bvar = IntVar()
 
-        self. red = self.rvar.get()
+        self.red = self.rvar.get()
         self.green = self.gvar.get()
         self.blue = self.bvar.get()
 
         self.build()
 
-    def rhandle(self, _evt):
+    def rhandle(self, evt=None):
         """command callback for red
 
         Parameters
@@ -98,11 +99,13 @@ class RgbSelect:
         red = self.rvar.get()
         green = self.gvar.get()
         blue = self.bvar.get()
-        draw_gradient(self.gcan, (red, 0, blue), (red, 255, blue), width=300)
-        draw_gradient(self.bcan, (red, green, 0), (red, green, 255), width=300)
+        draw_gradient(self.gcan, (red, 0, blue), (red, 255, blue), width=300*self.e,
+                      height=26*self.e)
+        draw_gradient(self.bcan, (red, green, 0), (red, green, 255), width=300*self.e,
+                      height=26*self.e)
         self.lab['background'] = self.rgbhash(red, green, blue)
 
-    def ghandle(self, _evt):
+    def ghandle(self, evt=None):
         """command callback for green
 
         Parameters
@@ -118,11 +121,12 @@ class RgbSelect:
         green = self.gvar.get()
         blue = self.bvar.get()
         draw_gradient(self.rcan, (0, green, blue),
-                      (255, green, blue), width=300)
-        draw_gradient(self.bcan, (red, green, 0), (red, green, 255), width=300)
+                      (255, green, blue), width=300*self.e, height=26*self.e)
+        draw_gradient(self.bcan, (red, green, 0), (red, green, 255),
+                        width=300*self.e, height=26*self.e)
         self.lab['background'] = self.rgbhash(red, green, blue)
 
-    def bhandle(self, _evt):
+    def bhandle(self, evt=None):
         """command callback for blue
 
         Parameters
@@ -138,8 +142,9 @@ class RgbSelect:
         green = self.gvar.get()
         blue = self.bvar.get()
         draw_gradient(self.rcan, (0, green, blue),
-                      (255, green, blue), width=300)
-        draw_gradient(self.gcan, (r, 0, b), (r, 255, b), width=300)
+                      (255, green, blue), width=300*self.e, height=26*self.e)
+        draw_gradient(self.gcan, (red, 0, blue), (red, 255, blue),
+                        width=300*self.e, height=26*self.e)
         self.lab['background'] = self.rgbhash(red, green, blue)
 
     def build(self):
@@ -157,7 +162,7 @@ class RgbSelect:
         rl1 = Label(self.parent, text='red  ')
         rl1.grid(column=0, row=0)
 
-        self.rcan = Canvas(self.parent, width=300, height=26)
+        self.rcan = Canvas(self.parent, width=300*self.e, height=26*self.e)
         self.rcan.grid(column=1, row=0, sticky='n')
 
         rsc = Scale(
@@ -166,20 +171,23 @@ class RgbSelect:
             to=255,
             variable=self.rvar,
             orient='horizontal',
-            length=300,
+            length=300*self.e,
             command=self.rhandle,
             tickinterval=20,
-            showvalue=0)
+            showvalue=0,
+            width=15*self.e,
+            sliderlength=30*self.e)
+        
         rsc.grid(column=1, row=1, sticky='nw')
 
         rsb = Spinbox(self.parent, from_=0, to=255, textvariable=self.rvar,
-                      command=self.rhandle, width=5)
+                      command=self.rhandle, width=5*self.e)
         rsb.grid(column=2, row=0, sticky='nw')
 
         gl1 = Label(self.parent, text='green')
         gl1.grid(column=0, row=2)
 
-        self.gcan = Canvas(self.parent, width=300, height=26)
+        self.gcan = Canvas(self.parent, width=300*self.e, height=26*self.e)
         self.gcan.grid(column=1, row=2, sticky='n')
 
         gsc = Scale(
@@ -188,20 +196,23 @@ class RgbSelect:
             to=255,
             variable=self.gvar,
             orient='horizontal',
-            length=300,
+            length=300*self.e,
             command=self.ghandle,
             tickinterval=20,
-            showvalue=0)
+            showvalue=0,
+            width=15*self.e,
+            sliderlength=30*self.e)
+        
         gsc.grid(column=1, row=3, sticky='nw')
 
         gsb = Spinbox(self.parent, from_=0, to=255, textvariable=self.gvar,
-                      command=self.ghandle, width=5)
+                      command=self.ghandle, width=5*self.e)
         gsb.grid(column=2, row=2, sticky='nw')
 
         bl1 = Label(self.parent, text='blue ')
         bl1.grid(column=0, row=4)
 
-        self.bcan = Canvas(self.parent, width=300, height=26)
+        self.bcan = Canvas(self.parent, width=300*self.e, height=26*self.e)
         self.bcan.grid(column=1, row=4, sticky='n')
 
         bsc = Scale(
@@ -210,20 +221,23 @@ class RgbSelect:
             to=255,
             variable=self.bvar,
             orient='horizontal',
-            length=300,
+            length=300*self.e,
             command=self.bhandle,
             tickinterval=20,
-            showvalue=0)
+            showvalue=0,
+            width=15*self.e,
+            sliderlength=30*self.e)
+        
         bsc.grid(column=1, row=5, sticky='nw')
 
         bsb = Spinbox(self.parent, from_=0, to=255, textvariable=self.bvar,
-                      command=self.bhandle, width=5)
+                      command=self.bhandle, width=5*self.e)
         bsb.grid(column=2, row=4, sticky='nw')
 
         self.lab = lab = Label(self.parent, height=4, width=10)
         lab.grid(column=1, row=6)
         lab.grid_propagate(0)
-        lab['background'] = self.rgbhash(self.r, self.g, self.b)
+        lab['background'] = self.rgbhash(self.red, self.green, self.blue)
 
     def rgbhash(self, red, green, blue):
         """Convert rgb to hexadecimal
@@ -248,8 +262,12 @@ class RgbSelect:
 
 if __name__ == "__main__":
     root = Tk()
+    winsys = root.tk.call("tk", "windowingsystem")
+    BASELINE = 1.33398982438864281 if winsys != 'aqua' else 1.000492368291482
+    scaling = root.tk.call("tk", "scaling")
+    enlargement = int(scaling / BASELINE + 0.5)
     fra1 = Frame(root)
     fra1.grid(row=0, column=0)
-    RgbSelect(fra1)
+    RgbSelect(fra1, enlargement)
     root.mainloop()
 

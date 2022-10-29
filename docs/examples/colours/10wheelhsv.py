@@ -5,148 +5,8 @@
 
 from tkinter import Tk, Canvas, Label, IntVar, Frame, PhotoImage
 from tkinter.ttk import LabelFrame, Scale, Style, Spinbox
-from math import pi, atan2, degrees, hypot, cos, sin
 from PIL import Image, ImageDraw, ImageTk
-import numpy as np
-
-
-def rgb2hash(red, green, blue):
-    """Convert rgb to hexadecimal
-
-    Parameters
-    ----------
-    red : int
-        red component
-    green : int
-        green component
-    blue : int
-        blue component
-    Results
-    -------
-    string
-        hexadecimal colour
-    """
-
-    rgb = (red, green, blue)
-    return '#%02x%02x%02x' % rgb
-
-
-def circle(canvas, x, y, radius, width=None, tags=None, outline=None,
-           activeoutline=None):
-    """Canvas circle with centre and radius
-
-    Parameters
-    ----------
-    canvas : str
-        handle to canvas
-    x : int
-        x coord centre
-    y : int
-        y coord centre
-    radius : int
-        radius
-    width : int
-        outside ring
-    tags : str
-        tags
-    outline : str
-        colour outside ring
-
-    Returns
-    -------
-    canvas circle
-    """
-
-    return canvas.create_oval(x + radius, y + radius, x - radius, y - radius,
-                              width=width, tags=tags,
-                              activeoutline=activeoutline, outline=outline)
-
-
-def generate_gradient(from_colour, to_colour, height, width):
-    """Draw gradient in numpy as array
-
-    Parameters
-    ----------
-    from_colour : tuple of int
-        start colour
-    to_colour : tuple of int
-        end colour
-    height : int
-        canvas height
-    width : int
-        canvas width
-
-    Returns
-    -------
-    array of integers
-    """
-
-    new_ch = [np.tile(np.linspace(from_colour[i], to_colour[i], width,
-                                  dtype=np.uint8),
-                      [height, 1]) for i in range(len(from_colour))]
-    return np.dstack(new_ch)
-
-
-def draw_gradient(canvas, colour1, colour2, width=300, height=26):
-    """Import gradient into tkinter
-
-    Parameters
-    ----------
-    canvas : str
-        parent widget
-    colour1 : tuple of int
-        start colour
-    colour2 : tuple of int
-        end colour
-    steps : int
-        number steps in gradient
-    width : int
-        canvas width
-    height : int
-        canvas height
-
-    Returns
-    -------
-    None
-    """
-
-    arr = generate_gradient(colour1, colour2, height, width)
-    xdata = 'P6 {} {} 255 '.format(width, height).encode() + arr.tobytes()
-    gradient = PhotoImage(width=width, height=height, data=xdata, format='PPM')
-    canvas.create_image(0, 0, anchor="nw", image=gradient)
-    canvas.image = gradient
-
-
-def hue_gradient(canvas, width=300, height=26, steps=360):
-    """Draw hue gradient in tkinter canvas
-
-    Parameters
-    ----------
-    canvas : str
-        parent widget
-    width : int
-        canvas width
-    height : int
-        canvas height
-    steps : int
-        steps
-
-    Returns
-    -------
-    array of integers
-    """
-
-    image = Image.new("RGB", (width, height), "#FFFFFF")
-    hdraw = ImageDraw.Draw(image)
-
-    for i in range(steps):
-        x0 = int(float(width * i) / steps)
-        x1 = int(float(width * (i + 1)) / steps)
-        hdraw.rectangle((x0, 0, x1, height), fill=hsv_to_rgb(i, 100, 100))
-    gradient = ImageTk.PhotoImage(image)
-    canvas.create_image(0, 0, anchor="nw", image=gradient)
-    canvas.image = gradient
-
+from colourTools import draw_gradient, hsv_to_rgb, hue_gradient, circle
 
 def sb_okay(text, input_, upper):  # '%P','%S'
     """Validation for colour components
@@ -170,127 +30,6 @@ def sb_okay(text, input_, upper):  # '%P','%S'
             return bool(0 <= int(text) <= int(upper))
         return False
     return False
-
-
-def hsv_to_rgb(h, s, v):
-    """Conversion hsv to rgb
-        h 0-360, s & v 0-100
-
-    Parameters
-    ----------
-    h : int
-        hue
-    s : int
-        saturation
-    v : int
-        value
-
-    Returns
-    -------
-    tuple integers for rgb
-    """
-
-    h = min(max(h, 0), 360)
-    s = min(max(s, 0), 100)
-    v = min(max(v, 0), 100)
-    h, s, v = h / 360.0, s / 100.0, v / 100.0
-    # calculate all 0 รท 1.0
-    if s == 0.0:
-        v *= 255
-        v = int(v)
-        return (v, v, v)
-    i = int(h * 6.)  # assume int() truncates!
-    f = (h * 6.) - i
-    p, q, t = int(255 * (v * (1. - s))),\
-        int(255 * (v * (1. - s * f))),\
-        int(255 * (v * (1. - s * (1. - f))))
-    v *= 255
-    i %= 6
-    v = int(v)
-    if i == 0:
-        return (v, t, p)
-    if i == 1:
-        return (q, v, p)
-    if i == 2:
-        return (p, v, t)
-    if i == 3:
-        return (p, q, v)
-    if i == 4:
-        return (t, p, v)
-    if i == 5:
-        return (v, p, q)
-
-
-def polar2cart(phi, ray, outer_w, inner_w):
-    """Conversion polar to cartesian coordinates
-        original image 317x317 using inner 299x299 working area,
-        ring can be on outer edge wheel, so allow a space around image
-        image size used in calculating phi, ray from x,y
-        phi,ray is h,s of hsv, ray adjusted
-
-    Parameters
-    ----------
-    phi : float
-        angle
-    ray : float
-        distance to centre angle
-    outer_w : int
-        outside width of colour wheelimage
-    inner_w : int
-        inner width of colour wheelimage
-
-    Returns
-    -------
-    tuple of integers
-    """
-
-    centre = outer_w // 2, outer_w // 2
-    inner = inner_w, inner_w
-    radius = min(inner) // 2
-    ray = ray * radius / 100
-
-    dx = ray * cos(phi * pi / 180)
-    dy = ray * sin(phi * pi / 180)
-    x = centre[0] + dx
-    y = centre[1] + dy
-
-    return int(x + 0.5), int(y + 0.5)
-
-
-def cart2polar(x, y, outer_w, inner_w):
-    """Conversion cartesian to polar coordinates
-        output h,s of hsv; s adjusted
-
-    Parameters
-    ----------
-    x : int
-        horiz coord
-    y : int
-        vert coord
-    outer_w : int
-        outside width of colour wheelimage
-    inner_w : int
-        inner width of colour wheelimage
-
-    Returns
-    -------
-    tuple of floats
-    """
-
-    centre = outer_w // 2, outer_w // 2
-    inner = inner_w, inner_w
-    radius = min(inner) // 2
-
-    dx = x - centre[0]
-    dy = y - centre[1]
-    deg = int(0.5 + degrees(atan2(dy, dx)))
-    if deg < 0:
-        deg = 360 + deg
-    ray = int(0.5 + hypot(dx, dy) * 100 / radius)
-    ray = min(max(ray, 0), 100)
-    deg = min(max(deg, 0), 360)
-
-    return deg, ray
 
 
 class TtkScale(Scale):
@@ -322,7 +61,7 @@ class TtkScale(Scale):
 
     def __init__(self, parent, from_=0, to=255, length=300, orient='horizontal',
                  variable=0, digits=None, tickinterval=None, sliderlength=16,
-                 command=None):
+                 command=None, enlargement=1):
         self.from_ = from_
         self.to = to
         self.variable = variable
@@ -332,6 +71,7 @@ class TtkScale(Scale):
 
         self.digits = digits
         self.length = length
+        self.e = enlargement
 
         self.build(parent, from_, to, sliderlength, tickinterval, length)
 
@@ -358,8 +98,8 @@ class TtkScale(Scale):
             for i in range(from_, to + 2, tickinterval):
                 item = Label(parent, text=i, bg='#EFFEFF')
                 item.place(in_=self, bordermode='outside',
-                           relx=sliderlength / length / 2 +
-                           i / sc_range * (1 - sliderlength / length),
+                           relx=sliderlength*self.e / length*self.e / 2 +
+                           i / sc_range * (1 - sliderlength*self.e / length*self.e),
                            rely=1, anchor='n')
 
 
@@ -376,21 +116,22 @@ class HsvSelect:
     None
     """
 
-    def __init__(self, fr0):
+    def __init__(self, fr0, enlargement):
         self.fr0 = fr0
 
         self.hvar = IntVar()
         self.svar = IntVar()
         self.vvar = IntVar()
+        self.e = enlargement
 
-        self.scale_l = 300
+        self.scale_l = 300*self.e
         self.canvas_w = self.scale_l
-        self.canvas_h = 26
-        self.cursor_w = 16
-        self.wheel_w = 317
-        self.wheel_iw = 299
-        self.ring_radius = 10
-        self.ring_width = 3
+        self.canvas_h = 26*self.e
+        self.cursor_w = 16*self.e
+        self.wheel_w = 317*self.e
+        self.wheel_iw = 299*self.e
+        self.ring_radius = 10*self.e
+        self.ring_width = 3*self.e
 
         self.build()
 
@@ -416,10 +157,12 @@ class HsvSelect:
         value = self.vvar.get()
         from_colour = hsv_to_rgb(*(hue, 0, value))
         to_colour = hsv_to_rgb(*(hue, 100, value))
-        draw_gradient(self.scan, from_colour, to_colour, width=self.canvas_w)
+        draw_gradient(self.scan, from_colour, to_colour,
+                      width=self.canvas_w, height=self.canvas_h)
         from_colour = hsv_to_rgb(*(hue, sat, 0))
         to_colour = hsv_to_rgb(*(hue, sat, 100))
-        draw_gradient(self.vcan, from_colour, to_colour, width=self.canvas_w)
+        draw_gradient(self.vcan, from_colour, to_colour,
+                      width=self.canvas_w, height=self.canvas_h)
 
     def shandle(self, evt=None):
         """command callback for saturation
@@ -439,10 +182,12 @@ class HsvSelect:
         value = self.vvar.get()
         from_colour = hsv_to_rgb(*(hue, 0, value))
         to_colour = hsv_to_rgb(*(hue, 100, value))
-        draw_gradient(self.scan, from_colour, to_colour, width=self.canvas_w)
+        draw_gradient(self.scan, from_colour, to_colour,
+                      width=self.canvas_w, height=self.canvas_h)
         from_colour = hsv_to_rgb(*(hue, sat, 0))
         to_colour = hsv_to_rgb(*(hue, sat, 100))
-        draw_gradient(self.vcan, from_colour, to_colour, width=self.canvas_w)
+        draw_gradient(self.vcan, from_colour, to_colour,
+                      width=self.canvas_w, height=self.canvas_h)
 
     def vhandle(self, evt=None):
         """command callback for value
@@ -462,10 +207,12 @@ class HsvSelect:
         self.vvar.set(int(0.5 + value))
         from_colour = hsv_to_rgb(*(hue, 0, value))
         to_colour = hsv_to_rgb(*(hue, 100, value))
-        draw_gradient(self.scan, from_colour, to_colour, width=self.canvas_w)
+        draw_gradient(self.scan, from_colour, to_colour,
+                      width=self.canvas_w, height=self.canvas_h)
         from_colour = hsv_to_rgb(*(hue, sat, 0))
         to_colour = hsv_to_rgb(*(hue, sat, 100))
-        draw_gradient(self.vcan, from_colour, to_colour, width=self.canvas_w)
+        draw_gradient(self.vcan, from_colour, to_colour,
+                      width=self.canvas_w, height=self.canvas_h)
 
     def build(self):
         """widget construction
@@ -544,17 +291,18 @@ class HsvSelect:
         # assume initial setting 0,100,100 hsv
         to_colour = hsv_to_rgb(*(0, 100, 100))
 
-        hue_gradient(self.hcan, width=self.canvas_w)
-        draw_gradient(self.scan, (255, 255, 255),
-                      to_colour, width=self.canvas_w)
-        draw_gradient(self.vcan, (0, 0, 0), to_colour, width=self.canvas_w)
+        hue_gradient(self.hcan, width=self.canvas_w, height=self.canvas_h)
+        draw_gradient(self.scan, (255, 255, 255), to_colour,
+                      width=self.canvas_w, height=self.canvas_h)
+        draw_gradient(self.vcan, (0, 0, 0), to_colour,
+                      width=self.canvas_w, height=self.canvas_h)
 
         can_hsv = Canvas(fr4, width=self.wheel_w,
                          height=self.wheel_w, bg='#d9d9d9')
         can_hsv.grid(column=1, row=9, pady=25, sticky='n')
-        self.hsv_gamut = PhotoImage(file='../../figures/colour_wheel.png')
+        self.hsv_gamut = PhotoImage(file='../../figures/colour_wheel'+str(self.e)+'.png')
         can_hsv.create_image(0, 0, anchor='nw', image=self.hsv_gamut)
-        self.ring = circle(can_hsv, 307, 158, self.ring_radius,
+        self.ring = circle(can_hsv, 307*self.e, 158*self.e, self.ring_radius,
                            width=self.ring_width, tags='ring')
 
     def checksbh(self, evt):
@@ -575,10 +323,12 @@ class HsvSelect:
         value = self.vvar.get()
         from_colour = hsv_to_rgb(*(hue, 0, value))
         to_colour = hsv_to_rgb(*(hue, 100, value))
-        draw_gradient(self.scan, from_colour, to_colour, width=self.canvas_w)
+        draw_gradient(self.scan, from_colour, to_colour,
+                      width=self.canvas_w, height=self.canvas_h)
         from_colour = hsv_to_rgb(*(hue, sat, 0))
         to_colour = hsv_to_rgb(*(hue, sat, 100))
-        draw_gradient(self.vcan, from_colour, to_colour, width=self.canvas_w)
+        draw_gradient(self.vcan, from_colour, to_colour,
+                      width=self.canvas_w, height=self.canvas_h)
 
     def checksb100(self, evt):
         """Procedure called by s,v spinboxes
@@ -598,22 +348,28 @@ class HsvSelect:
         value = self.vvar.get()
         from_colour = hsv_to_rgb(*(hue, 0, value))
         to_colour = hsv_to_rgb(*(hue, 100, value))
-        draw_gradient(self.scan, from_colour, to_colour, width=self.canvas_w)
+        draw_gradient(self.scan, from_colour, to_colour,
+                      width=self.canvas_w, height=self.canvas_h)
         from_colour = hsv_to_rgb(*(hue, sat, 0))
         to_colour = hsv_to_rgb(*(hue, sat, 100))
-        draw_gradient(self.vcan, from_colour, to_colour, width=self.canvas_w)
+        draw_gradient(self.vcan, from_colour, to_colour,
+                      width=self.canvas_w, height=self.canvas_h)
 
 
 if __name__ == "__main__":
     root = Tk()
+    winsys = root.tk.call("tk", "windowingsystem")
+    BASELINE = 1.33398982438864281 if winsys != 'aqua' else 1.000492368291482
+    scaling = root.tk.call("tk", "scaling")
+    enlargement = e = int(scaling / BASELINE + 0.5)
 
     img = Image.new("RGBA", (16, 10), '#00000000')
     trough = ImageTk.PhotoImage(img)
 
     # constants for creating upward pointing arrow
-    WIDTH = 17
-    HEIGHT = 17
-    OFFSET = 5
+    WIDTH = 17*e
+    HEIGHT = 17*e
+    OFFSET = 5*e
     ST0 = WIDTH // 2, HEIGHT - 1 - OFFSET
     LIGHT = 'GreenYellow'
     MEDIUM = 'LawnGreen'
@@ -650,11 +406,11 @@ if __name__ == "__main__":
                                      {'border': 3, 'sticky': 'n'})}})
 
     style.theme_use('default')
-
-    root.geometry("500x600+200+100")
+    style.configure('TSpinbox', arrowsize=10*e)
+    #root.geometry("500x600+200+100")
     fra0 = Frame(root)
     fra0.grid(row=0, column=0, sticky='nsew')
-    HsvSelect(fra0)
+    HsvSelect(fra0, enlargement)
     root.mainloop()
 
 root.mainloop()
