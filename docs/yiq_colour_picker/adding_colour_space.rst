@@ -19,6 +19,16 @@ Like the colour wheel there is no real need for a scale, it will show up on
 the gradients. In Wikipedia the y axis was flipped so that the axis follows 
 mathematical convention with increasing y going vertically upwards.
 
+.. _colour-space:
+
+.. container:: toggle
+
+    .. container:: header
+
+        *Show/Hide Code* 02yiq_colour_space.py
+
+    .. literalinclude:: ../examples/yiq/02yiq_colour_space.py
+
 We can now change 01basicyiq.py into 03yiqspaceadded.py whilst importing the
 image created from 02yiq_colourspace.py. Add the function for a circle,  
 insert the canvas for the colour space, together with its cursor - include 
