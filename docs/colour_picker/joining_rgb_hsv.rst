@@ -218,14 +218,6 @@ so add horizontal padding, half the slider length, to the canvas.
         *Show/Hide Code* 12rgbandhsv.py
 
     .. literalinclude:: ../examples/colours/12rgbandhsv.py
-        :emphasize-lines: 6,118,146,176,565,677,700,723,769,799,820,840,842,
-            859-907,909,929-945,947,954-959,961,968-973,975,982-987,989,
-            996-1001,1003,1010-1012,1014,1021-1028,1030,1037-1044,1051,1059,
-            1081,1101,1133-1156,1178,1202,1210,1232,1241,1276,1524,1527-1528,
-            634,1057,1079,1099,1176,1208,1230,1250
-
-.. note:: Only those changes caused by major revisions have been highlighted,
-        changes caused by joining the two colour schemes not been shown.
 
 .. figure :: ../figures/hsv_related_adjusted.webp
     :width: 516
