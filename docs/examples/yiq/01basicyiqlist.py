@@ -2,148 +2,10 @@
     spinbox validation, working with modified Scale
 """
 
-from tkinter import Tk, Canvas, Label, Frame, PhotoImage, StringVar
+from tkinter import Tk, Canvas, Label, Frame, StringVar
 from tkinter.ttk import LabelFrame, Scale, Style, Spinbox
 from PIL import Image, ImageDraw, ImageTk
-import numpy as np
-
-
-def rgb2hash(red, green, blue):
-    """Convert rgb to hexadecimal
-
-    Parameters
-    ----------
-    red : int
-        red component
-    green : int
-        green component
-    blue : int
-        blue component
-
-    Returns
-    -------
-    hash : str
-        hexadecimal colour
-    """
-
-    rgb = (red, green, blue)
-    return '#%02x%02x%02x' % rgb
-
-
-def yiq_to_rgb(y, i, q):
-    """Conversion yiq to rgb
-        incoming y 0 to 100, i, q ±100
-
-    Parameters
-    ----------
-    y : str
-        luma
-    i : str
-        chrominance
-    q : str
-        chrominance
-
-    Returns
-    -------
-    tuple of integers
-    """
-
-    # assume I and Q between ±1, correct for coloursys
-    y = min(max(y, 0), 100)
-    i = min(max(i, -100), 100)
-    q = min(max(q, -100), 100)
-    y = y / 100
-    i = 0.599 * i / 100
-    q = 0.5251 * q / 100
-
-    red = y + 0.9468822170900693 * i + 0.6235565819861433 * q
-    green = y - 0.27478764629897834 * i - 0.6356910791873801 * q
-    blue = y - 1.1085450346420322 * i + 1.7090069284064666 * q
-    red = min(max(red, 0), 1)
-    green = min(max(green, 0), 1)
-    blue = min(max(blue, 0), 1)
-
-    return (int(red * 255 + 0.5), int(green * 255 + 0.5), int(blue * 255 + 0.5))
-
-
-def generate_gradient(from_colour, to_colour, height, width):
-    """Draw gradient in numpy as array
-
-    Parameters
-    ----------
-    from_colour : tuple of int
-        start colour
-    to_colour : tuple of int
-        end colour
-    height : int
-        canvas height
-    width : int
-        canvas width
-
-    Returns
-    -------
-    array of integers
-    """
-
-    new_ch = [np.tile(np.linspace(from_colour[i], to_colour[i], width,
-                                  dtype=np.uint8),
-                      [height, 1]) for i in range(len(from_colour))]
-    return np.dstack(new_ch)
-
-
-def draw_gradient(canvas, colour1, colour2, width=300, height=26):
-    """Import gradient into tkinter
-
-    Parameters
-    ----------
-    canvas : str
-        parent widget
-    colour1 : tuple of int
-        start colour
-    colour2 : tuple of int
-        end colour
-    steps : int
-        number steps in gradient
-    width : int
-        canvas width
-    height : int
-        canvas height
-    """
-
-    arr = generate_gradient(colour1, colour2, height, width)
-    xdata = 'P6 {} {} 255 '.format(width, height).encode() + arr.tobytes()
-    gradient = PhotoImage(width=width, height=height, data=xdata, format='PPM')
-    canvas.create_image(0, 0, anchor="nw", image=gradient)
-    canvas.image = gradient
-
-
-def yiq_okay(action, text, input_, lower, upper):
-    """Validation for colour components
-
-    Parameters
-    ----------
-    action : str
-        action
-    text : str
-        text if accepted
-    input_ : str
-        current input
-    lower : str
-        lower limit
-    upper : int
-        upper limit
-
-    Returns
-    -------
-    boolean
-    """
-
-    # action=1 -> insert
-    if action == "1":
-        if input_ in '0123456789.-+':
-            return bool(float(lower) <= float(text) <= float(upper))
-        return False
-    return True
+from yiqTools import draw_gradient, yiq_to_rgb, yiq_okay 
 
 
 class TtkScale(Scale):
@@ -226,17 +88,19 @@ class YiqSelect:
         parent widget
     """
 
-    def __init__(self, fr0):
+    def __init__(self, fr0, enlargement):
         self.fr0 = fr0
+        self.e = enlargement
 
         self.yvar = StringVar()
         self.ivar = StringVar()
         self.qvar = StringVar()
 
-        self.scale_l = 300
-        self.canvas_w = self.scale_l
-        self.canvas_h = 26
-        self.cursor_w = 16
+        self.scale_l = 300*self.e
+        self.sliderlength = 16*self.e
+        self.canvas_w = self.scale_l-self.sliderlength
+        self.canvas_h = 26*self.e
+        self.canvas_b = 30*self.e
 
         self.build()
 
@@ -252,13 +116,16 @@ class YiqSelect:
         q = float(self.qvar.get())
         from_colour = yiq_to_rgb(*(0, i, q))
         to_colour = yiq_to_rgb(*(100, i, q))
-        draw_gradient(self.cans[0], from_colour, to_colour, width=self.canvas_w)
+        draw_gradient(self.cans[0], from_colour, to_colour,
+                      width=self.canvas_w, height=self.canvas_h)
         from_colour = yiq_to_rgb(*(y, -100, q))
         to_colour = yiq_to_rgb(*(y, 100, q))
-        draw_gradient(self.cans[1], from_colour, to_colour, width=self.canvas_w)
+        draw_gradient(self.cans[1], from_colour, to_colour,
+                      width=self.canvas_w, height=self.canvas_h)
         from_colour = yiq_to_rgb(*(y, i, -100))
         to_colour = yiq_to_rgb(*(y, i, 100))
-        draw_gradient(self.cans[2], from_colour, to_colour, width=self.canvas_w)
+        draw_gradient(self.cans[2], from_colour, to_colour,
+                      width=self.canvas_w, height=self.canvas_h)
 
     def build(self):
         """widget construction"""
@@ -296,11 +163,13 @@ class YiqSelect:
         to_colour = yiq_to_rgb(*(30, 100.0, 40.56))
         # print(self.canvas_w)
         draw_gradient(self.cans[0], yiq_to_rgb(0.0, 100.0, 40.56),
-                      yiq_to_rgb(100, 100, 40.56), width=self.canvas_w)
+                      yiq_to_rgb(100, 100, 40.56),
+                      width=self.canvas_w, height=self.canvas_h)
         draw_gradient(self.cans[1], yiq_to_rgb(30, -100.0, 40.56), to_colour,
-                      width=self.canvas_w)
+                      width=self.canvas_w, height=self.canvas_h)
         draw_gradient(self.cans[2], yiq_to_rgb(30, 100, -100),
-                      yiq_to_rgb(30, 100, 100), width=self.canvas_w)
+                      yiq_to_rgb(30, 100, 100),
+                      width=self.canvas_w, height=self.canvas_h)
 
     def checksyiq(self, evt):
         """Procedure called by yiq spinboxes
@@ -316,25 +185,32 @@ class YiqSelect:
         q = float(self.qvar.get())
         from_colour = yiq_to_rgb(*(0, i, q))
         to_colour = yiq_to_rgb(*(100, i, q))
-        draw_gradient(self.cans[0], from_colour, to_colour, width=self.canvas_w)
+        draw_gradient(self.cans[0], from_colour, to_colour,
+                      width=self.canvas_w, height=self.canvas_h)
         from_colour = yiq_to_rgb(*(y, -100, q))
         to_colour = yiq_to_rgb(*(y, 100, q))
-        draw_gradient(self.cans[1], from_colour, to_colour, width=self.canvas_w)
+        draw_gradient(self.cans[1], from_colour, to_colour,
+                      width=self.canvas_w, height=self.canvas_h)
         from_colour = yiq_to_rgb(*(y, i, -100))
         to_colour = yiq_to_rgb(*(y, i, 100))
-        draw_gradient(self.cans[2], from_colour, to_colour, width=self.canvas_w)
+        draw_gradient(self.cans[2], from_colour, to_colour,
+                      width=self.canvas_w, height=self.canvas_h)
 
 
 if __name__ == "__main__":
     root = Tk()
+    winsys = root.tk.call("tk", "windowingsystem")
+    BASELINE = 1.33398982438864281 if winsys != 'aqua' else 1.000492368291482
+    scaling = root.tk.call("tk", "scaling")
+    enlargement = e = int(scaling / BASELINE + 0.5)
 
-    img = Image.new("RGBA", (16, 10), '#00000000')
+    img = Image.new("RGBA", (16*e, 10*e), '#00000000')
     trough = ImageTk.PhotoImage(img)
 
     # constants for creating upward pointing arrow
-    WIDTH = 17
-    HEIGHT = 17
-    OFFSET = 5
+    WIDTH = 17*e
+    HEIGHT = 17*e
+    OFFSET = 5*e
     ST0 = WIDTH // 2, HEIGHT - 1 - OFFSET
     LIGHT = 'GreenYellow'
     MEDIUM = 'LawnGreen'
@@ -371,9 +247,9 @@ if __name__ == "__main__":
                                      {'border': 3, 'sticky': 'n'})}})
 
     style.theme_use('default')
-
+    style.configure('TSpinbox', arrowsize=10*e)
     fr = Frame(root)
     fr.grid(row=0, column=0, sticky='nsew')
-    YiqSelect(fr)
+    YiqSelect(fr, enlargement)
     root.mainloop()
 

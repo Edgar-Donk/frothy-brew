@@ -5,432 +5,8 @@
 from tkinter import Tk, Canvas, IntVar, Frame, PhotoImage, StringVar
 from tkinter.ttk import LabelFrame, Scale, Style, Entry, Spinbox, Label
 from PIL import Image, ImageDraw, ImageTk
-import numpy as np
-
-
-def rgb2hash(red, green, blue):
-    """Convert rgb to hexadecimal
-
-    Parameters
-    ----------
-    red : int
-        red component
-    green : int
-        green component
-    blue : int
-        blue component
-
-    Returns
-    -------
-    hash : str
-        hexadecimal colour
-    """
-
-    rgb = (red, green, blue)
-    return '#%02x%02x%02x' % rgb
-
-
-def circle(canvas, x, y, radius, width=None, tags=None, outline=None,
-           activeoutline=None):
-    """Returns Canvas circle using centre and radius
-
-    Parameters
-    ----------
-    canvas : str
-        handle to canvas
-    x : int
-        x coord centre
-    y : int
-        y coord centre
-    radius : int
-        radius
-    width : int
-        outside ring
-    tags : str
-        tags
-    outline : str
-        colour outside ring
-    activeoutline : str
-        colour outside ring when mouse on ring
-    """
-
-    return canvas.create_oval(x + radius, y + radius, x - radius, y - radius,
-                              width=width, tags=tags,
-                              activeoutline=activeoutline, outline=outline)
-
-def yiq_to_rgb(y, i, q):
-    """Conversion yiq to rgb
-        incoming y 0 to 100, i, q ±100
-
-    Parameters
-    ----------
-    y : str
-        luma
-    i : str
-        chrominance
-    q : str
-        chrominance
-
-    Returns
-    -------
-    tuple of integers
-    """
-
-    # assume I and Q between ±1, correct for coloursys
-    y = min(max(y, 0), 100)
-    i = min(max(i, -100), 100)
-    q = min(max(q, -100), 100)
-    y = y / 100
-    i = 0.599 * i / 100
-    q = 0.5251 * q / 100
-
-    red = y + 0.9468822170900693 * i + 0.6235565819861433 * q
-    green = y - 0.27478764629897834 * i - 0.6356910791873801 * q
-    blue = y - 1.1085450346420322 * i + 1.7090069284064666 * q
-    red = min(max(red, 0), 1)
-    green = min(max(green, 0), 1)
-    blue = min(max(blue, 0), 1)
-
-    return (int(red * 255 + 0.5), int(green * 255 + 0.5), int(blue * 255 + 0.5))
-
-
-def rgb_to_yiq(red, green, blue):
-    """Converts rgb to yiq
-        incoming and outgoing denormalised, y 0 to 100, i, q ±100
-
-    Parameters
-    ----------
-    red : int
-        red
-    green : int
-        green
-    blue : int
-        blue
-
-    Returns
-    -------
-    yiq : float
-        tuple of floats
-    """
-
-    red = red / 255
-    green = green / 255
-    blue = blue / 255
-    y = 0.30 * red + 0.59 * green + 0.11 * blue
-    i = 0.74 * (red - y) - 0.27 * (blue - y)
-    q = 0.48 * (red - y) + 0.41 * (blue - y)
-    i = i / 0.599
-    q = q / 0.5251
-    return (y * 100, i * 100, q * 100)
-
-
-def generate_gradient(from_colour, to_colour, height, width):
-    """Draw gradient in numpy as array
-
-    Parameters
-    ----------
-    from_colour : tuple of int
-        start colour
-    to_colour : tuple of int
-        end colour
-    height : int
-        canvas height
-    width : int
-        canvas width
-
-    Returns
-    -------
-    array of integers
-    """
-
-    new_ch = [np.tile(np.linspace(from_colour[i], to_colour[i], width,
-                                  dtype=np.uint8),
-                      [height, 1]) for i in range(len(from_colour))]
-    return np.dstack(new_ch)
-
-
-def draw_gradient(canvas, colour1, colour2, width=300, height=26):
-    """Import gradient into tkinter
-
-    Parameters
-    ----------
-    canvas : str
-        parent widget
-    colour1 : tuple of int
-        start colour
-    colour2 : tuple of int
-        end colour
-    steps : int
-        number steps in gradient
-    width : int
-        canvas width
-    height : int
-        canvas height
-
-    """
-
-    arr = generate_gradient(colour1, colour2, height, width)
-    xdata = 'P6 {} {} 255 '.format(width, height).encode() + arr.tobytes()
-    gradient = PhotoImage(width=width, height=height, data=xdata, format='PPM')
-    canvas.create_image(0, 0, anchor="nw", image=gradient)
-    canvas.image = gradient
-
-
-def check(width, height, square_size=4):
-    """Draw chequers in numpy as array
-        chequer value to grey or white depends on x position
-
-    Parameters
-    ----------
-    width : int
-        canvas width
-    height : int
-        canvas height
-    square_size : int
-        size each square
-
-    Returns
-    -------
-    array of integers
-    """
-
-    array = np.zeros([height, width, 3], dtype=np.uint8)
-    for x in range(width):
-        for y in range(height):
-            if (x % square_size * 2) // square_size ==\
-               (y % square_size * 2) // square_size:
-                array[y, x] = 127 - int(0.5 + 127 / width * x)
-    return array
-
-
-def draw_agradient(canvas, colour1, colour2, width=300, height=26):
-    """Import alpha gradient into tkinter
-
-    Parameters
-    ----------
-    canvas : str
-        parent widget
-    colour1 : tuple of int
-        start colour
-    colour2 : tuple of int
-        end colour
-    steps : int
-        number steps in gradient
-    width : int
-        canvas width
-    height : int
-        canvas height
-
-    """
-
-    arr = generate_gradient(colour1, colour2, height, width)
-    arr1 = check(width, height)
-    xdata = 'P6 {} {} 255 '.format(
-        width, height).encode() + (arr + arr1).tobytes()
-    gradient = PhotoImage(width=width, height=height, data=xdata, format='PPM')
-    canvas.create_image(0, 0, anchor="nw", image=gradient)
-    canvas.image = gradient
-
-
-def vcheck(width, height, alpha, square_size=4):
-    """Draw vertical chequers in numpy as array
-        chequer value to grey or white depends on y position
-
-    Parameters
-    ----------
-    width : int
-        canvas width
-    height : int
-        canvas height
-    alpha : int
-        opacity
-    square_size : int
-        size each square
-
-    Returns
-    -------
-    array of integers
-    """
-
-    al0 = 127 - alpha // 2
-    ah0 = al0 / height
-    array = np.zeros([height, width, 3], dtype=np.uint8)
-    for y in range(height):
-        for x in range(width):
-            if (x % square_size * 2) // square_size == (y % square_size * 2) \
-                    // square_size:
-                array[y, x] = int(0.5 + ah0 * y)
-    return array
-
-
-def vgenerate_gradient(to_colour, alpha, height, width):
-    """Draw vertical gradient in numpy as array
-
-    Parameters
-    ----------
-    to_colour : tuple of int
-        end colour
-    alpha : int
-        opacity
-    height : int
-        canvas height
-    width : int
-        canvas width
-
-    Returns
-    -------
-    array of integers
-    """
-
-    al0 = alpha / 255
-    res0 = 1 - al0
-    from_colour = (int(to_colour[0] * al0 + 127 * res0),
-                   int(to_colour[1] * al0 + 127 * res0),
-                   int(to_colour[2] * al0 + 127 * res0))  # changing from_colour
-    new_ch = [np.tile(np.linspace(to_colour[i], from_colour[i], height,
-                                  dtype=np.uint8),
-                      [width, 1]).T for i in range(3)]
-    return np.dstack(new_ch)
-
-
-def vdraw_gradient(canvas, colour1, alpha=255, width=30, height=30):
-    """Either background fill
-        or call vgenerate_gradient then vcheck, import vertical gradient
-        into tkinter
-
-    Parameters
-    ----------
-    canvas : str
-        parent widget
-    colour1 : tuple of int
-        start colour
-    alpha : int
-        opacity
-    width : int
-        canvas width
-    height : int
-        canvas height
-
-    """
-
-    if alpha > 240:
-        hash_value = rgb2hash(colour1[0], colour1[1], colour1[2])
-        canvas['background'] = hash_value
-        canvas.background = hash_value
-    else:
-        arr = vgenerate_gradient(colour1, alpha, height, width)
-        arr1 = vcheck(width, height, alpha)
-        xdata = 'P6 {} {} 255 '.format(
-            width, height).encode() + (arr + arr1).tobytes()
-        gradient = PhotoImage(
-            width=width,
-            height=height,
-            data=xdata,
-            format='PPM')
-        canvas.create_image(0, 0, anchor="nw", image=gradient)
-        canvas.image = gradient
-
-
-def yiq_okay(action, text, input_, lower, upper):
-    """Validation for yiq colour components
-
-    Parameters
-    ----------
-    action : str
-        action
-    text : str
-        text if accepted
-    input_ : str
-        current input
-    lower : str
-        lower limit
-    upper : int
-        upper limit
-
-    Returns
-    -------
-    boolean
-    """
-
-    # action=1 -> insert
-    if action == "1":
-        if input_ in '0123456789.-+':
-            return bool(float(lower) <= float(text) <= float(upper))
-        return False
-    return True
-
-
-def is_okay(index, text, input_):  # '%i','%P','%S'
-    """Validation for hash, which cannot be removed,
-        hex check on input after hash
-
-    Parameters
-    ----------
-    index : str
-        index
-    text : str
-        text if accepted
-    input_ : str
-        current input
-
-    Returns
-    -------
-    boolean
-    """
-
-    index = int(index)  # index is string!
-    if index == 0 and text == '#':
-        return True
-    try:
-        int(input_, 16)
-        return bool(0 < index < 7)
-    except ValueError:  # not a hex
-        return False
-
-
-def sb_okay(action, text, input_, lower, upper):  # '%P','%S'
-    """Validation for rgba colour components
-
-    Parameters
-    ----------
-    action : str
-        insertion or deletion
-    text : str
-        text if accepted
-    input_ : str
-        current input
-    lower : str
-        lower limit
-    upper : int
-        upper limit
-
-    Returns
-    -------
-    boolean
-    """
-
-    if action == "1":
-        if input_.isdigit():
-            return bool(int(lower) <= int(text) <= int(upper))
-        return False
-    return True
-
-
-def hash2rgb(hash_):
-    """Conversion hash colour to rgb
-
-    Parameters
-    ----------
-    hash_ : str
-        colour as hash
-
-    Returns
-    -------
-    tuple of integers
-    """
-
-    hash_ = hash_.strip('#')
-    return tuple(int(hash_[i:i + 2], 16) for i in (0, 2, 4))
+from yiqTools import rgb2hash, circle, draw_gradient,  draw_agradient,   \
+    vdraw_gradient, hash2rgb, yiq_okay, is_okay, sb_okay, rgb_to_yiq, yiq_to_rgb
 
 
 class TtkScale(Scale):
@@ -515,8 +91,9 @@ class RgbYiqSelect:
 
     """
 
-    def __init__(self, fr0):
+    def __init__(self, fr0, enlargement):
         self.fr0 = fr0
+        self.e = enlargement
 
         self.yvar = StringVar()
         self.ivar = StringVar()
@@ -527,13 +104,17 @@ class RgbYiqSelect:
         self.avar = IntVar()
         self.evar = StringVar()
 
-        self.scale_l = 300
-        self.canvas_w = self.scale_l
-        self.canvas_h = 26
-        self.cursor_w = 16
-        self.space = 301
-        self.ring_radius = 10
-        self.ring_width = 3
+        self.scale_l = 300*self.e
+        self.sliderlength = 16*self.e
+        self.canvas_w = self.scale_l-self.sliderlength
+        self.canvas_h = 26*self.e
+        self.cursor_w = 16*self.e
+        self.canvas_b = 30*self.e
+
+        self.space = 301*self.e
+        self.ring_radius = 10*self.e
+        self.ring_width = 3*self.e
+
 
         self.build()
 
@@ -554,13 +135,16 @@ class RgbYiqSelect:
         q = float(self.qvar.get())
         from_colour = yiq_to_rgb(*(0, i, q))
         to_colour = yiq_to_rgb(*(100, i, q))
-        draw_gradient(self.cans[0], from_colour, to_colour, width=self.canvas_w)
+        draw_gradient(self.cans[0], from_colour, to_colour,
+                      width=self.canvas_w, height=self.canvas_h)
         from_colour = yiq_to_rgb(*(y, -100, q))
         to_colour = yiq_to_rgb(*(y, 100, q))
-        draw_gradient(self.cans[1], from_colour, to_colour, width=self.canvas_w)
+        draw_gradient(self.cans[1], from_colour, to_colour,
+                      width=self.canvas_w, height=self.canvas_h)
         from_colour = yiq_to_rgb(*(y, i, -100))
         to_colour = yiq_to_rgb(*(y, i, 100))
-        draw_gradient(self.cans[2], from_colour, to_colour, width=self.canvas_w)
+        draw_gradient(self.cans[2], from_colour, to_colour,
+                      width=self.canvas_w, height=self.canvas_h)
         self.overlord(yiq=(y, i, q))
 
     def iqhandle(self, evt=None):
@@ -571,15 +155,18 @@ class RgbYiqSelect:
         q = float(self.qvar.get())
         from_colour = yiq_to_rgb(*(0, i, q))
         to_colour = yiq_to_rgb(*(100, i, q))
-        draw_gradient(self.cans[0], from_colour, to_colour, width=self.canvas_w)
+        draw_gradient(self.cans[0], from_colour, to_colour,
+                      width=self.canvas_w, height=self.canvas_h)
         from_colour = yiq_to_rgb(*(y, -100, q))
         to_colour = yiq_to_rgb(*(y, 100, q))
-        draw_gradient(self.cans[1], from_colour, to_colour, width=self.canvas_w)
+        draw_gradient(self.cans[1], from_colour, to_colour,
+                      width=self.canvas_w, height=self.canvas_h)
         from_colour = yiq_to_rgb(*(y, i, -100))
         to_colour = yiq_to_rgb(*(y, i, 100))
-        draw_gradient(self.cans[2], from_colour, to_colour, width=self.canvas_w)
-        X = i * 3 / 2 + 150
-        Y = q * 3 / 2 + 150
+        draw_gradient(self.cans[2], from_colour, to_colour,
+                      width=self.canvas_w, height=self.canvas_h)
+        X = i * 3 / 2 + 150*self.e
+        Y = q * 3 / 2 + 150*self.e
         ring_radius = self.ring_radius
         for s in self.canYiq.find_withtag("ring"):
             self.canYiq.coords(
@@ -600,13 +187,16 @@ class RgbYiqSelect:
         # yiq = (y, i, q)
         from_colour = yiq_to_rgb(*(0, i, q))
         to_colour = yiq_to_rgb(*(100, i, q))
-        draw_gradient(self.cans[0], from_colour, to_colour, width=self.canvas_w)
+        draw_gradient(self.cans[0], from_colour, to_colour,
+                      width=self.canvas_w, height=self.canvas_h)
         from_colour = yiq_to_rgb(*(y, 0, q))
         to_colour = yiq_to_rgb(*(y, 100, q))
-        draw_gradient(self.cans[1], from_colour, to_colour, width=self.canvas_w)
+        draw_gradient(self.cans[1], from_colour, to_colour,
+                      width=self.canvas_w, height=self.canvas_h)
         from_colour = yiq_to_rgb(*(y, i, 0))
         to_colour = yiq_to_rgb(*(y, i, 100))
-        draw_gradient(self.cans[2], from_colour, to_colour, width=self.canvas_w)
+        draw_gradient(self.cans[2], from_colour, to_colour,
+                      width=self.canvas_w, height=self.canvas_h)
         self.overlord(yiq=(y, i, q))
 
 
@@ -617,15 +207,16 @@ class RgbYiqSelect:
         green = self.gvar.get()
         blue = self.bvar.get()
         alpha = self.avar.get()
-        draw_gradient(self.rgbcans[0], (0, green, blue),
-                      (255, green, blue), width=self.canvas_w)
-        draw_gradient(self.rgbcans[1], (red, 0, blue),
-                      (red, 255, blue), width=self.canvas_w)
-        draw_gradient(self.rgbcans[2], (red, green, 0),
-                      (red, green, 255), width=self.canvas_w)
-        draw_agradient(self.rgbcans[3], (127, 127, 127),
-                       (red, green, blue), width=self.canvas_w)
-        vdraw_gradient(self.cmcan, (red, green, blue), alpha=alpha)
+        draw_gradient(self.rgbcans[0], (0, green, blue), (255, green, blue),
+                      width=self.canvas_w, height=self.canvas_h)
+        draw_gradient(self.rgbcans[1], (red, 0, blue), (red, 255, blue),
+                      width=self.canvas_w, height=self.canvas_h)
+        draw_gradient(self.rgbcans[2], (red, green, 0), (red, green, 255),
+                      width=self.canvas_w, height=self.canvas_h)
+        draw_agradient(self.rgbcans[3], (127, 127, 127), (red, green, blue),
+                       self.e, width=self.canvas_w, height=self.canvas_h)
+        vdraw_gradient(self.cmcan, (red, green, blue), self.e, alpha=alpha,
+                       width=self.canvas_b, height=self.canvas_b)
         self.evar.set(rgb2hash(red, green, blue))
         self.overlord(rgb=(red, green, blue))
 
@@ -637,7 +228,8 @@ class RgbYiqSelect:
         blue = self.bvar.get()
         alpha = self.avar.get()
         self.avar.set(alpha)
-        vdraw_gradient(self.cmcan, (red, green, blue), alpha=alpha)
+        vdraw_gradient(self.cmcan, (red, green, blue), self.e, alpha=alpha,
+                       width=self.canvas_b, height=self.canvas_b)
 
     def overlord(self, rgb=None, hasho=None, yiq=None):
         """Supervisory procedure to control calls from handles
@@ -665,26 +257,26 @@ class RgbYiqSelect:
                 self.cans[0],
                 from_colour,
                 to_colour,
-                width=self.canvas_w)
+                width=self.canvas_w, height=self.canvas_h)
             from_colour = yiq_to_rgb(*(y, -100, q))
             to_colour = yiq_to_rgb(*(y, 100, q))
             draw_gradient(
                 self.cans[1],
                 from_colour,
                 to_colour,
-                width=self.canvas_w)
+                width=self.canvas_w, height=self.canvas_h)
             from_colour = yiq_to_rgb(*(y, i, -100))
             to_colour = yiq_to_rgb(*(y, i, 100))
             draw_gradient(
                 self.cans[2],
                 from_colour,
                 to_colour,
-                width=self.canvas_w)
+                width=self.canvas_w, height=self.canvas_h)
             self.yvar.set(y)
             self.ivar.set(i)
             self.qvar.set(q)
-            X = i * 3 / 2 + 150
-            Y = q * 3 / 2 + 150
+            X = i * 3 / 2 + 150*self.e
+            Y = q * 3 / 2 + 150*self.e
             ring_radius = self.ring_radius
             for s in self.canYiq.find_withtag("ring"):
                 self.canYiq.coords(
@@ -698,15 +290,17 @@ class RgbYiqSelect:
             y, i, q = yiq[0], yiq[1], yiq[2]
             red, green, blue = yiq_to_rgb(y, i, q)
             draw_agradient(self.rgbcans[3], (127, 127, 127),
-                           (red, green, blue), width=self.canvas_w)
+                           (red, green, blue), self.e,
+                           width=self.canvas_w, height=self.canvas_h)
             alpha = self.avar.get()
-            vdraw_gradient(self.cmcan, (red, green, blue), alpha=alpha)
-            draw_gradient(self.rgbcans[0], (0, green, blue),
-                          (255, green, blue), width=self.canvas_w)
-            draw_gradient(self.rgbcans[1], (red, 0, blue),
-                          (red, 255, blue), width=self.canvas_w)
-            draw_gradient(self.rgbcans[2], (red, green, 0),
-                          (red, green, 255), width=self.canvas_w)
+            vdraw_gradient(self.cmcan, (red, green, blue), self.e, alpha=alpha,
+                           width=self.canvas_b, height=self.canvas_b)
+            draw_gradient(self.rgbcans[0], (0, green, blue), (255, green, blue),
+                          width=self.canvas_w, height=self.canvas_h)
+            draw_gradient(self.rgbcans[1], (red, 0, blue), (red, 255, blue),
+                          width=self.canvas_w, height=self.canvas_h)
+            draw_gradient(self.rgbcans[2], (red, green, 0), (red, green, 255),
+                          width=self.canvas_w, height=self.canvas_h)
             self.evar.set(rgb2hash(red, green, blue))
             self.rvar.set(red)
             self.gvar.set(green)
@@ -744,11 +338,12 @@ class RgbYiqSelect:
         fr3 = LabelFrame(self.fr0, text='colour mix')
         fr3.grid(column=1, row=0, sticky='nw')
 
-        self.cmcan = cmcan = Canvas(fr3, width=30, height=30, bd=0,
-                                    highlightthickness=0)
+        self.cmcan = cmcan = Canvas(fr3, width=self.canvas_b,
+                    height=self.canvas_b, bd=0, highlightthickness=0)
         cmcan.grid(column=0, row=0, sticky='n', columnspan=2)
         cmcan.grid_propagate(0)
-        vdraw_gradient(self.cmcan, (255, 0, 0), alpha=255)
+        vdraw_gradient(self.cmcan, (255, 0, 0), self.e, alpha=255,
+                       width=self.canvas_b, height=self.canvas_b)
 
         cml = Label(fr3, text='hash\nvalue')
         cml.grid(column=0, row=1)
@@ -759,13 +354,14 @@ class RgbYiqSelect:
         en.grid(column=1, row=1)
         en.bind('<KeyRelease>', self.checkhash)
 
-        draw_gradient(self.rgbcans[0], (0, 0, 0), (255, 0, 0), width=self.canvas_w)
-        draw_gradient(self.rgbcans[1], (255, 0, 0),
-                      (255, 255, 0), width=self.canvas_w)
-        draw_gradient(self.rgbcans[2], (255, 0, 0),
-                      (255, 0, 255), width=self.canvas_w)
-        draw_agradient(self.rgbcans[3], (127, 127, 127),
-                       (255, 0, 0), width=self.canvas_w)
+        draw_gradient(self.rgbcans[0], (0, 0, 0), (255, 0, 0),
+                      width=self.canvas_w, height=self.canvas_h)
+        draw_gradient(self.rgbcans[1], (255, 0, 0), (255, 255, 0),
+                      width=self.canvas_w, height=self.canvas_h)
+        draw_gradient(self.rgbcans[2], (255, 0, 0), (255, 0, 255),
+                      width=self.canvas_w, height=self.canvas_h)
+        draw_agradient(self.rgbcans[3], (127, 127, 127), (255, 0, 0),
+                       self.e, width=self.canvas_w, height=self.canvas_h)
 
         fr4 = LabelFrame(self.fr0, text='yiq')
         fr4.grid(column=2, row=0)
@@ -800,15 +396,17 @@ class RgbYiqSelect:
         to_colour = yiq_to_rgb(*(30, 100.0, 40.56))
         # print(self.canvas_w)
         draw_gradient(self.cans[0], yiq_to_rgb(0.0, 100.0, 40.56),
-                      yiq_to_rgb(100, 100, 40.56), width=self.canvas_w)
+                      yiq_to_rgb(100, 100, 40.56),
+                      width=self.canvas_w, height=self.canvas_h)
         draw_gradient(self.cans[1], yiq_to_rgb(30, -100.0, 40.56), to_colour,
-                      width=self.canvas_w)
+                      width=self.canvas_w, height=self.canvas_h)
         draw_gradient(self.cans[2], yiq_to_rgb(30, 100, -100),
-                      yiq_to_rgb(30, 100, 100), width=self.canvas_w)
+                      yiq_to_rgb(30, 100, 100),
+                      width=self.canvas_w, height=self.canvas_h)
 
         self.canYiq = canYiq = Canvas(fr4, width=self.space, height=self.space)
         canYiq.grid(column=1, row=9, pady=25, sticky='n')
-        self.yiqGamut = PhotoImage(file='../../figures/colour_space.png')
+        self.yiqGamut = PhotoImage(file='../../figures/colour_space'+str(self.e)+'.png')
         canYiq.create_image(0, 0, anchor='nw', image=self.yiqGamut)
         self.ring = circle(canYiq, 300.0, 210.84, self.ring_radius, width=self.ring_width,
                            activeoutline='#555555', tags='ring')
@@ -846,8 +444,8 @@ class RgbYiqSelect:
                 X + ring_radius,
                 Y + ring_radius)
 
-        i = (X - space // 2) * 2 / 3
-        q = (Y - space // 2) * 2 / 3
+        i = (X - space // 2) * 2 / 3 / self.e
+        q = (Y - space // 2) * 2 / 3 / self.e
         self.ivar.set(i)
         self.qvar.set(q)
         ring = i, q
@@ -869,13 +467,16 @@ class RgbYiqSelect:
         q = float(self.qvar.get())
         from_colour = yiq_to_rgb(*(0, i, q))
         to_colour = yiq_to_rgb(*(100, i, q))
-        draw_gradient(self.cans[0], from_colour, to_colour, width=self.canvas_w)
+        draw_gradient(self.cans[0], from_colour, to_colour,
+                      width=self.canvas_w, height=self.canvas_h)
         from_colour = yiq_to_rgb(*(y, -100, q))
         to_colour = yiq_to_rgb(*(y, 100, q))
-        draw_gradient(self.cans[1], from_colour, to_colour, width=self.canvas_w)
+        draw_gradient(self.cans[1], from_colour, to_colour,
+                      width=self.canvas_w, height=self.canvas_h)
         from_colour = yiq_to_rgb(*(y, i, -100))
         to_colour = yiq_to_rgb(*(y, i, 100))
-        draw_gradient(self.cans[2], from_colour, to_colour, width=self.canvas_w)
+        draw_gradient(self.cans[2], from_colour, to_colour,
+                      width=self.canvas_w, height=self.canvas_h)
 
     def checkhash(self, evt=None):
         """Procedure called by entry for hash
@@ -895,14 +496,19 @@ class RgbYiqSelect:
             self.gvar.set(green)
             self.bvar.set(blue)
             draw_agradient(self.rgbcans[3], (127, 127, 127),
-                           (red, green, blue), width=self.canvas_w)
+                           (red, green, blue), self.e,
+                           width=self.canvas_w, height=self.canvas_h)
             draw_gradient(self.rgbcans[0], (0, green, blue),
-                          (255, green, blue), width=self.canvas_w)
+                          (255, green, blue),
+                          width=self.canvas_w, height=self.canvas_h)
             draw_gradient(self.rgbcans[1], (red, 0, blue),
-                          (red, 255, blue), width=self.canvas_w)
+                          (red, 255, blue),
+                          width=self.canvas_w, height=self.canvas_h)
             draw_gradient(self.rgbcans[2], (red, green, 0),
-                          (red, green, 255), width=self.canvas_w)
-            vdraw_gradient(self.cmcan, (red, green, blue), alpha=alpha)
+                          (red, green, 255),
+                          width=self.canvas_w, height=self.canvas_h)
+            vdraw_gradient(self.cmcan, (red, green, blue), self.e, alpha=alpha,
+                           width=self.canvas_b, height=self.canvas_b)
 
     def checksba(self, evt=None):
         """Procedure called by alpha spinbox
@@ -918,7 +524,8 @@ class RgbYiqSelect:
         red = self.rvar.get()
         green = self.gvar.get()
         blue = self.bvar.get()
-        vdraw_gradient(self.cmcan, (red, green, blue), alpha=alpha)
+        vdraw_gradient(self.cmcan, (red, green, blue), self.e, alpha=alpha,
+                           width=self.canvas_b, height=self.canvas_b)
 
     def checksb(self, evt=None):
         """Procedure called by rgb colour spinboxes
@@ -935,26 +542,35 @@ class RgbYiqSelect:
         green = self.gvar.get()
         blue = self.bvar.get()
         draw_agradient(self.rgbcans[3], (127, 127, 127),
-                       (red, green, blue), width=self.canvas_w)
+                       (red, green, blue), self.e,
+                       width=self.canvas_w, height=self.canvas_h)
         draw_gradient(self.rgbcans[0], (0, green, blue),
-                      (255, green, blue), width=self.canvas_w)
+                      (255, green, blue),
+                      width=self.canvas_w, height=self.canvas_h)
         draw_gradient(self.rgbcans[1], (red, 0, blue),
-                      (red, 255, blue), width=self.canvas_w)
+                      (red, 255, blue),
+                      width=self.canvas_w, height=self.canvas_h)
         draw_gradient(self.rgbcans[2], (red, green, 0),
-                      (red, green, 255), width=self.canvas_w)
-        vdraw_gradient(self.cmcan, (red, green, blue), alpha=alpha)
+                      (red, green, 255),
+                      width=self.canvas_w, height=self.canvas_h)
+        vdraw_gradient(self.cmcan, (red, green, blue), self.e, alpha=alpha,
+                           width=self.canvas_b, height=self.canvas_b)
         self.evar.set(rgb2hash(red, green, blue))
 
 if __name__ == "__main__":
     root = Tk()
+    winsys = root.tk.call("tk", "windowingsystem")
+    BASELINE = 1.33398982438864281 if winsys != 'aqua' else 1.000492368291482
+    scaling = root.tk.call("tk", "scaling")
+    enlargement = e = int(scaling / BASELINE + 0.5)
 
-    img = Image.new("RGBA", (16, 10), '#00000000')
+    img = Image.new("RGBA", (16*e, 10*e), '#00000000')
     trough = ImageTk.PhotoImage(img)
 
     # constants for creating upward pointing arrow
-    WIDTH = 17
-    HEIGHT = 17
-    OFFSET = 5
+    WIDTH = 17*e
+    HEIGHT = 17*e
+    OFFSET = 5*e
     ST0 = WIDTH // 2, HEIGHT - 1 - OFFSET
     LIGHT = 'GreenYellow'
     MEDIUM = 'LawnGreen'
@@ -991,8 +607,8 @@ if __name__ == "__main__":
                                      {'border': 3, 'sticky': 'n'})}})
 
     style.theme_use('default')
-
+    style.configure('TSpinbox', arrowsize=10*e)
     fr = Frame(root)
     fr.grid(row=0, column=0, sticky='nsew')
-    RgbYiqSelect(fr)
+    RgbYiqSelect(fr, enlargement)
     root.mainloop()
