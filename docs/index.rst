@@ -193,7 +193,7 @@ create one. YIQ is one of the most understandable colour schemes.
 .. toctree::
     :maxdepth: 3
     
-    yiq_picker/yiq_index
+    yiq_colour_picker/yiq_index
 
 Sources for Documentation
 =========================
