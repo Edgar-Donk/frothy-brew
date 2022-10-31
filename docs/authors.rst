@@ -59,14 +59,19 @@ More
 .. raw:: html
 
    <head>
+   <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Babylonica">
+
    <link rel="stylesheet" href="_static/imagehover_min.css">
    <style type="text/css">
-   
+   /*@import url("https://anchorfonts.com/king-of-thieves-font/"); Qwigley*/
    figure, figurecaption {
 
       display: block;
-      font-family: Brush Script MT, cursive; Aladdin;
-      font-size: 32px;
+      font-family: Babylonica;
+      font-size: 48px;
+      text-shadow: 4px 4px 4px #aaa;
+
       /*font-style: medium;
       font-variant: small-caps;*/
       text-align: center;
