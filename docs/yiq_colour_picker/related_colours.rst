@@ -23,11 +23,10 @@ in these cases saturation starts at white and finishes with our colour mix
 while value starts at black and finishes with our colour mix. 
 
 However try with brown and it is a different story. With a hash value of
-#7f3f3f, hue sits at 0 and both saturation and value are 50. The scale cursor
-for S and V sit at #7f4040 and #7c3e3e, the S gradient starts at #7f7e7e and 
-finishes at #7f0000, whilst the V gradient starts at #000000 and finishes at 
-#fe7e7e. Do related colours associated with S and V apply to a value of 50 
-or 100? With YIQ there is no such ambiguity.  
+#7f3f3f, hue sits at 0 and both saturation and value are both 50. Are 
+related colours found by changing saturation or value, or both?
+With YIQ there is no such ambiguity. Keeping I and Q constant (equivalent to
+hue constant in HSV) change the luma and the related colours do not change.
 
 Resizing
 --------

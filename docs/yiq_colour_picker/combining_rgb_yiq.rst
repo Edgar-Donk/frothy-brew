@@ -22,11 +22,16 @@ the handles require a reference to overlord. Test that all these work, now
 add references in the handles for I and Q and overlord to the colour space, 
 so the cursor moves when the scales are adjusted::
 
-    X=i*3/2+150
-    Y=q*3/2+150
-    ringR=self.ringR
-    for s in self.canYiq.find_withtag("ring"):
-        self.canYiq.coords(s,X-ringR,Y-ringR,X+ringR,Y+ringR)
+    X = i * 3 / 2 + 150*self.e
+        Y = q * 3 / 2 + 150*self.e
+        ring_radius = self.ring_radius
+        for s in self.canYiq.find_withtag("ring"):
+            self.canYiq.coords(
+                s,
+                X - ring_radius,
+                Y - ring_radius,
+                X + ring_radius,
+                Y + ring_radius)
 
 Whoops - forgot to change the labels to themed ones, delete the references 
 to background and height.
@@ -42,13 +47,8 @@ to background and height.
 There are one or two advantages that yiq/yuv has over rgb and hsv, we can
 optically get an accurate grey just by selecting the Y component(I and Q 
 both 0), further the complementary colour is -1.0 times the I and Q 
-components, and Y is 100-Y. For general purposes YIQ is easier to understand 
-what is going on than with most other colour systems. 
-
-In principle we can use the same method for YUV, but we probably would run
-into trouble with any of the LAB colour systems. As we saw the main problem
-is how long it takes to draw a gradient. By sticking to the RGB gradient we
-have all the speed advantages and can use straight python.
+components, and Y becomes 100-Y. For general purposes YIQ or YUV are easier 
+to understand what is going on than with most other colour systems. 
 
 .. container:: toggle
 
