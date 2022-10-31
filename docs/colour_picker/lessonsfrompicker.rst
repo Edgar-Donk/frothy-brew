@@ -16,5 +16,6 @@ The following were new to me:-
 #. Expanding a widget containing an image
 
 Say we wish to have different colour schemes other than hsv, then hsl is 
-a good candidate. Whatever colour scheme is chosen it would be a good idea to 
+a good candidate, it should follow a similar method to hsv. Whatever colour 
+scheme is chosen it would be a good idea to 
 include rgb since that is the base for displaying colour on the monitor.

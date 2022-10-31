@@ -41,7 +41,7 @@ into tkinter.
       - White
       - Black
 
-Bare in mind that PPM cannot have an alpha component, so the array 
+Bear in mind that PPM cannot have an alpha component, so the array 
 manipulation has to replicate the effect of having an alpha component. This
 means that we have to have a strong showing of the chequer at the gradient 
 white end, whilst we want a weak chequer showing at the coloured end of the

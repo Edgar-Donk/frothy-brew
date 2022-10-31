@@ -74,10 +74,12 @@ A function is used to draw the saturation and value gradients::
         value = self.vvar.get()
         from_colour = hsv_to_rgb(*(hue, 0, value))
         to_colour = hsv_to_rgb(*(hue, 100, value))
-        draw_gradient(self.scan, from_colour, to_colour, width=self.canvas_w)
+        draw_gradient(self.scan, from_colour, to_colour,
+                      width=self.canvas_w, height=self.canvas_h)
         from_colour = hsv_to_rgb(*(hue, sat, 0))
         to_colour = hsv_to_rgb(*(hue, sat, 100))
-        draw_gradient(self.vcan, from_colour, to_colour, width=self.canvas_w)
+        draw_gradient(self.vcan, from_colour, to_colour,
+                      width=self.canvas_w, height=self.canvas_h)
 
 Let's clean up some of those magic numbers, the colour wheel image size, the
 colour wheel size and ring radius and width.

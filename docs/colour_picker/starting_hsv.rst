@@ -19,7 +19,7 @@ are at 100, their final colour follows the hue colour. Saturation
 starts from white whereas value starts from black. Altering saturation or 
 value has no effect on their own gradient, but they do affect the other 
 component. When saturation and value are at 0 any change in hue has no 
-effect, as we are at black. In fact Saturation stays black whenever value is 
+effect, as we are at black. In fact Saturation stays black whenever its value is 
 0, no matter what value hue or saturation have. Value changes from white to 
 black when saturation is 0.
 
@@ -31,10 +31,11 @@ black when saturation is 0.
 
     Full red at 100% saturation and 100% value
 
-Hue is straightforward, no gradient change, we only have to generate it at
+Hue is straightforward, it always is the same so no gradient change, we only 
+have to generate it at
 initialisation. When saturation and value are both 100 we see that hue at 0 
-corresponds to red #ff0000 as does hue at 360. As we move hue we can see 
-that one or more rgb components are at 255.
+corresponds to red #ff0000 as does hue at 360. When hue is moved and 
+saturation and value are both 100 one or more rgb components are always at 255.
 
 .. figure :: ../figures/white_hsv.webp
     :width: 170

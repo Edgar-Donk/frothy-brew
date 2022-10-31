@@ -52,9 +52,9 @@ change the ttk scale and make changes to entry and spinboxes as required::
     img=Image.new("RGBA",(16,10),'#00000000')
     trough=ImageTk.PhotoImage(img)
     # constants for creating upward pointing arrow
-    WIDTH = 17
-    HEIGHT = 17
-    OFFSET = 5
+    WIDTH = 17*e
+    HEIGHT = 17*e
+    OFFSET = 5*e
     ST0 = WIDTH // 2, HEIGHT - 1 - OFFSET
     LIGHT = 'GreenYellow'
     MEDIUM = 'LawnGreen'
@@ -193,9 +193,6 @@ can easily see the empty labels.
         *Show/Hide Code* 06scalemod.py
 
     .. literalinclude:: ../examples/colours/06scalemod.py
-
-.. note:: Only major changes have been highlighted, grid changes have not 
-    been shown.
 
 This should produce:-
 

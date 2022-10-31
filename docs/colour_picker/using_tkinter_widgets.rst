@@ -12,7 +12,7 @@ it into the canvas. To do this we need to have a modified Lerp function (
 linear interpolation) which interperpolates in RGB and makes a hash value for
 the result, 
 
-Let's make a simple gradient, with a canvas size of 300 x 26, and
+Let's make a simple gradient, with a canvas size of 300*e x 26*e, and
 start with white finishing with black::
 
     def LerpHex(colour1, colour2, fraction):
@@ -24,6 +24,20 @@ start with white finishing with black::
 
 The lerp function is called whilst drawing the gradient, and colours each 
 small rectangle with a slightly differing colour at each step within a loop.
+
+.. topic: Making the Program DPI aware
+
+    At the start of each of the following scripts you will find the following
+    lines::
+    
+        winsys = root.tk.call("tk", "windowingsystem")
+        BASELINE = 1.33398982438864281 if winsys != 'aqua' else 1.000492368291482
+        scaling = root.tk.call("tk", "scaling")
+        enlargement = int(scaling / BASELINE + 0.5)
+
+    When running with OS, Idle or Pyscripter this gives an enlargement
+    factor of ``1`` whereas other python IDEs will give a factor of ``2``.
+    Remember to multiply the pixel sizes by the factor.
 
 We can then include these as follows:-
 
@@ -60,7 +74,7 @@ the gradient whenever an intvar changes. The resulting colour can be
 displayed on a Label.
 
 Each pair of Scales and Spinboxes have a common command function, red uses 
-the function rhandle(). each each command function need only redraw
+the function rhandle(), each command function need only redraw
 the relevant gradients. Only the 
 gradients of the component not being changed need to be updated - so if red 
 changes the red gradient remains unchanged but the blue and green gradients 
@@ -96,8 +110,8 @@ but the command has not been triggered.
 
 The numbers below the scale correspond to the scale position, but the 
 canvas needs to align with the cursor in the scale. The default slider 
-length is 30 pixels, so either the Scale should be enlarged or the canvas 
-should be reduced. As the canvas is reduced we need to add ``width=270`` to 
+length is 30*e pixels, so either the Scale should be enlarged or the canvas 
+should be reduced. As the canvas is reduced we need to add ``width=270*e`` to 
 both the canvases and the draw_gradient function.
 
 .. topic:: Multiple Widgets

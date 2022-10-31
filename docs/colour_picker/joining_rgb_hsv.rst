@@ -53,14 +53,14 @@ that the gradients need to be redrawn by overlord::
                 self.scan,
                 from_colour,
                 to_colour,
-                width=self.canvas_w)
+                width=self.canvas_w, height=self.canvas_h)
             from_colour = hsv_to_rgb(*(hue, sat, 0))
             to_colour = hsv_to_rgb(*(hue, sat, 100))
             draw_gradient(
                 self.vcan,
                 from_colour,
                 to_colour,
-                width=self.canvas_w)
+                width=self.canvas_w, height=self.canvas_h)
             self.hvar.set(hue)
             self.svar.set(sat)
             self.vvar.set(value)
@@ -77,16 +77,17 @@ that the gradients need to be redrawn by overlord::
         elif hsv:
             hue, sat, value = hsv[0], hsv[1], hsv[2]
             red, green, blue = hsv_to_rgb(hue, sat, value)
-            draw_agradient(self.acan, (127, 127, 127),
-                           (red, green, blue), width=self.canvas_w)
+            draw_agradient(self.acan, (127, 127, 127), (red, green, blue),
+                           self.e, width=self.canvas_w, height=self.canvas_h)
             alpha = self.avar.get()
-            vdraw_gradient(self.cmcan, (red, green, blue), alpha=alpha)
-            draw_gradient(self.rcan, (0, green, blue),
-                          (255, green, blue), width=self.canvas_w)
-            draw_gradient(self.gcan, (red, 0, blue),
-                          (red, 255, blue), width=self.canvas_w)
-            draw_gradient(self.bcan, (red, green, 0),
-                          (red, green, 255), width=self.canvas_w)
+            vdraw_gradient(self.cmcan, (red, green, blue), self.e, alpha=alpha,
+                           width=self.canvas_b, height=self.canvas_b)
+            draw_gradient(self.rcan, (0, green, blue), (255, green, blue),
+                          width=self.canvas_w, height=self.canvas_h)
+            draw_gradient(self.gcan, (red, 0, blue), (red, 255, blue),
+                          width=self.canvas_w, height=self.canvas_h)
+            draw_gradient(self.bcan, (red, green, 0), (red, green, 255),
+                          width=self.canvas_w, height=self.canvas_h)
             self.evar.set(rgb2hash(red, green, blue))
             self.rvar.set(red)
             self.gvar.set(green)
