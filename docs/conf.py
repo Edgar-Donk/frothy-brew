@@ -37,7 +37,8 @@ extensions = ["sphinx.ext.autodoc",
     'sphinx.ext.napoleon',
     "sphinx.ext.autosummary",
     # "numpydoc",
-    'sphinx.ext.mathjax'
+    'sphinx.ext.mathjax',
+    'sphinx_copybutton'
 ]
 
 napoleon_google_docstring = False
