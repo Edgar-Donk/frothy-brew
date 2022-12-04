@@ -33,8 +33,8 @@ columns.
 Join the RGB HSV Output
 -----------------------
 
-At present the two sides run independantly, we will have to make an rgb 
-change known to hsv and vice versa. We need a supervisory handle that 
+At present the two sides run independantly, so make an rgb 
+change known to hsv and vice versa. A supervisory handle is required that 
 receives calls whenever one of the tk variables triggers the
 individual handles, or when the hash value is changed. Alpha will not 
 trigger a change. Whenever ring is changed we call door_bell which can be
@@ -127,7 +127,7 @@ colorsys with a normalised input and a denormalised output::
         
         return int(hue * 360 + 0.5), sat, int(value * 100 + 0.5)
 
-Next we wish to change labels from tkinter to a themed type, so that they 
+Next change labels from tkinter to a themed type, so that they 
 blend in with the background. 
 
 Run this and you should see the cursor move when either the hsv side or rgb
@@ -138,7 +138,7 @@ Related RGB HSV Colours
 -----------------------
 
 When picking colours it often is useful to have related colours. Just using 
-RGB this would be a problem, with HSV we can use a constant hue, then adjust
+RGB this is a problem, with HSV we can use a constant hue, then adjust
 saturation and/or value to find colours within the same colour scheme. For
 simplicity choose 4 equidistant values for saturation and value. Do not select 
 the zero values as it produces either white or black for most colours. Leave 
@@ -163,9 +163,9 @@ Resizing the Widgets
     Similar to horizontal, all we need are ``sticky 'ns'`` and ``rowconfigure``.
 
 If we had been using pack then all the container widgets would need the fill
-and expand options suitably filled in, but as we are using the grid management
-system, it is a bit more complicated. The horizontal expansion will be 
-required. All widgets that will adjust horizontally require a ``sticky 'ew'``
+and expand options, but as we are using the grid management
+system, it is a bit more complicated. All widgets that adjust horizontally 
+require a ``sticky 'ew'``
 option, so if it has a ``'n'`` it becomes ``'new'``, existing ``'ew'`` stay.
 All container widgets also require ``sticky 'ew'``, this does not apply to 
 root. We now have to inform all container widgets which columns are required
@@ -191,15 +191,15 @@ configuration alters ``w.bind("<Configure>", self.function)``.
 
 Within 12rgbandhsv.py we can use separate functions for each canvas, so that 
 only the relevant gradient is redrawn for each canvas. As each canvas is being 
-adjusted sequentially this makes sense. Within the bind function we can 
-discover the new width of the canvas, then use this to redraw the gradient.
+adjusted sequentially this makes sense. Within the bind function the new 
+width of the canvas is discovered, then this is used to redraw the gradient.
 At the same time remember to change the default canvas width's value. The 
 redrawn gradient is then imported as normal into canvas. Ensure that none
 of the default widths are reactivated, To prevent the colour wheel being 
 changed alter its grid layout, start it from column 0 (the label column), 
 centralise it on column 1 by using **columnspan=3**.
 
-As we have changed from fixed sizes to widgets that can expand horizontally
+After changing from fixed sizes widgets to that can expand horizontally
 the relative sizes of the canvas and scale alters. Unless corrected
 the canvas expands to the size of the scale, 
 so add horizontal padding, half the slider length, to the canvas.

@@ -2,18 +2,14 @@ Using the Tkinter Widgets
 =========================
 
 You might be thinking - "Hang on a minute, drawing gradients is not so 
-simple". Rest assured we have most of the necessary tools at our fingertips,
-we have already drawn gradients when making our themes in `Putting on the 
-Style! <https://tkinterttkstyle.readthedocs.io/en/latest/08down_to_earth.html>`_
+simple". Rest assured most of the necessary tools are at our fingertips,
+gradients were used when making our themes in `Putting on the 
+Style! <https://tkinterttkstyle.readthedocs.io/en/latest/earth/colour.html>`_
 at the section on Gradients. As we are displaying our results in the Canvas
-widget, it would seem sensible to first draw the gradient on the canvas, 
+widget, it is sensible to first draw the gradient on the canvas, 
 rather than drawing in PIL then importing the image into tkinter and putting
-it into the canvas. To do this we need to have a modified Lerp function (
-linear interpolation) which interperpolates in RGB and makes a hash value for
-the result, 
-
-Let's make a simple gradient, with a canvas size of 300*e x 26*e, and
-start with white finishing with black::
+it into the canvas. To do this modify the Lerp function (linear interpolation) 
+which interperpolates in RGB and results with a hash value::
 
     def LerpHex(colour1, colour2, fraction):
     # colour1 start colour, colour2 end colour, fraction 0 to 1
@@ -22,7 +18,13 @@ start with white finishing with black::
                               int(colour1[1] + (colour2[1] - colour1[1]) * fraction),
                               int(colour1[2] + (colour2[2] - colour1[2]) * fraction))
 
-The lerp function is called whilst drawing the gradient, and colours each 
+.. sidebar:: What's that e?
+
+    This script is DPI aware - remember - e is the enlargement factor.
+
+Make a simple gradient, with a canvas size of 300*e x 26*e, and
+start with white finishing with black. The lerp function is called whilst 
+drawing the gradient, and colours each 
 small rectangle with a slightly differing colour at each step within a loop.
 
 .. topic: Making the Program DPI aware
@@ -35,9 +37,14 @@ small rectangle with a slightly differing colour at each step within a loop.
         scaling = root.tk.call("tk", "scaling")
         enlargement = int(scaling / BASELINE + 0.5)
 
-    When running with OS, Idle or Pyscripter this gives an enlargement
-    factor of ``1`` whereas other python IDEs will give a factor of ``2``.
-    Remember to multiply the pixel sizes by the factor.
+    On my UHD monitor running with OS, Idle or Pyscripter this gave an enlargement
+    factor of ``1`` whereas other python IDEs gave a factor of ``2``,
+    multiply the pixel sizes by the factor.
+
+.. sidebar:: Drawing Rectangles in Canvas
+
+    We need to supply both the fill and the empty outline, in PIL we only 
+    needed to define fill.
 
 We can then include these as follows:-
 
@@ -48,11 +55,6 @@ We can then include these as follows:-
         *Show/Hide Code* 01gradient_canvas.py
 
     .. literalinclude:: ../examples/colours/01gradient_canvas.py
-
-.. sidebar:: Drawing Rectangles in Canvas
-
-    We need to supply both the fill and the empty outline, in PIL we only 
-    needed to define fill.
 
 and see the following:-
 
@@ -66,12 +68,12 @@ and see the following:-
 
 Now create the Scale and Spinbox linked to IntVar for each of the 
 colours. If we use tkinter widgets, as opposed to the themed widgets, there 
-are more options available. Note how 
+are more options immediately available. Note how 
 the logic needs to work. Change the gradient into a function, so that it can 
 be called for each of the components. When creating the scales and spinboxes 
-they need to be tied to the intvars, additionally the command option redraws 
-the gradient whenever an intvar changes. The resulting colour can be 
-displayed on a Label.
+they need to be tied to the IntVars, additionally the command option redraws 
+the gradient whenever an IntVar changes. The resulting colour from all three
+components can then be displayed on a Label.
 
 Each pair of Scales and Spinboxes have a common command function, red uses 
 the function rhandle(), each command function need only redraw
@@ -219,7 +221,7 @@ converted to an image then loaded into tkinter before being displayed::
         dtype=np.uint8),[height, 1]) for i in range(len(from_color))]
         return np.dstack(new_ch)
 
-.. note:: numpy works in reverse order with width and height.
+.. note:: numpy works in reverse order height then width.
 
 ::
 
@@ -282,14 +284,13 @@ Make Some Changes
 
 We are now in a position to change 02all3colours.py to 03all3coloursPPM.py,
 not forgetting the width changes and importing numpy and PhotoImage. Add 
-initial settings for our tk variables. Whenever we have height, length and
-width replace by the variables ``self.scale_l, self.canvas_w or self.canvas_h``.
-When creating the PPM image, rather than using constant sizes. use the string 
-format method to be able to adjust the sizes::
+initial settings for our tk variables, 
+use the variables ``self.scale_l, self.canvas_w or self.canvas_h``
+for height, length and width .
+When creating the PPM image, rather than using constant sizes, use the string 
+format method to be able to adjust the sizes as required::
 
     xdata = 'P6 {} {} 255 '.format(width, height).encode() + arr.tobytes()
-
-This will give the image the capability of resizing.
 
 .. container:: toggle
 

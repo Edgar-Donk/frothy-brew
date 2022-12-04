@@ -5,17 +5,17 @@ Colour Picker App
 While there are a load of rgbahsv colour pickers out there it is still  
 useful to make one.
 
-Let's use the colour picker in paint.net as an example, and keep it simple
+Let's use the colour picker in paint.net as a pattern, keeping it simple
 at the start, use the canvas to display our gradient, then use a scale 
 underneath the canvas and a spinbox to show the value of the scale. If both 
 the scale and its associated spinbox point to the same tk variable they 
 should affect each other. At the same time the gradient should change with the 
-value on with each colour component.
+value shown on each colour component.
 
-In case you are wondering the following scripts are DPI aware, so they have
+In case you are wondering, the following scripts are DPI aware, so they have
 an enlargement factor included, and will operate at 96dpi and 192dpi equally 
 well, for larger dpi remember to run the colour wheel script 
-:ref:`09colour_wheel_pil.py<colour-wheel>`.
+:ref:`09colour_wheel_pil.py<colour-wheel>` and adjust.
 
 .. toctree::
     :caption: Colour Picker...

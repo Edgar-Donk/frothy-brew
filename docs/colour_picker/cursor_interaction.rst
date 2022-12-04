@@ -10,20 +10,20 @@ Enabling Cursor User Interaction
 
     Cursor on HSV Wheel at Red
 
-As we stated before we need to bind the cursor to the mouse buttons::
+As stated before we need to bind the cursor to the mouse buttons::
 
     canHsv.bind('<Button-1>',self.Click_ring) 
     canHsv.tag_bind('ring','<B1-Motion>',self.Drag_ring)
 
-Since we are operating within the class of HsvSelect the event handlers will 
-be part of this class. Make sure that we import the necessary math functions
+Make the event handlers part of HsvSelect class. Make sure that
+the necessary math functions are imported
 to enable the polar conversions. The events use the coordinates of the 
 cursor when the mouse is clicked then translated into coordinates 
-relative to the wheel centre. Make sure that the coordinates are within the
-colour wheel. When we are clicking in the wheel we need to find the ring, 
-then move it to the new position - we are actually moving the rectangle of 
-the ring image. Find the hue and saturation values and update the tk variables, 
-then call the function to draw the gradients.
+relative to the wheel centre. Ensure that the coordinates are within the
+colour wheel. When clicking inside the wheel seek the ring, 
+then move the ring to the mouse. Note the hue and saturation values and 
+update the tk variables, 
+then redraw the gradients.
 
 .. code-block:: python
    :emphasize-lines: 10
@@ -66,7 +66,7 @@ then call the function to draw the gradients.
         ring = hue, sat
         self.door_bell(ring)
         
-A function is used to draw the saturation and value gradients::        
+The door_bell function is used to draw the saturation and value gradients::        
         
     def door_bell(self, ring):
         # calls from bind
@@ -81,13 +81,13 @@ A function is used to draw the saturation and value gradients::
         draw_gradient(self.vcan, from_colour, to_colour,
                       width=self.canvas_w, height=self.canvas_h)
 
-Let's clean up some of those magic numbers, the colour wheel image size, the
+Clean up some of those magic numbers, the colour wheel image size, the
 colour wheel size and ring radius and width.
 
 Move the Ring using Scale
 --------------------------
 
-At present the ring changes hue and saturation, we now need to reverse the 
+At present the ring changes hue and saturation, reverse the 
 process so that these components change the ring position, obviously value 
 has no effect. Add the following code to both the handle functions for hue
 and saturation::
@@ -106,8 +106,8 @@ After those changes our user can move the ring either by clicking on it and
 dragging or else clicking in the colour wheel. Also the ring should change 
 in position whenever the hue or saturation scale or spinbox is altered. 
 There  is a bit of difficulty in starting to drag the ring, maybe a bit of
-feedback is required to show that the ring is ready. If we add 
-``activeoutline`` we can see the ring change in colour when the mouse cursor
+feedback is required to show that the ring is ready. Add 
+``activeoutline`` to see the ring change in colour when the mouse cursor
 passes over the ring, what is apparent is that the centre is not activated
 only when the mouse passes over the ring itself.
 
@@ -119,5 +119,5 @@ only when the mouse passes over the ring itself.
 
     .. literalinclude:: ../examples/colours/11user2ring.py
 
-Now that the HSV part is operational we can join it to the RGB part, 
+Now that the HSV part is operational join it to the RGB part, 
 modifying some of the original functions as necessary.

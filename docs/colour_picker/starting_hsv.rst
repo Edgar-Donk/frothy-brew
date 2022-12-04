@@ -5,12 +5,12 @@ Starting with HSV
 Using paint.net as our guide the hsv part consists of 3 colour gradients,
 similar to their rgb part, but there will be a colour wheel which will be
 directly linked to the hsv part. Apart from the colour wheel it should be
-similar to the widgets we have already used for rgb.
+similar to the widgets already used for rgb.
 
 Determining HSV Gradients
 =========================
 
-Using a similar process to that for rgb we should be able to create our 
+Using a similar process to that for rgb create our 
 gradients. Before starting note that we have dissimilar ranges. Hue starts 
 at 0 and finishes at 360, whilst saturation and value both start and finish 
 at 0 and 100 respectively. When saturation or value change the hue gradient 
@@ -80,17 +80,17 @@ Converting HSV to RGB and Back Again
 If we were being pedantic our upper limits would be 359 and 99, rather than
 360 and 100.
 
-Using the conversions, as found in colorsys, we need only convert the start 
-and finish values into rgb using it as before to make the gradient.
-That means we do not need to do intermediate conversions from hsv to hash. 
-The conversions are made with normalised values (0 to 1) therefore it would 
-be useful to include normalisation and denormalisation at the input and 
-output.
+Using the conversions, as found in colorsys, only the converted start 
+and finish values are required to make the gradient in rgb.
+That means intermediate values need not be converted from hsv to hash. 
+The conversions are made with normalised values (0 to 1) therefore it is 
+useful to include normalisation and denormalisation at the input and 
+output in our function.
 
 Working with the Validation
 ---------------------------
 
-When working with spinbox entry areas we have a similar situation to just a
+When working with spinbox entry areas there is a similar situation to just
 plain entry, but when these are linked to tk variables additional constraints
 are created. Firstly even though we can have an empty entry that continues to
 validate, the tk variable will raise an error if we are using an IntVar or
@@ -99,17 +99,16 @@ integers. Some seat of the pants changes are required to prevent errors, so
 do not allow an empty entry part, changes have to be made with a part entry 
 input which can be prefixed as necessary.
 
-When validating use the current input, rather than the text if allowed. This
+When validating use the current input, rather than the text if we can. This
 prevents a completely empty editing area.
 
-It would be better if we could import the upper size limit and reuse the 
-validation code, since all the code is exactly the same otherwise. This has
+It would be better if the upper size limit is imported and reuse the 
+validation code, since all the code is otherwise exactly the same. This has
 been done by inserting the upper limit in the spinbox call to the register
 function. The validate command accepts just the number, but cannot have 
 an attribute such as ``upper=360``.
 
-After all that we should have a script that looks like the following, it 
-should be a reasonably similar to 02all3colours.py.
+After all that we should have a script that looks like 02all3colours.py.
 
 .. container:: toggle
 

@@ -12,7 +12,7 @@ Creating a Cursor for the Colour Wheel
 
 The cursor will be a ring that can be moved over the colour wheel either by
 using the left mouse button to drag the cursor or clicking to the 
-required position with a mouse. It will be constructed from arc which
+required position with a mouse. It will be constructed from oval which
 normally has a transparent fill and a black outline of width 1 pixel. Using 
 the assisting function we can create the circle working directly using centre 
 and radius::
@@ -31,11 +31,11 @@ hand mouse button to enable dragging. When clicking use much the same
 code, but include a clause to find the cursor.
 
 If we were to use ``canvas.move`` we need need to know the amount of movement 
-meaning that we would need to know the actual and final position. Using 
+meaning that the actual and final positions need to be known. Using 
 ``canvas.coords`` only the final position is required, which can be readily 
 found from the tkinter 
-canvas. Unless careful, ``coords`` can deform the image when it is being 
-moved, a circle does not have this problem as a line would have had. 
+canvas. Sometimes ``coords`` deforms the image when being 
+moved, luckily circle does not have this problem. 
 
 The coordinates of the canvas will be in cartesian, whereas the colour wheel
 will show the hue and saturation as polar coordinates. Therefore add
@@ -76,7 +76,7 @@ conversions between the two systems::
 
         return deg, ray
 
-Modifying 08basichsv.py we add the required polar conversion functions, the
+Modifying 08basichsv.py add the required polar conversion functions, the
 circle drawing function then import the colour wheel image and place the 
 cursor at the right-hand edge level with the centre, corresponding to a hsv
 of (0,100,100).
@@ -89,6 +89,6 @@ of (0,100,100).
 
     .. literalinclude:: ../examples/colours/10wheelhsv.py
 
-Using this as our basis we can now make our cursor interact with the user.
+Next make the cursor interact with the mouse actions.
 
 

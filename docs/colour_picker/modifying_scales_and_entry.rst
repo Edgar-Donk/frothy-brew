@@ -5,14 +5,14 @@ Change the Scale
 ----------------
 
 At present the scale has that stuck on feeling, it does not sit in with the
-application. There are two real choices, we could either go the whole hog 
-and change the scale to a canvas which combined the gradient and cursor, or 
-we could just change the appearance of the cursor using a theme. The first 
+application. There are two real choices, either go the whole hog 
+and change the scale to a canvas which combines the gradient and cursor, or 
+just change the appearance of the cursor using a theme. The first 
 choice would slow down the whole application, by how much is not really 
 known until tested on the full application when rgb is combined with hsv. 
-The second choice allows a scale to operate just as we already have. When 
-switching to a themed scale we will have to make provision to display the 
-range values which weres already part of the tkinter widget. 
+The second choice allows a scale to operate just as before. When 
+switching to a themed scale we will need to make provision to display the 
+range values which were included in the tkinter widget. 
 
 Changing the Scale Cursor
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -42,10 +42,10 @@ Changing the Scale Cursor
     to you, look up 
     `Linking style with State <https://tkinterttkstyle.readthedocs.io/en/latest/03style_with_state.html>`_
 
-Create a small class for our scale, purely so that we can use 
-inheritance. First of all let's create a cursor on an invisible trough, 
+Create a small super class for our scale, purely so that we can use 
+inheritance. First of all create a cursor on an invisible trough, 
 a bit like those in paint.net, but larger so that it is easier to click on 
-thecursor. Use state to changes its appearance when 
+the cursor. Using state, cChange its appearance when 
 pressed. Place this in the __init__ of RgbSelect we can 
 change the ttk scale and make changes to entry and spinboxes as required::
 
@@ -97,8 +97,8 @@ Checking out our requirements for the scale, note that the length of the
 Scale is the movement length of the cursor plus the cursor width, plus any
 trough borders. The external trough length is the actual Scale length. The
 centre of the cursor should correspond to the measurement on the range. If 
-the calculations are correct then when the cursor is at its minimum, ``from_``,
-it should show 0 and the corresponding ``to`` value at its maximum.
+the calculations are correct then when the cursor is at its minimum ``from_``
+it should show 0 and the corresponding ``to`` value is at its maximum.
 
 Adding Range Values
 ^^^^^^^^^^^^^^^^^^^^
@@ -144,8 +144,8 @@ This should give us::
         
             self.build(parent,from_,to,sliderlength,tickinterval, length)
 
-As we wish to position the range values just below the trough, it is 
-probably best to build them as part of the scale widget and use the ``place``
+Position the range values just below the trough,
+build them as part of the scale widget and use the ``place``
 layout manager, so these act as a built-in feature of the widget::
 
     def build(self, parent, from_, to, sliderlength, tickinterval, length):
@@ -160,15 +160,16 @@ layout manager, so these act as a built-in feature of the widget::
                            sc_range * (1 - sliderlength / length),
                            rely=1, anchor='n')
 
+.. sidebar:: ``relx`` is an x scale relative to the parent size, and ranges 
+
+    from 0 to 1, hence the need to normalise the values.
+
 The first tick value is positioned just below the centre of the slider when
-it is hard up against the left hand border, whilst the final tick should
-be below the centre of the slider when it is hard up against the right hand 
+it is hard up against the left hand border, whilst the final tick is
+below the centre of the slider when it is hard up against the right hand 
 border. This means that the first tick is half a slider length inside the 
 border, and the last tick is half a slider length inside the opposite border.
 Other ticks are equally spaced between these two extremes.
-
-``relx`` is an x scale relative to the
-parent size, and ranges from 0 to 1, hence the need to normalise the values.
 
 Now change all the Scales to TtkScale, altering any attributes as necessary.
 
@@ -212,8 +213,8 @@ User Input in Entry and Spinboxes
 User validation on both entry and spinboxes is necessary to ensure that 
 input is correct, spinboxes allow integer input up to 3 figures with an 
 upper and lower limit, whereas entry deals with a hash and hexadecimal input.
-When we add validation to both the entry and spinboxes we lose some of our
-automatic adjustment, this means that it is advisable to add a bind to each
+When adding validation to both the entry and spinboxes some of our
+automatic adjustment is lost, therefore add a bind to each
 of these widgets, so that any changes in values are reflected in our 
 gradients and shown value in entry::
 
@@ -225,8 +226,8 @@ gradients and shown value in entry::
         return True
 
 Each spinbox requires to register the above function, which is the same for
-each colour component RGBA. We are validating on keystroke, and using the
-action, current input and the text before validation. The bind handler is 
+each colour component RGBA. Validate on keystroke,
+action, current input and text. The bind handler is 
 common for the colour components RGB, and slightly less complicated for the 
 alpha component, since we are only updating the final colour, whereas a standard
 component must update all the other component gradients, the alpha component
@@ -239,11 +240,11 @@ use common validation and handler functions.
     Creating the final format does not always fall into your lap, so I have
     a commented out my first working attempt.
 
-The validation for the entry is a bit more complicated. We first of all
+The validation for the entry is a bit more complicated. First
 check that the first character is a hash, then all the subsequent input is 
-checked to be hexadecimal. Finally we limit it to 6 hexadecimal units using 
+checked as hexadecimal. Finally limit it to 6 hexadecimal units using 
 a bool function in the return clause of the try clause, which is equivalent
-to our range checking::
+to range checking::
 
     def isOkay(index, text, input_):  # '%i','%P','%S'
         # hash cannot be removed, hex check on input after hash
@@ -256,13 +257,12 @@ to our range checking::
         except ValueError:  # not a hex
             return False
 
-The validation otherwise is similar to the spinboxes, but because we need to 
-use the index, that must be called as well. When initialising the entry we 
-need the tk variable to set the default value, otherwise it became difficult 
-to do this by an insert into the entry when validation is used,  
-on small programs even this may not work. 
+The validation otherwise is similar to the spinboxes, but also 
+use the index, that must be called as well. When initialising the entry  
+the tk variable is set to the default value, otherwise validation
+prevents an update. 
 
-The bind handler gets the new hash value from which it can determine each 
+The bind handler gets the new hash value from which it determines each 
 colour component that in turn sets the colour component of the tk variable. 
 Each of the colour gradients then is drawn. 
 
@@ -276,8 +276,8 @@ After all that you should see something like the following:-
 
     .. literalinclude:: ../examples/colours/07entryscalemod.py
 
-Now that the rgba has been almost finalised as a standalone application we
-can develop the hsv as a standalone application along generally similar lines.
+Now that the rgba has been almost finalised
+develop the hsv along generally similar lines.
 Many of the calling functions should stay similar, so it is relatively 
 straightforward to import and leave the 
 application uncluttered. That's the theory at least.

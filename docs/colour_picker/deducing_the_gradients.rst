@@ -1,10 +1,10 @@
 Deducing the Gradients
 ======================
 
-If we start off with RGB values then we only need the straightforward 
-change to hexadecimal to display in tkinter. The first problem is how to 
-determine the start and finishing colours of each gradient, related to this 
-is how each component interacts with the other components. 
+Start off with RGB values then we only need the 
+change to hexadecimal to display in tkinter. Determine the start and finishing 
+colours of each gradient, also find out
+how each component interacts with the other components. 
 
 .. figure:: ../figures/red_colour.webp
     :width: 189
@@ -12,18 +12,17 @@ is how each component interacts with the other components.
     :align: center
     :alt: RGB gradients in red
 
-    Gradients when Red is Showing
+    Gradients starting on Red
 
 Open the colourpicker in paint.net or another application, and see what the 
 effect is on the gradients when the colour is changed. In particular move to 
-the extreme conditions. If the red value is 255 and the other two are 0, we 
-see that the red gradient is changing from black to red. Both green and red 
+the extreme conditions. If the red value is 255 and the other two are 0, 
+the red gradient changes from black to red. Both green and red 
 start from red and change to yellow and magenta respectively. 
 
 When all the components are 0 then all gradients start from black and finish 
-at their respective colour. When the red scale is adjusted the red gradient 
-remains unchanged, but the other two gradients change. From this we can see 
-that the red scale has an R value that starts at 0 and finishes at 255. 
+at their respective colour. When the red scale (R) is adjusted the red gradient 
+remains unchanged, but the other two gradients change.
 
 .. figure:: ../figures/black_colour.webp
     :width: 186
@@ -31,7 +30,7 @@ that the red scale has an R value that starts at 0 and finishes at 255.
     :align: center
     :alt: RGB gradients in black
 
-    Gradients when Black is Showing
+    Gradients starting with Black
 
 .. sidebar:: Interactive Gradients
 

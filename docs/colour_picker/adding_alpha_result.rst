@@ -12,11 +12,11 @@ Alpha Selector
 
     The Alpha gradient with a red colour and 255 Alpha from paint.net
 
-Let us add the alpha (opacity) to our colour components. As an example look 
+Add the alpha (opacity) to the colour components. As an example look 
 at Opacity - Alpha in paint.net. The gradient is different from the RGB
 gradients. The alpha gradient starts from white and ends with the selected 
 colour. At the white end are blocks of grey and white, while at the coloured 
-end the gradient is full colour. The normal method to produce this effect is 
+end the gradient is full colour. One method to produce this effect is 
 to create two images and combine them using the PIL alpha-composite 
 method, as we saw before, using PIL is not so fast, and we can surmise with
 so many image manipulations it will be comparitively slow. It would pay to 
@@ -248,7 +248,7 @@ grey::
     return array
 
 The gradient function is also transposed, but in a numpy way, at the end of
-the numpy instructions we append ``.T``::
+the numpy instructions append ``.T``::
 
     def vgenerate_gradient(to_colour, alpha, height, width):
         al0 = alpha / 255
@@ -264,8 +264,8 @@ the numpy instructions we append ``.T``::
 Adding Alpha
 ------------
 
-Since we wish to place the alpha component directly below the rgb values, it
-would be best to move the final result label to just right of the red 
+Place the alpha component directly below the rgb values, and
+move the final result label to just right of the red 
 component. Enclose the rgb in a labelframe, place opacity in its 
 own labelframe, while we are at it put the final result in its own 
 labelframe. Add a check function::
@@ -280,8 +280,8 @@ labelframe. Add a check function::
                     array[y, x] = 127-int(0.5 + 127 / width * x)
         return array
 
-Now that we have a chequers drawing function the gradient drawing needs to 
-be changed to include the chequer array with our gradient. A separate 
+Using the chequers drawing function change the chequer array to include with 
+our gradient. A separate 
 alpha drawing is made, then it is easy to call this rather than modifying 
 the original gradient drawing function::
 
@@ -319,16 +319,15 @@ So far the rgb should look like this.
 Adding Alpha to Resulting Colour
 --------------------------------
 
-We have already tested the necessary vertical gradient and chequer functions.
 As there is no appreciable difference in the resulting colour in the upper
-alpha band, we need only draw a background colour when alpha is above 240. 
+alpha band, only draw a background colour when alpha is above 240. 
 If this is done using a label the units of size measurement are width in
 characters and height in lines, potentially a problem when switching between 
 background and image. So the resulting colour is displayed on a canvas, which
 always uses the one measurement - pixels.
 
-Our functions to generate vertical chequers and draw a gradient are as we 
-have tested above. We require a vertical drawing function::
+Our functions to generate vertical chequers and draw a gradient are as
+tested above, now add a vertical drawing function::
 
     def vdraw_gradient(canvas, colour1, alpha=255, width=30, height=30):
         if alpha > 240:
@@ -354,11 +353,11 @@ reference to it or else it is just ignored (garbage collected).
 Change all references from the label having a background colour to the new
 vertical gradient. Change the label to a canvas.
 
-Since we have a colour mix container, add an entry widget, tie this to a tk
+Since there is now a colour mix container, add an entry widget, tie this to a tk
 variable to show the colour hash value. This needs to be a string variable 
-as we have hexadecimal values. Add an explanatory label.
+for hexadecimal values. Add an explanatory label.
 
-At the end of build draw all the gradients, so that they appear when we open
+At the end of build draw all the gradients, so that they appear when opening
 the application. On startup show red, which is set at 255 while blue and 
 green are 0. Show full alpha, no transparency, so set alpha to 255. 
 
