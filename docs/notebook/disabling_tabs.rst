@@ -45,7 +45,7 @@ When creating the Notebook use the style hook ``green.Notebook`` (without
     st1.configure('green.TNotebook.Tab', background='light green', foreground='blue')
     st1.map('green.TNotebook.Tab',background=[('disabled','#d9d9d9'),('selected', '#bceebc')])
     
-    nb = Notebook(root, style='green.TNotebook') # <-- only Notebook, not TNotebook.Tab
+    nb = Notebook(root, style='green.TNotebook') # <-- only TNotebook, not TNotebook.Tab
 
 .. container:: toggle
 

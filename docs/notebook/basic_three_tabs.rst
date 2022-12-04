@@ -19,7 +19,7 @@ Basic 3 Tab System
       |nb_basic|         |nb_basic_ide|
     ================== ==================
 
-The notebook is a container for other widgets and their contents. Let's form 
+The notebook is a container for other widgets and their contents. Form 
 a notebook with 3 tabs each having a different coloured frame::
 
     from tkinter import Tk, Frame
@@ -44,13 +44,13 @@ a notebook with 3 tabs each having a different coloured frame::
 
 Note that the notebook itself relies on normal layout management, such as
 grid or pack, while each tab has an ``add`` method to include the 
-tab's contents. Since the first child of each page often is a frame
+tab's contents. The first child of each page is often a frame, therefore
 the add method only affects the frame, thereafter use the normal layout 
-management for that frame. Each frame has been called pageX (where X is an 
+management for that frame. Each frame has been called pageN (where N is an 
 integer).
 
-So that each page will look similar the height has been adjusted by a 
+To make each page look similar the height has been adjusted by a 
 multiplier, calculated from the length of "Test" in a known font. On a normal
 monitor it will be 30 pixels long, on an Ultra High Definition monitor it
 will have a different value - on my monitor it shows 66 pixels, 2.2 times
-that on the normal monitor.
+that of the normal monitor.
