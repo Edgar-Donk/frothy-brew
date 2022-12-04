@@ -10,10 +10,10 @@ Combining RGB with YIQ
     
     RGB and YIQ Combined
 
-Going along the same pathline as for hsv, we can now add the rgb colour
+Going along the same pathline as for hsv, now add the rgb colour
 system, then tie the two parts together. So in essence add 07entryscalemod
 to 03yiqspaceadded to make 04rgbandyiq, removing duplicate files and 
-renaming sb_okay and its references in the yiq part.
+renaming sb_okay and its references in the YIQ part.
 
 Check that the layout is correct, adjust the LabelFrame references and grid
 layout for opacity. Now add the function overlord, copied from 12rgbandhsv
@@ -44,7 +44,7 @@ to background and height.
     
     RGB and YIQ Combined 
 
-There are one or two advantages that yiq/yuv has over rgb and hsv, we can
+There are one or two advantages that YIQ/YUV has over rgb and hsv, we can
 optically get an accurate grey just by selecting the Y component(I and Q 
 both 0), further the complementary colour is -1.0 times the I and Q 
 components, and Y becomes 100-Y. For general purposes YIQ or YUV are easier 

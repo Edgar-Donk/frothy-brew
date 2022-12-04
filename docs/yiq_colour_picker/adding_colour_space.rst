@@ -29,20 +29,20 @@ mathematical convention with increasing y going vertically upwards.
 
     .. literalinclude:: ../examples/yiq/02yiq_colour_space.py
 
-We can now change 01basicyiq.py into 03yiqspaceadded.py whilst importing the
+Now change 01basicyiq.py into 03yiqspaceadded.py whilst importing the
 image created from 02yiq_colourspace.py. Add the function for a circle,  
 insert the canvas for the colour space, together with its cursor - include 
 the activeoutline option. See that it all fits together.
 
 Now start making the cursor interactive. As we are dealing with a square
 colour space there is no requirement for special functions to convert x,y 
-to i,q and back again. When calling the cursor function door_bell, keep the 
-y component at the current value, rather than 50 (which was used to draw the 
+to I,Q and back again. When calling the cursor function door_bell, keep the 
+Y component at the current value, rather than 50 (which was used to draw the 
 space). Now add the binds for the cursor and their functions.
 
 Change the bind functions to reflect cartesian coordinates. Ensure the
-cursor stays inside the canvas, convert the x and y coordinates to the i and
-q values.
+cursor stays inside the canvas, convert the x and y coordinates to the I and
+Q values.
 
 .. figure:: ../figures/yiq_space.webp
     :width: 310

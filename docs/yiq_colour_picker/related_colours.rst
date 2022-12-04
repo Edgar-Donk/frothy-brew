@@ -11,12 +11,12 @@ Related Colours
     Combined RGB and YIQ with Related Colours 
 
 No matter where we are on the spectrum it is easy to calculate related 
-colours using YIQ. All we need do is keep the hue constant, I and Q 
+colours using YIQ. Just keep the hue constant that is the I and Q 
 components, then adjust the luma Y and read off the related colour. The 
 complementary colour is not much more complicated, multiply the I and Q 
 values by -1 and take away the luma from 100.
 
-We were able to obtain something similar in HSV. Related colours have the same 
+Something similar can be done in HSV. Related colours have the same 
 hue, so adjusting saturation and value gave the related colours. Often
 it is obvious, especially when dealing with fully saturated and 100% value,
 in these cases saturation starts at white and finishes with our colour mix 
@@ -31,13 +31,13 @@ hue constant in HSV) change the luma and the related colours do not change.
 Resizing
 --------
 
-We can resize along similar lines to RGB and HSV, except that we are using
-a single resize function, where we have included the name of the Canvas in
+Resize along similar lines to RGB and HSV, but now use
+a single resize function, where the name of the Canvas is included in
 our bind call. Special provision is made using the ``partial`` method fron
 the package ``functools``. Depending on the Canvas name so the appropriate
 gradient is redrawn with a new width. The actual values of the colour 
 components need to be found before the gradients are drawn. Just as before
-we need to update the default Canvas width, otherwise once the resizing is 
+update the default Canvas width, otherwise once the resizing is 
 complete any cursor movement could result in wrongly sized gradients.
 
 .. container:: toggle
