@@ -31,7 +31,7 @@ Table: **Attributes for tkinter and ttk Scales**
    :delim: ;
 
 .. warning:: Not all ttk Scale widgets react as expected or in the same way
-    when querying or setting using Style. 
+    when querying or setting when using Style. 
 
 |
 

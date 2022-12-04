@@ -16,7 +16,7 @@ inside the parent of the widget, root in our case and has the text "N"::
     
     lab0 = Label(root, text='N')
     
-We wish to place the Label outside the selected widget, which is called by the
+Place the Label outside the selected widget, which is called by the
 ``_in`` parameter which ties it to the widget where the label is positioned, 
 the Label is to be on the ouside, so specify bordermode='outside'::
 
@@ -30,9 +30,9 @@ on its lower side ('s')::
     
     lab0.place(in_=but,  bordermode='outside', relx=0.5, rely=0, anchor='s')
     
-We can see that by using bordermode='outside' the width of the widget
+By using **bordermode='outside'** the width of the widget
 plus its padding is included in our rely calculation, if the Label text is 
-sitting over the widget border simply make the padding larger.
+sitting on the widget border simply make the padding larger.
 
 .. container:: toggle
 

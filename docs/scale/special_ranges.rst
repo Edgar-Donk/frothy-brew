@@ -2,7 +2,7 @@
 Special Ranges
 ==============
 
-If you should try a range such as -1 to 1 then expect the ``range`` in the 
+When using a range such as -1 to 1 then expect the ``range`` in the 
 ``for`` loop to give an error. This can be solved by using numpy ``arange``.
 The relative positions of the minimum and maximum tick values can be made 
 into variables::
@@ -14,7 +14,7 @@ Create a numpy array of the data in our range::
 
     data = np.arange(from_val, to_val+tick_val, tick_val)
 
-as can be seen the construction is similar to the range. To ensure the maximum
+the construction is similar to the range. To ensure the maximum
 value is included add the tick value to the ``to_val``. As the data is 
 an array of floats round the values, then convert to a tuple::
 

@@ -36,7 +36,7 @@ Values of Scale Elements
 
 Before we can accurately place the range values we need to know the position
 of the slider's halfway line (half the slider length).
-. The class name for the horizontal scale is 'Horizontal.TSlider', 
+The class name for the horizontal scale is 'Horizontal.TSlider', 
 the component names are 'trough' and 'slider', and the relevant element names 
 are 'borderwidth' and 'sliderlength'. For instance we can query the trough
 borderwidth element directly::
@@ -58,7 +58,7 @@ the location of the current value by finding out the 'borderwidth' and
 'sliderlength'.
 
 If we specify the values using a ``Style.configure()`` method then be aware
-that the changes relate to the actual pixel size even in dpi unaware IDEs. 
+that the changes relate to the actual pixel size, even in dpi unaware IDEs. 
 When confirming the option ``length`` using ``cget()`` then the length
 corresponds to the length in pixels but the display size is for a dpi unaware
 situation in Idle and PyScripter.
@@ -77,10 +77,13 @@ in later scripts this problem will be addressed.
 Ranges 
 ------
 
-When we later use ColourPicker and YIQColourPicker there are standard ranges
-0 to 100 for HSV and YIQ, 0 to 255 for RGB and 0 to 360 for HSV. As these 
-ranges start from 0 and finish with 100 or more in all cases, some of the
-special cases are not encountered. The range values are made of Labels, that 
+.. sidebar:: Standard Ranges
+
+    Note when using ColourPicker and YIQColourPicker they have 
+    standard ranges 0 to 100 for HSV and YIQ, 0 to 255 for RGB and 0 to 360 
+    for HSV. Special cases are not encountered. 
+
+The range values are made of Labels, that 
 use the ``place()`` layout manager, which are incorporated into the Scale 
 widget by the layout manager. The placement is made easier as the text is 
 placed centrally over each "tick", therefore provided the ticks have been
@@ -108,7 +111,7 @@ now display the range values::
                     rely=1, anchor='n')
 
 This gives a reasonably good correlation, but may be slightly innaccurate at
-the lowest values. A better estimate needs to account for the sizes of the 
+the lowest values. A better estimate would account for the sizes of the 
 cursor at the two extremes and the trough border thickness. The travel of the 
 slider is from the border thickness plus half the slider length to the length
 of the trough minus the border thickness minus half the slider length. This
