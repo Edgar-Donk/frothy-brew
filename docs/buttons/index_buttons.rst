@@ -74,7 +74,7 @@ and radiobuttons scaleable.
     a scaling factor, whereas the first two variants change the widgets
     through tk/tcl so can only affect the standard ttk widgets. Third party
     widgets are mostly image based so cannot be altered by any of these
-    means, or else are already scaleable (sphinx-bootstrap-theme).
+    means, or else are already scaleable, `sphinx-bootstrap widgets <https://github.com/scotch/sphinx-bootstrap>`_.
 
 .. toctree::
    :caption: Check- Radiobuttons...

@@ -37,7 +37,7 @@ similar to the checkbutton make a separate dictionary.
 As with the check buttons test with an added checkbox to disable/enable one 
 of the radiobuttons. When testing without the states (active, selected) and 
 active the radiobuttons refused to change state from unselected to selected,
-so remember to include these states.
+therfore remember to include these states.
 
 .. container:: toggle
 
@@ -97,7 +97,5 @@ theme and are sized separately as required for dpi awareness.
     .. literalinclude:: ../examples/buttons/test_altflex.py
 
 As can be seen from the test script results (figures at the top of the page)
-the check and radiobuttons match in size just by scaling. Pyscripter is not
-dpi aware and whereas Thonny is dpi aware. If the same script had been run
-using the alt theme then both the check and radiobuttons would have been 
-half the size with Thonny.
+:ref:`Scaleable Radiobuttons` the check and radiobuttons match in size just 
+by scaling.

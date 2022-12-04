@@ -155,11 +155,11 @@ based theme.
 Displaying the Checkbutton
 ==========================
 
-As shown in `Radio and Check Buttons <https://tkinterttkstyle.readthedocs.io/en/latest/bluesky/radio-check.html>`_
+As shown in `Putting on the Style, Radio and Check Buttons <https://tkinterttkstyle.readthedocs.io/en/latest/bluesky/radio-check.html>`_
 make a command for Style to create a theme, that in our case, has alt as the 
 parent. Insert the required states, remembering that the compound state 
-preceeds the single state (disabled, alternate is directly followed by 
-alternate). Style needs to map the background colour when the widget 
+preceeds the single state (<disabled, alternate> is directly followed by 
+<alternate>). Style needs to map the background colour when the widget 
 is active.
 
 Then display a pair of checkbuttons and add a third to disable/!disable one
