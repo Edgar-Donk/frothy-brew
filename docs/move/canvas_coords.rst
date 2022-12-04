@@ -3,9 +3,9 @@ Canvas Coords
 =============
 
 On the face of it the coords method is slightly easier, but it often causes 
-problems. In order to move an object it must first be selected, then it can
-be moved to a new position, then released. Alternatively the mouse can be 
-first positioned then clicked whereupon the object will be moved to this 
+problems. In order to move an object it must first be selected, moved to a 
+new position, then released. Alternatively the mouse can be 
+first positioned then clicked whereupon the object will move to the mouse 
 position. The first example is purely using the Scale widget, this shows the
 effect of moving and clicking::
 
@@ -27,7 +27,6 @@ over the object and the mouse button is pressed. The slider looks as though
 it is moving, in reality it has been redrawn in a new position.
 
 
-
 Drag and Drop
 -------------
 
@@ -37,8 +36,8 @@ Drag and Drop
     :height: 363
     :alt: circle in tkinter frame
 
-Our object is to emulate the Scale slider interaction in our canvas 
-application. By adding binds to the mouse events functions can be created to 
+We wish to emulate the Scale slider interaction in our canvas 
+application. By adding binds to the mouse events, functions can be created to 
 move a canvas object, this can be a drawn object or an image. There are 
 quite a few
 Canvas functions we can use, in fact we are spoilt for choice. Let's see 
