@@ -144,22 +144,37 @@ horizontal and vertical scales are addressed.
     
     scale/index_scale
 
+Saving with Canvas
+==================
+
+.. figure:: images/canvas/line_testr.png
+   :width: 200px
+   :height: 200px
+
+Working with canvas there are times when the output should be saved. This 
+shows some of the choices available.
+
+.. toctree::
+   :maxdepth: 3
+   
+   canvas/index_canvas
+
 Move in Canvas
 ==============
 
 .. image:: figures/move/05handles_to_rectangle_split.png
-    :align: center
-    :width: 431
-    :height: 356
-    :alt: rectangle with handles on corners
+   :align: center
+   :width: 431
+   :height: 356
+   :alt: rectangle with handles on corners
 
 Canvas tkinter widget using one of its many facets, moving objects. This is 
 a prelude to Colour Picker and YIQ Colour Picker.
 
 .. toctree::
-    :maxdepth: 3
-    
-    move/index_move
+   :maxdepth: 3
+   
+   move/index_move
 
 Colour Picker
 =============
