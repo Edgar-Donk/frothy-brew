@@ -23,8 +23,8 @@ smaller when in DPI Aware mode. They remain too small even after applying
 scaling. This applies to all four standard themes, (alt, clam, classic and
 default) but for Windows where vista and xpnative are available the indicators
 stay large. Mac users can test their own theme aqua. There is no attribute to
-turn the indicator off, also the style configuration options do not have a 
-size for the indicator.
+turn the indicator off on ttk radio and check buttons, nor can the style 
+configuration options always be used to adjust the indicator size.
 
 .. tabularcolumns:: |>{\centering\arraybackslash}\X{1}{5}|>{\centering\arraybackslash}\X{1}{5}
 
@@ -38,18 +38,18 @@ size for the indicator.
 
       - .. figure:: ../figures/dpi/ttk_widg_dpi_vista.png
 
-For the moment there is no quick fix for the ``check`` and ``radio`` buttons when using
-**alt**. **clam** can be configured using **indicatorsize**, whilst **classic** 
-and **default** can be configured using **indicatordiameter**. **vista** and 
+For the moment there is no quick fix for the ``check`` and ``radio`` buttons 
+when using
+**alt**. Configured **clam** using **indicatorsize**, whilst **classic** 
+and **default** can be configured using **indicatordiameter**, **vista** and 
 **xpnative** need no adjustment. 
 
 If the alt theme is to be used we need to closely examine the size and colours
 of the check and radio buttons in the required states, duplicate these with
 a scaling factor in a PIL script, which then loads the images into tkinter.
-As such it may not interest the general user to create a special module for
-but alt, but the principle of creating scaleable images used as widgets 
-sounds interesting. 
-
+As such it may not interest the general user to create a special module only
+for alt, but the principle of creating scaleable images used as widgets 
+sounds interesting :ref:`Check and Radio Buttons`. 
 
 More Themed Widgets
 -------------------
