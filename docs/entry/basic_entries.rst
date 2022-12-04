@@ -12,9 +12,9 @@ alphabetic or not. We require both options ``validate`` and ``validatecommand``.
 Validate is using ``'key'`` which means that after every keyboard entry the 
 callback function ``is_okay`` runs and checks the input, Entry then displays 
 this input if allowed. The validatecommand needs to know the callback 
-function and options we are using, in this case we are using ``'%P'`` which
+function and options being used, in this case ``'%P'`` which
 is the allowed text. As the input is entered the contents of ``'%P'`` 
-increases with each correct keystroke, this is shown in our print output. 
+increases with each correct keystroke, which is shown in the print output. 
 The callback function ``is_okay`` needs to be registered using the hook 
 ``vcmd`` before it can be used. As root is the parent widget it is used for
 registration in this example, later on we can use other widgets such as a
@@ -80,13 +80,13 @@ documentation here `Link to the Widget Specifications and Validation <http://tcl
         .. literalinclude:: ../examples/entry/00validate_demo.py
 
 When dealing with strings the first character is normally capitalised, 
-thereafter we could have letters, numbers and simple punctuation, so  
+thereafter characters, numbers and simple punctuation, so  
 we need to know the current indexed position before the current input, 
 ``'%S'``, can be accurately checked. 
 
 The first character is restricted to a capital letter, but if wrong it needs 
-to be corrected, in fact the input should be able to be corrected wherever
-the user is. Sometimes the normal ``if ... elif`` clauses can give unexpected 
+to be corrected, in fact the input should be able to be corrected anywhere.
+Sometimes the normal ``if ... elif`` clauses can give unexpected 
 results, so think in terms of progressive queries such that the next query 
 is only true if all previous queries are satisfied. In general start with 
 the widest ranging query and progressively narrow it down to the last query.
@@ -106,7 +106,7 @@ and fast rule, other than if it works it probably is right.
     :alt: string tkinter entry validation
     :align: center
 
-In this example we are using both ``text`` and ``input``:: 
+In this example use both ``text`` and ``input``:: 
 
     def is_okay(text, input): # %P, %S
         if input.isupper() and len(text)==1:
@@ -122,8 +122,8 @@ In this example we are using both ``text`` and ``input``::
     ent0 = Entry(root, validate='key', validatecommand=(vcmd, '%P', '%S'))
     ....
 
-In order to allow the user to correct the input we need to add the check 
-for an empty input. We cannot use a single nested set of queries, as the 
+Add a check for an empty input to enable corrections by the user. Do not 
+use a single nested set of queries, as the 
 the first character has a different condition to the following characters::
 
     def is_okay(input, action):
@@ -135,19 +135,19 @@ the first character has a different condition to the following characters::
 .. topic:: String Validation Function
     
     First check whether the first character is a capital
-    letter or not. Then we have two queries that check whether the input
+    letter or not. Then there are two queries that check whether the input
     is an alpha numeric character or one of a set of punctuation options.
     
-    Although the logic can be followed the fact that at every query apart
-    from the first is an elif or else query should raise a warning flag. As 
+    Although the logic can be followed, the fact that at every query apart
+    from the first, has an elif or else query should raise a warning flag. As 
     it stands the validation function is doing its job but there is room
     for improvement.
     
     Without peeking see if you can improve on the validation function, 
-    remember we want a capital first letter, thereafter characters, or some
-    prescribed punctuation. If at any time you can insert a character such as 
-    **%** then the validation is no longer working. After making your changes
-    test it with pylint, if you score more than 9.5 and it works - well done!
+    remember the first letter is capitalalised, thereafter characters, or some
+    prescribed punctuation. If at any time a character such as **%** can be 
+    inserted then the validation is no longer working. After making your changes
+    test it with pylint, if the score is more than 9.5 and it works - well done!
 
 .. container:: toggle
 
@@ -188,10 +188,10 @@ while the second option shows we are not inserting but deleting.
 .. note:: All Validating Substitutes are Strings
 
     Whenever using action %d or index %i use quoted numbers, or change the 
-    substiute variable to an integer.
+    substitute variable to an integer.
 
 It is better in that the expected behaviour is happening, but stylistically 
-it isn't the best::
+it isn't optimal::
 
     index = int(index)
     if action == '1':
@@ -243,8 +243,8 @@ test against ``isdigit``::
 It is just as restrictive as ``int``, but notice anything different? You
 should notice that no warnings were generated when a decimal point was tried,
 which allows validation process to continue. We still have the problem of 
-trying to change the first integer, we can use a similar solution to that 
-used previously. 
+trying to change the first integer, use a similar solution to that 
+for characters. 
 
 It would also be useful to have a  method that prevents input beyond upper 
 and lower limits, so try ``range`` to provide the limits::
@@ -263,21 +263,21 @@ and lower limits, so try ``range`` to provide the limits::
 
 As it stands this is only applicable to positive integers, and our test for 
 an empty first entry is tacked on. The limits work but the user does 
-not know the reason why the input is not accepted - the simplest solution is 
+not know the reason why an input is not accepted - the simplest solution is 
 to provide labels showing the limits - an alternative solution would provide 
 feedback. 
 
 Now change the lower range value from 1 to 11, no input is allowed. To 
 overcome this problem one needs to either check the input and use limits only
-after the entry is completed or separate out the limit checking as we shall 
-do later see 07layout_integer.py.
+after the entry is completed or separate out the limit checking as will be
+done later see 07layout_integer.py :ref: `Layout Integer`.
 
-Now we should enable minus integers::
+Now enable minus integers::
 
     elif text in ("", "-"):
 
 Only using "%P" fails since isnumeric does not recognise negative numbers, 
-(by the way it fails with isdigit and isdecimal as well). As we saw before, 
+(by the way it fails with isdigit and isdecimal as well). As seen before, 
 using int() with the ``if`` conditional construct produces errors that stops 
 validating. This can be solved by using a ``try`` and ``except`` construct 
 with ``int()`` for negative integers, only use an ``if`` construct with 
@@ -316,8 +316,8 @@ The try construct::
     **False** if it is not one of these options. 
     
     In the second part of the validation check whether it is an integer or not.
-    Once we start inserting a single integer either by itself or combined
-    with a minus sign, it is accepted by the integer validation.
+    Once starting to insert a single integer either by itself or combined
+    with a minus sign, is accepted by the integer validation.
     
     Both parts are independant, in that if it does not satisfy the first part
     it could still be valid for the second part. Therefore use sequential 
@@ -336,7 +336,7 @@ Float Entry
 ------------
 
 Float entry should be similar to integer, with negative numbers and decimal 
-points. As suspected, unless we make special provision for these two inputs,
+points. As suspected, unless special provision is made for these two inputs,
 it will create an error and not be read into the entry. To be consistent 
 "-." is also a special case. 
 
@@ -358,7 +358,7 @@ working if an error is generated)::
 
     The float validation runs along similar lines to the integer validation.
     The main differences being that we are checking for a float, and there 
-    are more options for the first character or two, as we can have a decimal
+    are more options for the first character or two, as there can be a decimal
     point or a minus sign and a decimal point. Otherwise it is just a copy
     of the integer validation.
 
@@ -375,9 +375,11 @@ using Style. This also applies to the themed Combobox and Spinbox::
     ent0 = Entry(....font=(font_family,font_size,'bold'))
     .....
 
-If we need to have limits then it is best to separate this from the 
-validation, and have a labelframe to enclose our limit labels and entry (see 
-later 09float_function.py).
+If limits are required then it is best to separate these from the 
+validation, and have a labelframe to enclose the limit labels and entry (see 
+later 09float_function.py :ref:`float-function`).
+
+.. _entry-float:
 
 .. container:: toggle
 

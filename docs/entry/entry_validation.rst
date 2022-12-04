@@ -46,11 +46,11 @@ Methods Used with Validation
 ----------------------------
 
 The three most important types of input, string, integer and float, will be dealt 
-within the this section. Within Colour Picker :ref:`mod-entry` is shown how to 
-deal with a hexadecimal input. In the colour picker you will also see that 
-we can check limits when different widgets use the same validation function. 
-As with most functions we need only refer to the actual validation parameters 
-we are actually using.
+within this section. Colour Picker :ref:`mod-entry` shows how to 
+deal with a hexadecimal input. The colour picker uses 
+check limits with different widgets using the same validation function. 
+As with any function only call the actual validation parameters 
+being being used.
 
 As we are validating simple options the **validate** function method together 
 with **key** is used and the **validatecommand**. Within these scripts the 

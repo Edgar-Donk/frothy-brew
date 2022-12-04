@@ -16,9 +16,9 @@ Class or Function?
 
 That works well, so now we can decide whether to make it into a function
 or class. Since the script is fairly small and uncomplicated create three 
-separate functions, however as an exercise we can convert all three to a 
+separate functions, however as an exercise convert all three to a 
 class, using the principles of `Sammy the Shark
-<https://www.digitalocean.com/community/tutorials/understanding-class-inheritance-in-python-3.>`_ 
+<https://www.digitalocean.com/community/tutorials/how-to-construct-classes-and-define-objects-in-python-3>`_ 
 From now on the validation function will also be made less verbose, after 
 each change ensure that the function still works as expected. 
 
@@ -54,6 +54,8 @@ Create a DoubleVar outside the widget, put its handle on the widget calling
 arguments, then set the outside variable from within the program. The value
 can then be picked up by a button and printed out. 
 
+.. _float-function:
+
 .. container:: toggle
 
     .. container:: header
@@ -68,15 +70,21 @@ Similar changes can be made with 06layout_string.py and 07layout_integer.
 
     Moving on from the validation in 06layout_string.py we have two queries
     that depend upon being in the first position and two queries that operate
-    on subsequent positions. We can combine the pairs using an ``or`` 
+    on subsequent positions. Combine the pairs using an ``or`` 
     construct. Previously the else clause returned *False*, by inserting a
     **bool** function the else clause tests the second pair creating a *True* or
     *False* result. As the pairs of queries are independant the first pair
-    must return *True* when valid, so we cannot use this for the bool function,
-    therefore the need for ``else``.
+    must return *True* when valid, so this cannot be used for the bool function,
+    therefore the requirement for ``else``.
     
     OK - how many lines did you end up with when trying to rewrite the 
     original string validation?
+
+|
+
+.. _integer-function:
+
+|
 
 .. container:: toggle
 
@@ -163,12 +171,12 @@ value as this causes no problem for any of our three types::
     DEF_INP = 'Pilsner'
     v = StringEntry(fra0, LF_TEXT, MESS_TEXT, DEF_TEXT, COLOUR)
 
-Let us add some colour coding to the labelframe label. The default colour is 
+Add some colour coding to the labelframe label. The default colour is 
 the existing brown and yellow 
 combination. The labelframe background remains brown, only the label 
-background is going to be changed to blue, green or pink. Using these as the
-attribute, we will need to 
-generate some additional style options. with brown as the default::
+background is going to be changed to blue, green or pink. Using these in the
+attribute, some additional style options needs to be generated, with brown as 
+the default::
 
     def __init__(self, parent,lf_text,mess_text,def_inp="",colour='brown'):
     ....
@@ -185,8 +193,8 @@ generate some additional style options. with brown as the default::
         self.lf0 = Labelframe(self.fr0, text=self.lf_text,
                          style=self.colour+'.TLabelframe')
 
-The widget might be disabled and then enabled by the user. We are placing 
-an optional checkbutton in the label position of the labelframe. This is a
+The widget might be disabled and then enabled by the user. Place 
+a checkbutton in the label position of the labelframe. This is a
 bit more complicated than either of the other two changes. The message shown
 in the label part of label frame is now taken over by the checkbutton, as is
 the background colour.

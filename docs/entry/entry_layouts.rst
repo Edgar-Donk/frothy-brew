@@ -89,11 +89,11 @@ Layout Integer
     The compound query acts as though we had used ``<=`` rather than ``<``
 
 In concept it is similar to our string layout, but now the widget title may
-contain units (as appropriate), we may also have upper and lower limits that
-will affect the logic of the event function. First define the lower limits,
+contain units (as appropriate), upper and lower limits may be present that
+affect the logic of the event function. First define the lower limits,
 then alter the event function to confirm the value and show when the limit
 has been exceeded. The rest of the script is the same as 
-04entry_negative_integers.py::
+04entry_negative_integers.py :ref:`Float Entry` ::
 
     L_LIMIT = 0
     U_LIMIT = 100
@@ -115,7 +115,7 @@ in two separate labels, (just after the limit definition)::
     llab = Label(lf0, text=str(L_LIMIT)+"  lower limit")
     llab.grid(row=2, column=1, padx=10)
 
-The enhanced widget looks rather grey with black lettering, let's colour it 
+The enhanced widget looks rather grey with black lettering, colour it 
 up a bit. Make the labelframe pale brown and the labels pale yellow::
 
     s.configure('brown.TLabelframe',background='#C9B99B')
@@ -132,7 +132,7 @@ up a bit. Make the labelframe pale brown and the labels pale yellow::
 
 It should be relatively easy to add warning colours to the limits, trigger
 these when the limit is exceeded. Keep the warning colour there until the
-Return event, when we can reset the warning colours before retesting::
+**Return** event, when we can reset the warning colours before retesting::
 
     s.configure('lowr.TLabel', background='lightblue')
     s.configure('upr.TLabel', background='red')
@@ -172,8 +172,9 @@ Layout Float
     
     Float Entry, Lower Limit Activated
 
-We can use most of the new construct from 07layout_integer.py, only needing
-to change to float and copying the feedback function from 05entry_float.py::
+Use most of the new construct from 07layout_integer.py, only needing
+to change to float and copying the feedback function from 05entry_float.py
+:ref:`entry-float` ::
 
     if L_LIMIT < float(ensv.get()) < U_LIMIT:
     ...

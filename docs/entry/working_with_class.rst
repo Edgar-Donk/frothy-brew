@@ -4,25 +4,28 @@ Working with Class
 Trimming Down
 -------------
 
-.. figure:: ../figures/ent_int_less.webp
+.. figure:: ../figures/ent_int_less.png
     :width: 314
     :height: 154
     :alt: tkinter entry integer validation with less feedback
     :align: center
-
+    
+    When a message does not show there is an annoying yellow bar showing
+    where a message would be. Blend the Label into the background leaving
+    only the foreground colours to show, or hide the Label.
 
 First move the colour style clauses from the init function to the construct
 method in StringEntry remembering to add the lower and upper limit 
-colours, then we can remove the same clauses in IntegerEntry and FloatEntry.
+colours, then remove the same clauses in IntegerEntry and FloatEntry.
 
 Remove the feedback information for cb_opt in modify and toggle_opt. Remove
 the passed argument **mess_text**, but still keep **mess_lbl** as it provides 
 confirmation that the input has succeeded. 
 
-In the method **end_input**, found in IntegerEntry, ``int(self.out_var.get())``
+The method **end_input**, found in IntegerEntry, ``int(self.out_var.get())``
 is not needed as out_var has been changed to an IntVar, the same applies to
-``float(self.out_var.get())`` in FloatEntry, **end_input** is now duplicated, 
-which can now be removed. 
+``float(self.out_var.get())`` in FloatEntry, **end_input** is now duplicated 
+and can now be removed. 
 
 The limits method has been changed to tie in with labelframe rather than parent::
 
@@ -56,6 +59,7 @@ The limits method has been changed to tie in with labelframe rather than parent:
     ......
     # remove method end_input
 
+
 .. container:: toggle
 
     .. container:: header
@@ -73,23 +77,23 @@ Adding Class Inheritance to Base Class
     :alt: tkinter entry validation string,integer,float
     :align: center
 
-We can use the LabelFrame class as the parent class for StringEntry with a 
+Use the LabelFrame class as the parent class for StringEntry with a 
 touch of the supers thrown in for good measure. In essence we inherit all
-the methods and parameters from LabelFrame, where we used the alias 
-``self.lf`` this becomes just ``self``, we no longer need to call 
-LabelFrame in the construct method. Parameters already 
+the methods and parameters from LabelFrame, where the hook 
+``self.lf`` was used just becomes ``self``, LabelFrame no longer needs to be 
+called in the construct method. Parameters already 
 incorporated in the three super calls can be deleted (commented out to show 
 immediate changes). To enable the style changes a call to ``self['style']`` 
 is made just after configure in the construct method.
 
 As you can see, the original composition call to LabelFrame has been changed
-to an inheritance call, in other words our widget changed from an "has a" to 
+to an inheritance call, in other words our widget changed from a "has a" to 
 a "is a" type of relationship with the LabelFrame widget. As it stands it is
-still a LabelFrame widget hence we can display it using normal layout 
-management within our *main* part or a calling program.
+still a LabelFrame widget hence it can be displayed using normal layout 
+management within our *main* part or from a calling program.
 
-Within an application it would be better if the widgets all appeared as the 
-same size. We can now call the dimensions from the widgets themselves within
+Within an application it would be better if the widgets all appeared the 
+same size. Call the dimensions from the widgets themselves within
 __main__. Just from this application we can see how more complex widgets 
 might be created.
 
