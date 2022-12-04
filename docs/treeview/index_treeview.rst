@@ -1,6 +1,6 @@
-========
-Treeview
-========
+===============
+Treeview Widget
+===============
 
 Treeview has many attributes that may not be always obvious, it can be used 
 to display heirarchical information such as in a directory, its 

@@ -49,8 +49,8 @@ ourselves to the primary and secondary colours::
                ('magenta', '#FF00FF', (255,0,255)),
                ('cyan', '#00FFFF', (0,255,255)))
 
-Now we can start creating the widget, notice that ``column`` is using the 
-column names found in ``tree_columns`` and we want the headings to show::
+Now start creating the widget, notice that ``column`` is using the 
+column names found in ``tree_columns`` and headings should be shown::
 
     fr0 = Frame(root)
     fr0.grid(column=0, row=0, sticky='nsew')
@@ -58,7 +58,7 @@ column names found in ``tree_columns`` and we want the headings to show::
     tree = Treeview(fr0, column=tree_columns, show='headings')
     tree.grid(column=0, row=0, sticky='nsew')
 
-We can now load the headings and data::
+Now load the headings and data::
 
     for col in tree_columns:
         tree.heading(col, text=col.title())
@@ -71,7 +71,7 @@ We can now load the headings and data::
 .. note:: RGB values
 
     Colours in tkinter are represented by hash values whereas rgb tuples 
-    can be used in PIL. When working with tuples these are normally separated
+    can be used in PIL. When working with tuples these are separated
     with commas rather than just spaces.
 
 .. sidebar:: Treeview Scripts
@@ -95,4 +95,4 @@ hide the script)
     script with Idle or PyScripter or run directly from the OS prompt. The
     problem in Windows lies with the use of Ultra High Definition monitor 
     with a change in pixel size. The problem is addressed in the chapter on 
-    "Set Header and Column Widths".
+    "Set Header and Column Widths" :ref: `Set Header and Column Widths`.

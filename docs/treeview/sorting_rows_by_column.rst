@@ -30,7 +30,7 @@ selects which column's data will be used for sorting::
         # switch the heading so that it will sort in the opposite direction
         tree.heading(col, command=lambda col=col: sort_by(tree, col, int(not descending)))
 
-When inserting the headings we will need to add a command option, this 
+When inserting the headings add a command option, this 
 has been extended by a lambda function so that the command can give the
 necessary column information to the ``sort_by``::
 
@@ -39,7 +39,7 @@ necessary column information to the ``sort_by``::
         tree.heading(col, text=col.title(),
             command=lambda c=col: sort_by(tree, c, 0))
 
-If you test this it will sort correctly but the zebra stripes will not be 
+When testing this it will sort correctly but the zebra stripes will not be 
 ordered in alternate rows. Add the following lines to the sort_by function.::
 
     # reconfigure tags after ordering

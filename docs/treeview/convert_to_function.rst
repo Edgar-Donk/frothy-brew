@@ -17,10 +17,9 @@ it remains where it is. The csv_file and csv_delimiter variables will be moved
 to ``if __name__ == "__main__"``. The frame will be renamed to ``page1`` to
 reflect treeview's use in a notebook. If the treeview is being called by 
 another program the calling program will be calling Tk() and driving it 
-using root.mainloop(), so transfer root = Tk() and root.mainloop() to our
-conditional part. If we need our fixed_map function we need to give the Style
-alias to the function and when we call it. Finally we have to call our 
-function::
+using root.mainloop(), so transfer root = Tk() and root.mainloop() to the
+conditional part. In the fixed_map function there is a Style 
+alias as an argument. Finally call the tree function::
 
     def Tree(fr,csv_file,csv_delimiter=','):
     .........
@@ -33,8 +32,8 @@ function::
         Tree(page1,csv_file,csv_delimiter) 
         root.mainloop()
 
-The file is named **tree_function** as it cannot start with a number if 
-being imported.
+The file is named **tree_function**, when imported it cannot start with a 
+number.
 
 .. container:: toggle
 

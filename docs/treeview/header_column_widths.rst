@@ -2,8 +2,8 @@ Set Header and Column Widths
 ============================
 
 You will notice that the header and column sizes are not set, therefore they
-display a default width of 200 for an IDE or 450 in Idle (python 3.7). Let's 
-see what happens when stretch is set to 'yes', we need to add a *tree.column* 
+display a default width of 200 for an IDE or 450 in Idle (python 3.7).
+See what happens when stretch is set to 'yes', add a *tree.column* 
 clause just after the tree.heading clause when creating the headings::
 
     tree.column(col,stretch=True)
@@ -29,7 +29,7 @@ This should return::
     {'width': 150, 'minwidth': 20, 'stretch': 0, 'anchor': 'w', 'id': 'Hash'}
     {'width': 200, 'minwidth': 20, 'stretch': 0, 'anchor': 'w', 'id': 'RGB'}
 
-If we had used an IDE such as Thonny or Spyder then the result will have the 
+Use an IDE such as Thonny or Spyder then the result will have the 
 correct widths, but the rows would be unreadable since the row heights were
 too small. So Idle and running python from the console has a width problem
 but the row height is better (Python 3.7 in Windows).
@@ -68,7 +68,7 @@ settings and stretch::
     tree.column(col, stretch=True)
 
 None of the columns were larger than 200 so this did not show any adjustment.
-Let us measure the width. We need to import ``font`` from tkinter and change 
+Measure the width. Import ``font`` from tkinter and change 
 the column attributes::
 
     from tkinter import Tk, StringVar, font
@@ -83,7 +83,7 @@ measured width for the column ``Colours`` was 67 in the IDE, but Idle had
 .. note:: 10 pixels have been added to our measure to give a clearance
     between columns.
 
-Let's set up the header and column styles. Add the following after the
+Set up the header and column styles. Add the following after the
 generic Treeview style configuration, to change the style property:: 
 
     st1.configure('font.Treeview', font=("DejaVu Sans Mono",'10'))
@@ -130,7 +130,7 @@ largest value and compare. Add the following just after the data insertion::
         if tree.column(tree_columns[indx], width=None) < ilen + 10:
             tree.column(tree_columns[indx], width=ilen + 10)
 
-Add an extra entry to the header data ``'Extra long header'``, and a dummy 
+Add an extra entry to the header data ``'Extra long header'``, and an extra 
 column of data ``('foo', 'bar', 'bong', 'ding a ling ping pong')``.
 
 .. sidebar:: Checking TkDefaultFont and TkHeadingFont
