@@ -90,6 +90,8 @@ Styling with tkinter.ttk
 .. _style: https://tkinterttkstyle.readthedocs.io/en/latest/index.html
 
 .. image:: _static/ben_style.png
+   :width: 831
+   :height: 104
    :target: style_
 
 Creating your own theme using Style.
@@ -100,6 +102,8 @@ Linking Python to Arduino
 .. _ard: https://electronic-python.readthedocs.io/en/latest/index.html
 
 .. image:: _static/arduino.png
+   :width: 798
+   :height: 145
    :target: ard_
 
 Basics and working with VPython, then create a digital gauge.
@@ -111,6 +115,8 @@ Adding dimensions to PIL
 .. _dims: https://pil-dimensions.readthedocs.io/en/latest/index.html
 
 .. image:: _static/ben_dim.png
+   :width: 960
+   :height: 104
    :target: dims_
 
 Add dimensions with either arrows or tailed lines, dashed lines and all
@@ -122,6 +128,8 @@ Water Properties
 .. _ale: https://adams-ale.readthedocs.io/en/latest/index.html
 
 .. image:: _static/ben_ale.png
+   :width: 798
+   :height: 145
    :target: ale_
 
 Simplified but accurate water proerties with interactive altair plots.
