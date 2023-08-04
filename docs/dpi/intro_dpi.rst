@@ -10,12 +10,28 @@ Introduction to DPI Awareness
     :align: center
     :alt: Tkinter buttons
     
-    tkinter buttons, same sizes differing highlight and shadow
+    tkinter buttons, differing sizes, text boldness, highlight and shadow
 
-On many IDEs (Thonny, Spider etc) older scripts produce results that are way
+On many IDEs (Thonny, Spider etc) older scripts produced results that are way
 too small but look correct when started from the operating system, Idle or
 PyScripter. This is the result of applying or not applying the higher 
-resolution available on modern monitors.
+resolution available on modern monitors. After updating to python 3.11 and 
+the various IDEs all
+IDEs reacted similarly, in that they started looking like the left hand image
+and only changed to appearing like the right hand image after applying dpi
+awareness.
+
+.. note:: The change was shown in Thonny as a modification that was made with
+    Thonny 4.0.0 and since 3.3.13. 
+    "Don't SetProcessDpiAwareness for user programs anymore. This means 
+    for example, that Tkinter and Pygame programs on Windows run as if they 
+    were executed with plain Python (ie they may become blurry on modern 
+    displays). For clear picture, start your program with"::
+
+        import ctypes;
+        ctypes.OleDLL("shcore").SetProcessDpiAwareness(1) 
+
+    `Thonny issue #2159 <https://github.com/thonny/thonny/issues/2159>`_
 
 .. sidebar:: Tkinter Dimensions
 
