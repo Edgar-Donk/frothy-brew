@@ -1,5 +1,13 @@
-Documentation
+﻿Documentation
 =============
+
+It is assumed that `sphinx` is installed together with the required theme::
+
+    pip install sphinx
+    ....
+    pip install pydata-sphinx-theme
+
+Any other special requirements should also be installed prior to ``make``.
 
 Create a directory ``myproject`` with two subdirectories ``docs`` and ``scripts``.
 Assuming that we are in myproject/docs obtain documentation, which includes 
@@ -8,6 +16,42 @@ important pre-requisites. It is often useful
 to have separate source and build directories, so when using the 
 ``sphinx-quickstart`` on the first question, asking whether to build a 
 separate source directory, say yes and not the default [n].
+
+Directory structure
+-------------------
+
+Any changes to the body of the project run ``make html``, changes to conf.py
+_static files or templates require ``make clean`` then ``make html``::
+
+    docs
+    ├─ conf.py
+    ├─ index.rst
+    ├─ _build
+    ├─ _static
+    ├─ _templates
+    ├─ make.bat
+    ├─ Makefile
+    └─ body
+
+Sphinx Newer Structure
+----------------------
+
+Make new directory with project name, from this location ``sphinx-quickstart docs``.
+When asked "Separate source and build directories?" <y>
+Then ``sphinx-build -b html docs/source/ docs/build/html``
+This will make a directory structure like this::
+
+    docs
+    ├── build
+    ├── make.bat
+    ├── Makefile
+    └── source
+        ├── conf.py
+        ├── index.rst
+        ├── _static
+        └── _templates
+
+The advantage is that many changes can be updated simply by  ``make html``.
 
 Edit the ``conf.py`` file to show the path to the ``scripts`` directory. Add
 to the extensions sphinx.ext.autodoc, and sphinx.ext.napoleon, then within 
@@ -107,3 +151,43 @@ these are not part of the documentation do not include them as a module.
    rgb-hsv
    rgb-yiq
    colour-tools
+
+Preparing for ReadTheDocs
+-------------------------
+
+Older Layout
+^^^^^^^^^^^^
+
+In the root of the project place two files **gitignore** and **readthedocs.yml**,
+for the older style in the directory **docs** place **requirements.txt**, the
+two files **make.bat** and **Makefile** are also placed in docs. `readthedocs.yml`
+shows the versions required for sphinx and python, also the relative positions
+of conf.py and requirements.txt::
+
+    version: 2
+
+    sphinx:
+      configuration: docs/conf.py
+
+    python:
+        version: 3
+        install:
+            - requirements: docs/requirements.txt
+
+Newer Layout
+^^^^^^^^^^^^
+
+As with the older layout **gitignore** and **readthedocs.yml** are placed in 
+the root. **requirements.txt** and the two files **make.bat** and **Makefile**
+are placed in the **docs** directory. Since **conf.py** is now placed in the
+source directory remember to change `readthedocs.yml`::
+
+    version: 2
+
+    sphinx:
+        configuration: docs/source/conf.py
+
+    python:
+        version: 3
+        install:
+            - requirements: docs/requirements.txt
