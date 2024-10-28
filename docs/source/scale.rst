@@ -1,4 +1,4 @@
-Scale Class Module
+﻿Scale Class Module
 ==================
 
 scaleClass module

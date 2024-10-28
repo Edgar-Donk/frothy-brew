@@ -1,4 +1,4 @@
-RGB HSV Colour Picker
+﻿RGB HSV Colour Picker
 =====================
 
 rgb-hsv class

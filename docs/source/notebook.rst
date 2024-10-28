@@ -1,8 +1,8 @@
-Notebook Module
+﻿Notebook Module
 ===============
 
-notebook module
----------------
+note module
+-----------
 
 .. automodule:: nb_import
    :members:

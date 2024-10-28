@@ -1,4 +1,4 @@
-RGB YIQ Colour Picker
+﻿Colour Picker RGB YIQ
 =====================
 
 rgb-yiq class

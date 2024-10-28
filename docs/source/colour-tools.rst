@@ -1,4 +1,4 @@
-Tools for Colour Pickers
+﻿Tools for Colour Pickers
 ========================
 
 colour\_tools package

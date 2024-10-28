@@ -1,4 +1,4 @@
-Entry Class Module
+﻿Entry Class Module
 ==================
 
 entry\_class module
