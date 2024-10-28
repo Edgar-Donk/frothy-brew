@@ -1,4 +1,4 @@
-.. _move:
+﻿.. _move:
 
 =====================
 Moving Canvas Objects
