@@ -1,4 +1,4 @@
-Adjusting Width and Height
+﻿Adjusting Width and Height
 ==========================
 
 .. figure:: ../figures/nb_adjust.webp
@@ -38,7 +38,7 @@ beginning of the function **tab_changed**::
         *Show/Hide Code* 04nb_adjust.py
 
     .. literalinclude:: ../examples/notebook/04nb_adjust.py
-        :emphasize-lines: 19, 27-31, 35
+        :emphasize-lines: 21, 29-33, 37
 
 The full effect of the size adjustment becomes really apparent once we have
 loaded data, which we should see in the next section.        

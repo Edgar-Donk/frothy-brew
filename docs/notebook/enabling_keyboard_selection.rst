@@ -1,4 +1,4 @@
-Enabling Keyboard Selection
+﻿Enabling Keyboard Selection
 ===========================
 
 .. figure:: ../figures/nb_key.webp

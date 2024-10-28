@@ -1,4 +1,4 @@
-Disabling a Tab
+﻿Disabling a Tab
 ===============
 
 .. figure:: ../figures/nbstate.webp
