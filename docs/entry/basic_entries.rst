@@ -1,4 +1,4 @@
-Basic Entries
+﻿Basic Entries
 =============
 
 .. figure:: ../figures/ent_basic.webp
@@ -57,7 +57,8 @@ end tkinter (tcl/tk)
 has provided eight special substitutions to help validating
 command, to start with concentrate on the four that we shall be using, %P, 
 %S, %i and %d (text if allowed, input, index and action). Find the official
-documentation here `Link to the Widget Specifications and Validation <http://tcl.tk/man/tcl8.7/TkCmd/entry.htm#M7>`_.
+documentation here `Link to the Widget Specifications and Validation 
+<https://www.pythontutorial.net/tkinter/tkinter-validation/>`_.
 
 .. topic:: A Little Demo
 
@@ -377,9 +378,11 @@ using Style. This also applies to the themed Combobox and Spinbox::
 
 If limits are required then it is best to separate these from the 
 validation, and have a labelframe to enclose the limit labels and entry (see 
-later 09float_function.py :ref:`float-function`).
+later :ref:`09float_function.py<float-function>` ).
 
 .. _entry-float:
+
+|
 
 .. container:: toggle
 

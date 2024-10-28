@@ -1,4 +1,4 @@
-Working with Class
+﻿Working with Class
 ==================
 
 Trimming Down

@@ -1,4 +1,4 @@
-Entry Validation
+﻿Entry Validation
 ================
 
 Central to our task is determining whether the user input is valid or not. 

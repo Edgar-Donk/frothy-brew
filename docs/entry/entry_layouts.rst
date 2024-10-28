@@ -1,4 +1,4 @@
-Entry Layouts
+﻿Entry Layouts
 =============
 
 Layout String

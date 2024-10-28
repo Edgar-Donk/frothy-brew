@@ -1,4 +1,4 @@
-Class or Function?
+﻿Class or Function?
 ==================
 
 .. figure:: ../figures/ent_float_fun.webp
@@ -55,6 +55,8 @@ arguments, then set the outside variable from within the program. The value
 can then be picked up by a button and printed out. 
 
 .. _float-function:
+
+|
 
 .. container:: toggle
 
