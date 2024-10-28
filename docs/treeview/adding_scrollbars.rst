@@ -1,4 +1,4 @@
-Adding Scrollbars
+﻿Adding Scrollbars
 =================
 
 .. figure:: ../figures/Tree_scroll.webp
@@ -17,7 +17,7 @@ Scrollbar in ttk, insert them just after the Treeview clause.
 Configure Treeview to take the scrollbars then give equal weight to both 
 rows and columns, this ensures that any changes are equally divided between
 the orientations. Both the scrollbars require a **sticky** directive only for 
-their orientation - we do want them to become longer, not fatter.
+their orientation - we want them to become longer, not fatter.
 
 Make sure that the scrollbars are positioned one row and one column 
 after the Treeview grid, and that the label is one row lower than the 

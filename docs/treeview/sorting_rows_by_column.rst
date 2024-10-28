@@ -1,4 +1,4 @@
-Sorting Rows by Column
+﻿Sorting Rows by Column
 ======================
 
 .. figure:: ../figures/tree_sort.webp

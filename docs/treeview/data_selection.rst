@@ -1,4 +1,4 @@
-Data Selection
+﻿Data Selection
 ==============
 
 .. figure:: ../figures/treeselect.webp
@@ -38,7 +38,7 @@ is bound to an event, that in turn changes a label. Normally we bind to
     action, but most could respond to mouse button release).
     
     A more comprehensive explanation is given in
-    `"Tkinter 8.5 reference a GUI for Python" <https://www.hsg-kl.de/faecher/inf/python/tkinter/tkinter.pdf>`_
+    `"Tkinter 8.5 reference a GUI for Python" <https://tkdocs.com/shipman/tkinter.pdf>`_
 
 We will be importing a couple of additional items from tkinter and ttk, 
 ``Label`` and ``StringVar``, Label will display the selected row from the

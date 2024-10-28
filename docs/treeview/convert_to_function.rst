@@ -1,4 +1,4 @@
-Convert to Function
+﻿Convert to Function
 ===================
 
 .. figure:: ../figures/tree_function.webp
