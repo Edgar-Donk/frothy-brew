@@ -1,4 +1,4 @@
-Modifying Scale, Spinbox and Entry
+﻿Modifying Scale, Spinbox and Entry
 ==================================
 
 Change the Scale

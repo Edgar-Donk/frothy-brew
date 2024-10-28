@@ -1,4 +1,4 @@
-Using the Tkinter Widgets
+﻿Using the Tkinter Widgets
 =========================
 
 You might be thinking - "Hang on a minute, drawing gradients is not so 

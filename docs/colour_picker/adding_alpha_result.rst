@@ -1,4 +1,4 @@
-Adding Alpha and Colour Result
+﻿Adding Alpha and Colour Result
 ==============================
 
 Alpha Selector

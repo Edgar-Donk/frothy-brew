@@ -1,4 +1,4 @@
-Deducing the Gradients
+﻿Deducing the Gradients
 ======================
 
 Start off with RGB values then we only need the 
