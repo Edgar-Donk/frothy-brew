@@ -1,4 +1,4 @@
-.. _indexscale:
+﻿.. _indexscale:
 
 =========
 ttk Scale

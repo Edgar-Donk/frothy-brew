@@ -1,4 +1,4 @@
-============================
+﻿============================
 Comparing ttk tkinter Scales
 ============================
 
@@ -14,7 +14,7 @@ Comparing ttk tkinter Scales
 
 First of all create scales in tkinter and ttk and compare what is available 
 using standard attributes and see what is available in ttk Style. Refer to
-`"Tkinter 8.5 reference a GUI for Python" <https://www.hsg-kl.de/faecher/inf/python/tkinter/tkinter.pdf>`_
+`"Tkinter 8.5 reference a GUI for Python" <https://tkdocs.com/shipman/tkinter.pdf>`_
 table 30. Scale Widget Options for the tkinter Scale and table 57. ttk.Scale
 Options and table 58, tkinter Scale options not in ttk.Scale. The last table
 shows which options are not supported and may need to be thought about, see
