@@ -1,4 +1,4 @@
-.. _introdpi:
+﻿.. _introdpi:
 
 =============================
 Introduction to DPI Awareness
