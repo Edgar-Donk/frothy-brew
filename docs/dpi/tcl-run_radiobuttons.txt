@@ -1,0 +1,38 @@
+package require Tk
+source code/sradiobutton.tcl
+
+proc p { x } {
+  puts "cmd: $x"
+}
+
+font create eee
+font configure eee -size 28
+
+set ::x B
+foreach {st} [list 1 2 3 4 5 6 7 8] {
+  sradiobutton .sa$st -value A -variable ::x -text AAAA \
+    -indicatorstyle $st -command [list p e]
+  sradiobutton .sb$st -value B -variable ::x -text BBBB \
+    -indicatorstyle $st -command [list p f]
+  grid .sa$st .sb$st
+}
+
+set st 2
+ttk::style configure B.SRadiobutton.TLabel -font eee
+sradiobutton .s1z -value E -variable ::z -text EE\
+    -indicatorstyle $st -command [list p e] -style B.SRadiobutton.TLabel
+sradiobutton .s2z -value F -variable ::z -text FF \
+    -indicatorstyle $st -command [list p f] -style B.SRadiobutton.TLabel
+set ::z F
+grid .s1z .s2z
+
+font create fff
+font configure fff -size 13
+ttk::style configure C.SRadiobutton.TLabel -font fff
+sradiobutton .s1w -value E -variable ::z -text GG \
+    -indicatorstyle $st -command [list p e] -indicatorcolor blue \
+    -style C.SRadiobutton.TLabel
+sradiobutton .s2w -value F -variable ::z -text HH \
+    -indicatorstyle $st -command [list p f] -indicatorcolor blue \
+    -style C.SRadiobutton.TLabel
+grid .s1w .s2w

@@ -1,0 +1,283 @@
+#!/usr/bin/tclsh
+#
+# Copyright 2018 Brad Lanam Walnut Creek, CA
+#
+
+package require Tk
+
+set ap [file dirname [info script]]
+if { $ap ni $::auto_path } {
+  lappend ::auto_path $ap
+}
+unset ap
+
+package require colorutils
+
+proc sradiobutton { nm args } {
+  srbwidget new $nm {*}$args
+  return $nm
+}
+
+namespace eval ::srbcmd {
+  variable vars
+
+  proc handler { w args } {
+    $w {*}$args
+  }
+
+  proc initializeAll { } {
+    variable vars
+
+    if { [info exists ::srbcmd::initialized] } {
+      return
+    }
+    set ::srbcmd::initialized true
+
+    set tbg [ttk::style lookup TFrame -background]
+    if { $::tcl_platform(os) eq "Darwin" } {
+      # this isn't going to work...
+      set tbg #ececec
+    }
+    lassign [winfo rgb . $tbg] bg_r bg_g bg_b
+    set bg [format {#%02x%02x%02x} \
+        [expr {$bg_r / 256}] \
+        [expr {$bg_g / 256}] \
+        [expr {$bg_b / 256}]]
+
+    ttk::style configure SRadiobutton.TFrame \
+        -background $bg
+    ttk::style configure SRadiobutton.TLabel \
+        -anchor e \
+        -width {} \
+        -background $bg \
+        -highlightthickness 0
+    ttk::style configure Indicator.SRadiobutton.TLabel \
+        -anchor {}
+  }
+}
+
+::oo::class create ::srbwidget {
+  constructor { nm args } {
+    my variable vars
+
+    ::srbcmd::initializeAll
+
+    set vars(ind.styles) {
+        1 {chars {\u25cb \u25cf} padding {0 0 0 3}}
+        2 {chars {\u25cc \u25cf} padding {0 0 0 3}}
+        3 {chars {\u26aa \u26ab} padding {0 0 0 0}}
+        4 {chars {\u25cb \u25c9} padding {0 0 0 3}}
+        5 {chars {\u25cc \u25c9} padding {0 0 0 3}}
+        6 {chars {\u25c7 \u25c6} padding {0 0 0 3}}
+        7 {chars {\u25c7 \u25c8} padding {0 0 0 3}}
+        8 {chars {\u2b26 \u2b25} padding {0 0 0 4}}
+        }
+    set vars(max.style) 8
+    set vars(char.nosel) \u25cb
+    set vars(char.sel) \u25cf
+    set vars(-indicatorstyle) 1
+    set vars(-indicatorcolor) {}
+    set vars(-value) {}
+    set vars(currvalue) {}
+    set vars(char.disp) $vars(char.nosel)
+    set vars(-command) {}
+    set vars(font.basesize) 11
+
+    # some defaults
+
+    set vars(frame.cont) [ttk::frame $nm \
+        -class Scaled.Radiobutton \
+        -style SRadiobutton.TFrame \
+        ]
+    set vars(widget) [ttk::label $nm.indicator \
+        -style Indicator.SRadiobutton.TLabel \
+        -textvariable [self]::vars(char.disp) \
+        ]
+    $vars(widget) configure -style 1.Indicator.SRadiobutton.TLabel
+    set vars(label) [ttk::label ${nm}.label \
+        -style SRadiobutton.TLabel \
+        ]
+    set vars(srb) ${nm}_srb
+    rename $vars(frame.cont) ::$vars(srb)
+    interp alias {} $vars(frame.cont) {} ::srbcmd::handler [self]
+    uplevel 2 [list $vars(frame.cont) configure {*}$args]
+
+    set vars(bind.tag) srbbt$vars(widget)
+    bindtags $vars(widget) [concat [bindtags $vars(widget)] $vars(bind.tag)]
+
+    grid $vars(widget) $vars(label) -in $vars(frame.cont) \
+        -sticky {} -padx 0 -pady 0
+    grid configure $vars(label) -sticky e
+    grid configure $vars(label) -ipadx 1p
+
+    # make sure any binds on the main hull get propagated to the display widget
+    set bt [bindtags $vars(widget)]
+    bindtags $vars(widget) [list $nm {*}$bt]
+
+    bind $vars(widget) <Destroy> [list [self] destruct]
+
+    bind $vars(widget) <ButtonRelease-1> [list [self] setvalue]
+    bind $vars(label) <ButtonRelease-1> [list [self] setvalue]
+    my adjustpadding
+  }
+
+  method destruct { } {
+    my variable vars
+    interp alias {} $vars(frame.cont) {}
+    [self] destroy
+  }
+
+  method setvalue { } {
+    my variable vars
+
+    if { [$vars(widget) instate readonly] } {
+      return
+    }
+    if { [$vars(widget) instate disabled] } {
+      return
+    }
+
+    set k -variable
+    set vars(currvalue) $vars(-value)
+    if { [info exists vars($k)] } {
+      set $vars($k) $vars(-value)
+    }
+    my checkvalue
+    if { $vars(-command) ne {} } {
+      {*}$vars(-command)
+    }
+  }
+
+  method checkvalue { args } {
+    my variable vars
+
+    set k -variable
+    if { [info exists vars($k)] && [info exists $vars($k)] } {
+      if { [set $vars($k)] eq $vars(-value) } {
+        set vars(char.disp) $vars(char.sel);
+      } else {
+        set vars(char.disp) $vars(char.nosel);
+      }
+    }
+  }
+
+  method starttrace { } {
+    my variable vars
+
+    set k -variable
+    if { [info exists vars($k)] && [info exists $vars($k)] } {
+      trace add variable $vars($k) write [list [self] checkvalue]
+    }
+  }
+
+  method adjustpadding { } {
+    my variable vars
+
+    set style [$vars(label) cget -style]
+    set font [$vars(label) cget -font]
+    if { $font eq {} } { set font TkDefaulFont }
+
+    dict for {key info} $vars(ind.styles) {
+      set opad [dict get $info padding]
+      set sz [font metrics $font -ascent]
+      set adj [expr {double($sz)/$vars(font.basesize)}]
+      set npad [list]
+      foreach {p} $opad {
+        set np [expr {round(double($p)*$adj)}]
+        lappend npad $np
+      }
+      ttk::style configure $key.Indicator.$style \
+          -padding $npad
+      if { $vars(-indicatorcolor) ne {} } {
+        set discolor [ttk::style lookup $style -foreground disabled #a3a3a3]
+        ttk::style configure $key.Indicator.$style \
+            -foreground $vars(-indicatorcolor)
+        ttk::style map $key.Indicator.$style \
+            -foreground [list disabled $discolor readonly $discolor]
+      }
+    }
+  }
+
+  method unknown { args } {
+    my variable vars
+
+    if { [lindex $args 0] eq "instate" && [llength $args] == 2 } {
+      return [uplevel 2 [list $vars(widget) {*}$args]]
+    }
+    if { [lindex $args 0] eq "state" && [llength $args] == 2 } {
+      uplevel 2 [list $vars(label) {*}$args]
+      return [uplevel 2 [list $vars(widget) {*}$args]]
+    }
+    set nm $vars(label)
+    return [uplevel 2 [list $nm {*}$args]]
+  }
+
+  method cget { key } {
+    my variable vars
+
+    set rv {}
+    if { $key eq "-variable" ||
+        $key eq "-command" ||
+        $key eq "-indicatorcolor" ||
+        $key eq "-indicatorstyle" ||
+        $key eq "-value" } {
+      set rv $vars($key)
+    } else {
+      set rv [$vars(label) cget $key]
+    }
+    return $rv
+  }
+
+  method configure { args } {
+    my variable vars
+
+    foreach {key val} $args {
+      if { $key eq "-indicatorstyle" } {
+        if { ! [string is entier $val] || $val < 1 || $val > $vars(max.style) } {
+          return
+        }
+        set vars(-indicatorstyle) $val
+        lassign [dict get $vars(ind.styles) $val chars] \
+            vars(char.nosel) vars(char.sel)
+        set style [$vars(label) cget -style]
+        $vars(widget) configure -style $val.Indicator.$style
+      } elseif { $key eq "-value" ||
+          $key eq "-command" ||
+          $key eq "-indicatorcolor" } {
+        set vars($key) $val
+      } elseif { $key eq "-variable" } {
+        set fqv {}
+        if { [string match {::*} $val] } {
+          set fqv $val
+        }
+        if { $fqv eq {} } {
+          set fqv [uplevel 2 [list namespace which -variable $val]]
+          if { $fqv eq {} } {
+            set ns [uplevel 2 [list namespace current]]
+            set fqv $ns$val
+            if { [string match ::::* $fqv] } {
+              set fqv [string range $fqv 2 end]
+            }
+          }
+        }
+        set vars($key) $fqv
+        if { ! [info exists $vars($key)] } {
+          set $vars($key) {}
+        }
+        my starttrace
+      } elseif { $key eq "-style" } {
+        $vars(label) configure -style $val
+        $vars(widget) configure -style $vars(-indicatorstyle).Indicator.$val
+      } else {
+        uplevel 2 [list $vars(label) configure $key $val]
+      }
+    }
+    my checkvalue
+    my adjustpadding
+    return -code ok
+  }
+
+}
+
+package provide sradiobutton 1.2
+
