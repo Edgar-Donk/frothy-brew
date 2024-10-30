@@ -194,7 +194,7 @@ class Tree:
 
 if __name__ == "__main__":
     root = Tk()
-    csv_file = '../../csv/test.csv'
+    csv_file = '../../csv_data/test.csv'
     csv_delimiter = ';'
     page1 = Frame(root)
     page1.pack(fill='both', expand=False)

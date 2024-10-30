@@ -24,7 +24,7 @@ import csv
 
 def fixed_map(st1,option):
     # Fix for setting text colour for Tkinter 8.6.9
-    # From: https://core.tcl.tk/tk/info/509cafafae
+    # From: https://core.tcl.tk/tk/info/509cafafae ulfalizer
     #
     # Returns the style map for 'option' with any styles starting with
     # ('!disabled', '!selected', ...) filtered out.
@@ -133,7 +133,7 @@ def Tree(fr0,csv_file,out_var,csv_delimiter=','):
 
 if __name__ == "__main__":
     root = Tk()
-    csv_file = '../../csv/test.csv'
+    csv_file = '../../csv_data/test.csv'
     csv_delimiter = ';'
     page1 = Frame(root)
     page1.pack(fill='both', expand=False)
