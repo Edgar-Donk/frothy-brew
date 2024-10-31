@@ -1,0 +1,884 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Comparing ttk tkinter Scales &#8212; Pydata Beer 0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'scale/comparison_scales';</script>
+    <link rel="icon" href="../_static/ben1.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Current Value ttk.Scales" href="current_values.html" />
+    <link rel="prev" title="ttk Scale" href="index_scale.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+<div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+    <span class="fa-solid fa-bars"></span>
+  </label>
+  
+  <div class="navbar-header-items__start">
+    
+      <div class="navbar-item">
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/bigbenc.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../_static/bigbencneon.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+    <p class="title logo__title">tkinter odds and ends</p>
+  
+</a></div>
+    
+  </div>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../authors.html">
+                        Contributors and Navigation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../dpi/index_dpi.html">
+                        Monitor Resolution - DPI
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../buttons/index_buttons.html">
+                        Check and Radio Buttons
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../notebook/index_notebook.html">
+                        ttk Notebook
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../treeview/index_treeview.html">
+                        Treeview Widget
+                      </a>
+                    </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../entry/index_entry.html">
+                        Enhanced Entry
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="index_scale.html">
+                        ttk Scale
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../canvas/index_canvas.html">
+                        tkinter Canvas
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../move/index_move.html">
+                        Moving Canvas Objects
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../colour_picker/index_colour.html">
+                        Colour Picker App
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../yiq_colour_picker/yiq_index.html">
+                        RGB YIQ Colour Picker
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../source/modules.html">
+                        Documentation
+                      </a>
+                    </li>
+                
+                </div>
+            </div>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+        </div>
+      
+      
+        <div class="navbar-item">
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+    </div>
+  
+
+  
+    <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+    </label>
+  
+</div>
+
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../authors.html">
+                        Contributors and Navigation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../dpi/index_dpi.html">
+                        Monitor Resolution - DPI
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../buttons/index_buttons.html">
+                        Check and Radio Buttons
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../notebook/index_notebook.html">
+                        ttk Notebook
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../treeview/index_treeview.html">
+                        Treeview Widget
+                      </a>
+                    </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../entry/index_entry.html">
+                        Enhanced Entry
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="index_scale.html">
+                        ttk Scale
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../canvas/index_canvas.html">
+                        tkinter Canvas
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../move/index_move.html">
+                        Moving Canvas Objects
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../colour_picker/index_colour.html">
+                        Colour Picker App
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../yiq_colour_picker/yiq_index.html">
+                        RGB YIQ Colour Picker
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../source/modules.html">
+                        Documentation
+                      </a>
+                    </li>
+                
+                </div>
+            </div>
+            
+  </ul>
+</nav></div>
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item"><nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">Annotated ttk Scale...</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Comparing ttk tkinter Scales</a></li>
+<li class="toctree-l1"><a class="reference internal" href="current_values.html">Current Value ttk.Scales</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tickinterval.html">Scale Tickinterval</a></li>
+<li class="toctree-l1"><a class="reference internal" href="place.html">Place Layout Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="special_ranges.html">Special Ranges</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moving_current_value.html">Moving Current Value</a></li>
+<li class="toctree-l1"><a class="reference internal" href="adjust_window.html">Adjusting the Window</a></li>
+<li class="toctree-l1"><a class="reference internal" href="calculate_length.html">Calculate the Length</a></li>
+<li class="toctree-l1"><a class="reference internal" href="calibrate.html">Calibration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="auto_range.html">Automatic Range</a></li>
+<li class="toctree-l1"><a class="reference internal" href="resolution.html">Resolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scale_class.html">Run Scale as Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vertical_scale.html">Vertical ttk Scales</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumbs">
+  <ul class="bd-breadcrumbs" role="navigation" aria-label="Breadcrumb">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="index_scale.html" class="nav-link">ttk Scale</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page">Comparing ttk tkinter Scales</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section id="comparing-ttk-tkinter-scales">
+<h1>Comparing ttk tkinter Scales<a class="headerlink" href="#comparing-ttk-tkinter-scales" title="Permalink to this heading">#</a></h1>
+<figure class="align-center" id="id1">
+<a class="reference internal image-reference" href="../_images/01ttk_tkinter_scale.png"><img alt="Comparing horizontal and vertical Scales in tkinter and ttk" src="../_images/01ttk_tkinter_scale.png" style="width: 296px; height: 409px;" /></a>
+<figcaption>
+<p><span class="caption-text">Compare the Scales</span><a class="headerlink" href="#id1" title="Permalink to this image">#</a></p>
+<div class="legend">
+<p>Note that tkinter can show a description, slider value and range of values</p>
+</div>
+</figcaption>
+</figure>
+<p>First of all create scales in tkinter and ttk and compare what is available
+using standard attributes and see what is available in ttk Style. Refer to
+<a class="reference external" href="https://tkdocs.com/shipman/tkinter.pdf">“Tkinter 8.5 reference a GUI for Python”</a>
+table 30. Scale Widget Options for the tkinter Scale and table 57. ttk.Scale
+Options and table 58, tkinter Scale options not in ttk.Scale. The last table
+shows which options are not supported and may need to be thought about, see
+following table <strong>To be Coded</strong>.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Table: <strong>Attributes for tkinter and ttk Scales</strong></p>
+<table class="table">
+<colgroup>
+<col style="width: 29.4%" />
+<col style="width: 23.5%" />
+<col style="width: 11.8%" />
+<col style="width: 17.6%" />
+<col style="width: 17.6%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Attributes in Original</p></th>
+<th class="head"><p>Attributes in ttk</p></th>
+<th class="head"><p>ttk Style</p></th>
+<th class="head"><p>To be Coded</p></th>
+<th class="head"><p>Another Widget</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>activebackground</p></td>
+<td></td>
+<td><p>√</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>background</p></td>
+<td></td>
+<td><p>√</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>borderwidth</p></td>
+<td></td>
+<td><p>√</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p>class</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>command</p></td>
+<td><p>command</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>cursor</p></td>
+<td><p>cursor</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>digits</p></td>
+<td></td>
+<td></td>
+<td><p>√</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>font</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>√</p></td>
+</tr>
+<tr class="row-even"><td><p>foreground</p></td>
+<td></td>
+<td><p>√</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>from_</p></td>
+<td><p>from_</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>highlightbackground</p></td>
+<td></td>
+<td><p>√</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>highlightcolor</p></td>
+<td></td>
+<td><p>√</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>highlightthickness</p></td>
+<td></td>
+<td><p>√</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>label</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>√</p></td>
+</tr>
+<tr class="row-even"><td><p>length</p></td>
+<td><p>length</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>orient</p></td>
+<td><p>orient</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>relief</p></td>
+<td></td>
+<td><p>√</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>repeatdelay</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>repeatinterval</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>resolution</p></td>
+<td></td>
+<td></td>
+<td><p>√</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>showvalue</p></td>
+<td></td>
+<td></td>
+<td><p>√</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>sliderlength</p></td>
+<td></td>
+<td></td>
+<td><p>√</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>sliderrelief</p></td>
+<td></td>
+<td><p>√</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>state</p></td>
+<td></td>
+<td><p>√</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>takefocus</p></td>
+<td></td>
+<td><p>√</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>tickinterval</p></td>
+<td><p>takefocus</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>to</p></td>
+<td><p>to</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>troughcolor</p></td>
+<td></td>
+<td><p>√</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>variable</p></td>
+<td><p>variable</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>width</p></td>
+<td></td>
+<td><p>√</p></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Not all ttk Scale widgets react as expected or in the same way
+when querying or setting when using Style.</p>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Table: <strong>Methods used in tkinter and ttk Scales</strong></p>
+<table class="table">
+<colgroup>
+<col style="width: 46.2%" />
+<col style="width: 30.8%" />
+<col style="width: 23.1%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Common Methods ttk Widgets</p></th>
+<th class="head"><p>Special ttk Scale</p></th>
+<th class="head"><p>Original Scale</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>.cget()</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>.configure()</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td></td>
+<td></td>
+<td><p>.coords()</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p>.get()</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>identify(x,y)</p></td>
+<td></td>
+<td><p>identify(x,y)</p></td>
+</tr>
+<tr class="row-odd"><td><p>.instate()</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p>.set()</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<div class="toggle docutils container">
+<div class="header docutils container">
+<p><em>Show/Hide Code</em> 01ttk_tkinter.py</p>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tkinter</span> <span class="k">as</span> <span class="nn">tk</span>
+<span class="kn">import</span> <span class="nn">tkinter.ttk</span> <span class="k">as</span> <span class="nn">ttk</span>
+
+<span class="n">root</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Style</span><span class="p">()</span>
+<span class="n">s</span><span class="o">.</span><span class="n">theme_use</span><span class="p">(</span><span class="s1">&#39;default&#39;</span><span class="p">)</span>
+
+<span class="n">sch</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Scale</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">from_</span><span class="o">=-</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Bogusstuinuous&#39;</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s1">&#39;horizontal&#39;</span><span class="p">,</span>
+            <span class="n">resolution</span><span class="o">=</span><span class="mf">0.02</span><span class="p">,</span> <span class="n">showvalue</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">tickinterval</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">digits</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+            <span class="n">length</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+<span class="n">sch</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+
+<span class="n">scv</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Scale</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">from_</span><span class="o">=-</span><span class="mi">0</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Fun&#39;</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s1">&#39;vertical&#39;</span><span class="p">,</span>
+            <span class="n">resolution</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">showvalue</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">tickinterval</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+            <span class="n">length</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+<span class="n">scv</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">sep</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Separator</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s1">&#39;horizontal&#39;</span><span class="p">)</span>
+<span class="n">sep</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">columnspan</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">scth</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Scale</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">from_</span><span class="o">=-</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+<span class="n">scth</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="n">sctv</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Scale</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">from_</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s1">&#39;vertical&#39;</span><span class="p">)</span>
+<span class="n">sctv</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">root</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</section>
+
+
+                </article>
+              
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="index_scale.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">ttk Scale</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="current_values.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Current Value ttk.Scales</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="tocsection sourcelink">
+    <a href="../_sources/scale/comparison_scales.rst.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+  </body>
+</html>
