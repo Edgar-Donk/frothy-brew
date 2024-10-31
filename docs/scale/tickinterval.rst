@@ -11,7 +11,7 @@ larger than the ``resolution``.
     As the range is equally divided the number of ticks will be the answer 
     the difference between ``from_`` and ``to`` divided by the ``tickinterval`` 
     plus one. So if from_=0.0, to=1.0, and tickinterval=0.25 there are
-    :math:`1.0 - 0.0 / 0.25 + 1 = 4 + 1 = 5` ticks.
+    :math:`(1.0 - 0.0) / 0.25 + 1 = 4 + 1 = 5` ticks.
 
 When a scale is correctly set up the user should see that the centre of the 
 slider corresponds to the attributes ``from_`` and ``to`` when the slider is 
