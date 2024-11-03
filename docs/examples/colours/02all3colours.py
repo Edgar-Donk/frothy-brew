@@ -1,3 +1,4 @@
+
 """ Construction three gradients in rgb"""
 
 from tkinter import Tk, Canvas, Spinbox, Scale, Label, IntVar, Frame
@@ -177,7 +178,7 @@ class RgbSelect:
             showvalue=0,
             width=15*self.e,
             sliderlength=30*self.e)
-        
+
         rsc.grid(column=1, row=1, sticky='nw')
 
         rsb = Spinbox(self.parent, from_=0, to=255, textvariable=self.rvar,
@@ -202,7 +203,7 @@ class RgbSelect:
             showvalue=0,
             width=15*self.e,
             sliderlength=30*self.e)
-        
+
         gsc.grid(column=1, row=3, sticky='nw')
 
         gsb = Spinbox(self.parent, from_=0, to=255, textvariable=self.gvar,
@@ -227,7 +228,7 @@ class RgbSelect:
             showvalue=0,
             width=15*self.e,
             sliderlength=30*self.e)
-        
+
         bsc.grid(column=1, row=5, sticky='nw')
 
         bsb = Spinbox(self.parent, from_=0, to=255, textvariable=self.bvar,

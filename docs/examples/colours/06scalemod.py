@@ -184,7 +184,7 @@ class RgbSelect:
         None
         """
 
-        red = self.rvar.get()
+        red = self.rvar.get() #round(self.rvar.get(),0)
         green = self.gvar.get()
         blue = self.bvar.get()
         alpha = self.avar.get()

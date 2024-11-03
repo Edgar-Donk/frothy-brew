@@ -198,6 +198,7 @@ class RgbSelect:
         """
 
         red = self.rvar.get()
+        self.rvar.set(red)
         green = self.gvar.get()
         blue = self.bvar.get()
         alpha = self.avar.get()
@@ -225,6 +226,7 @@ class RgbSelect:
 
         red = self.rvar.get()
         green = self.gvar.get()
+        self.gvar.set(green)
         blue = self.bvar.get()
         alpha = self.avar.get()
         draw_gradient(self.rcan, (0, green, blue), (255, green, blue),
@@ -252,6 +254,7 @@ class RgbSelect:
         red = self.rvar.get()
         green = self.gvar.get()
         blue = self.bvar.get()
+        self.bvar.set(blue)
         alpha = self.avar.get()
         draw_gradient(self.rcan, (0, green, blue), (255, green, blue),
                       width=self.canvas_w, height=self.canvas_h)
@@ -279,6 +282,7 @@ class RgbSelect:
         green = self.gvar.get()
         blue = self.bvar.get()
         alpha = self.avar.get()
+        self.avar.set(alpha)
         vdraw_gradient(self.cmcan, (red, green, blue), self.e, alpha=alpha,
                         width=30*self.e, height=30*self.e)
 
