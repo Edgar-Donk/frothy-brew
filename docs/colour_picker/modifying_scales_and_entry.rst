@@ -205,7 +205,14 @@ This should produce:-
    
    The layout after modifying scale
 
+Move the cursors, and we see that the output in all the spinboxes is a float,
+no longer an integer.
+
+|
+
 .. _mod-entry:
+
+|
 
 User Input in Entry and Spinboxes
 ---------------------------------
