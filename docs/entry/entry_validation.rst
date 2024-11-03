@@ -46,7 +46,7 @@ Methods Used with Validation
 ----------------------------
 
 The three most important types of input, string, integer and float, will be dealt 
-within this section. Colour Picker :ref:`mod-entry` shows how to 
+within this section. :ref:`Colour Picker<mod-entry>` shows how to 
 deal with a hexadecimal input. The colour picker uses 
 check limits with different widgets using the same validation function. 
 As with any function only call the actual validation parameters 
