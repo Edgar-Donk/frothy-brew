@@ -237,9 +237,13 @@ class RgbYiqSelect:
         """command callback for red, green, blue"""
 
         red = self.rvar.get()
+        self.rvar.set(red)
         green = self.gvar.get()
+        self.gvar.set(green)
         blue = self.bvar.get()
+        self.bvar.set(blue)
         alpha = self.avar.get()
+        self.avar.set(alpha)
         draw_gradient(self.rgbcans[0], (0, green, blue), (255, green, blue),
                       width=self.canvas_w, height=self.canvas_h)
         draw_gradient(self.rgbcans[1], (red, 0, blue), (red, 255, blue),

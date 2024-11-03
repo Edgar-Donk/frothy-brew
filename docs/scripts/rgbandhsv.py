@@ -148,6 +148,7 @@ class  RgbHsvSelect:
         """
 
         red = self.rvar.get()
+        self.rvar.set(red)
         green = self.gvar.get()
         blue = self.bvar.get()
         alpha = self.avar.get()
@@ -173,6 +174,7 @@ class  RgbHsvSelect:
 
         red = self.rvar.get()
         green = self.gvar.get()
+        self.gvar.set(green)
         blue = self.bvar.get()
         alpha = self.avar.get()
         draw_gradient(self.rcan, (0, green, blue), (255, green, blue),
@@ -198,6 +200,7 @@ class  RgbHsvSelect:
         red = self.rvar.get()
         green = self.gvar.get()
         blue = self.bvar.get()
+        self.bvar.set(blue)
         alpha = self.avar.get()
         draw_gradient(self.rcan, (0, green, blue), (255, green, blue),
                       width=self.canvas_w, height=self.canvas_h)
