@@ -92,7 +92,11 @@ hide the script)
 
 .. warning:: 
     If the data is all squashed up vertically and cannot be read, open the
-    script with Idle or PyScripter or run directly from the OS prompt. The
-    problem in Windows lies with the use of Ultra High Definition monitor 
-    with a change in pixel size. The problem is addressed in the chapter on 
-    "Set Header and Column Widths" :ref: `Set Header and Column Widths`.
+    script with Idle or PyScripter or run directly from the OS prompt. If
+    you continue to use your original IDE then the scripts with **dpi** at
+    the end should show the treeview better, though smaller.
+ 
+    The problem in Windows lies with the use of Ultra High Definition monitor 
+    with a change in pixel size. This is addressed in the chapter on 
+    "Set Header and Column Widths" :ref:`Set Header and Column Widths`. From 
+    then on either script with or without **dpi** should give viewable results.
