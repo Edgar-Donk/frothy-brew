@@ -1,4 +1,5 @@
-from tkinter import *
+from tkinter import Frame, Label, Button, NONE, BOTH, YES, NO, LEFT, RIGHT, END,\
+     TOP
 import Pmw
 import sys
 

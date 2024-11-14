@@ -1,4 +1,4 @@
-from tkinter import *
+from tkinter import Scrollbar, TclError, Tk, N,S,E,W,NW, HORIZONTAL, Canvas, Frame, Button
 
 class AutoScrollbar(Scrollbar):
     # A scrollbar that hides itself if it's not needed.

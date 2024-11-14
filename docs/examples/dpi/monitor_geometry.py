@@ -1,7 +1,7 @@
 
 # Author: Larz60+ Nov 2019
 
-#from screeninfo import get_monitors
+from screeninfo import get_monitors
 
 
 class GetGeometry:
