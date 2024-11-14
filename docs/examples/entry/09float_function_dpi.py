@@ -4,6 +4,9 @@ Float function for entry, tried using a named tuple to stop pylint
 """
 from tkinter import Tk, DoubleVar
 from tkinter.ttk import Entry, Style, Label, Labelframe, Frame, Button
+import ctypes
+
+ctypes.windll.shcore.SetProcessDpiAwareness(1)
 
 def entry_float(parent,lf_text,l_limit,u_limit, mess_text, out_var):
     """Float layout for entry
@@ -102,6 +105,12 @@ def entry_float(parent,lf_text,l_limit,u_limit, mess_text, out_var):
 
 if __name__ == "__main__":
     root = Tk()
+    ORIGINAL_DPI = 96
+    current_dpi = root.winfo_fpixels('1i')
+    SCALE = current_dpi / ORIGINAL_DPI
+    # when current_dpi is 192 SCALE becomes 2.0
+    root.tk.call('tk', 'scaling', SCALE)
+
     fra0 = Frame(root)
     fra0.grid()
     LFTEXT = 'Beer Strength % v/v'
