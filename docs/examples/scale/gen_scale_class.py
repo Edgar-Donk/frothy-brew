@@ -1,5 +1,5 @@
 from tkinter import Tk, IntVar, font
-from tkinter.ttk import Style, Scale, Spinbox, Label, Frame
+from tkinter.ttk import Style, Scale, Label, Frame
 import numpy as np
 
 class  TtkScale(Scale):
@@ -151,16 +151,16 @@ if __name__ == "__main__":
     from_val = 0
     to_val = 255
     tick_val = 10
-    dig_val = 2
+    dig_val = 0 # dig_val = 2
     res_val = 5
     or_val = 'vertical'
 
     if or_val =='horizontal':
         style_val = 'my.Horizontal.TScale'
-        root.geometry(str(len_val+200)+"x200+500+500")
+        #root.geometry(str(len_val+200)+"x200+500+500")
     else:
         style_val = 'my.Vertical.TScale'
-        root.geometry("200x"+str(len_val+200)+"+500+300")
+        #root.geometry("200x"+str(len_val+200)+"+500+300")
 
     style = Style()
     style.theme_use('default')
