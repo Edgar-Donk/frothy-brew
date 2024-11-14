@@ -9,7 +9,6 @@ recty = s1[1]
 
 def callback(event):
     can.update()
-    can_width = can.winfo_reqwidth()
     can_height = can.winfo_reqheight()
 
     for search in can.find_closest(event.x, event.y):
