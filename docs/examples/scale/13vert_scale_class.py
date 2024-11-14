@@ -1,5 +1,5 @@
-from tkinter import Tk, IntVar, font, DoubleVar
-from tkinter.ttk import Style, Scale, Spinbox, Label, Frame
+from tkinter import Tk, font
+from tkinter.ttk import Style, Scale, Label, Frame
 import numpy as np
 
 class  TtkScale(Scale):
@@ -51,7 +51,8 @@ class  TtkScale(Scale):
         min_len = (sizes if sizes % 50 == 0 else sizes + 50 - sizes % 50)
         self.len_val = len_val = min_len if length < min_len else length
         self.configure(length=len_val)
-
+        if bw_val == "":
+            bw_val = 0
         self.rel_min = rel_min = (sliderlength / 2 + bw_val) / len_val
         self.rel_max = rel_max = 1 - (sliderlength /2 - bw_val) / len_val
         if range_vals[-1] == to:
@@ -94,7 +95,6 @@ class  TtkScale(Scale):
         rel_y = self.convert_to_rely(float(value))
         self.disp_lab.config(text=value) # text=""
         self.disp_lab.place_configure(rely=rel_y)
-        digits = self.digits
         self.disp_lab.configure(text=f'{float(value):.{dig_val}f}')
         # if your python is not 3.6 or above use the following 2 lines
         #   instead of the line above
@@ -120,7 +120,7 @@ if __name__ == "__main__":
     from_val = 0
     to_val = 255
     tick_val = 10
-    dig_val = 2
+    dig_val = 0 # dig_val = 2
     res_val = 5
 
     style = Style()

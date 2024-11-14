@@ -1,5 +1,5 @@
-from tkinter import Tk, IntVar, font, DoubleVar
-from tkinter.ttk import Style, Scale, Spinbox, Label, Frame
+from tkinter import Tk, font
+from tkinter.ttk import Style, Scale, Label, Frame
 import numpy as np
 import ctypes
 
@@ -30,6 +30,7 @@ class  TtkScale(Scale):
         # set sliderlength
         st = Style(self)
         self.bw_val = bw_val = st.lookup('Vertical.Scale.trough','borderwidth')
+        print(bw_val)
         self.sliderlength = sliderlength = 32
 
         if showvalue:
@@ -50,13 +51,13 @@ class  TtkScale(Scale):
         lspace = def_font.metrics('linespace')
         len_rvs = len(range_vals)
         data_size = len_rvs * lspace
-
         space_size = len_rvs * 3
         sizes = data_size + space_size
         min_len = (sizes if sizes % 50 == 0 else sizes + 50 - sizes % 50)
         self.len_val = len_val = min_len if length < min_len else length
         self.configure(length=len_val)
-
+        if bw_val == "":
+            bw_val = 0
         self.rel_min = rel_min = (sliderlength / 2 + bw_val) / len_val
         self.rel_max = rel_max = 1 - (sliderlength /2 - bw_val) / len_val
         if range_vals[-1] == to:
@@ -64,7 +65,6 @@ class  TtkScale(Scale):
         else:
             max_rv = range_vals[-1]
             self.mult_y = mult_y = ((max_rv - from_)*rel_max/(to - from_))
-
         self.bind("<Button-1>", self.resolve)
 
         self.build(from_, to, rel_min, rel_max, range_vals, len_rvs)
@@ -99,7 +99,6 @@ class  TtkScale(Scale):
         rel_y = self.convert_to_rely(float(value))
         self.disp_lab.config(text=value) # text=""
         self.disp_lab.place_configure(rely=rel_y)
-        digits = self.digits
         self.disp_lab.configure(text=f'{float(value):.{dig_val}f}')
         # if your python is not 3.6 or above use the following 2 lines
         #   instead of the line above

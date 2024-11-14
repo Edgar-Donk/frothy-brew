@@ -1,5 +1,5 @@
-from tkinter import Tk, IntVar, font, DoubleVar
-from tkinter.ttk import Style, Scale, Spinbox, Label, Frame
+from tkinter import Tk, font
+from tkinter.ttk import Style, Scale, Label, Frame
 import numpy as np
 import ctypes
 

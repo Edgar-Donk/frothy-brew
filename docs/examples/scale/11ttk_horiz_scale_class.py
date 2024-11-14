@@ -1,5 +1,5 @@
-from tkinter import Tk, IntVar, font, DoubleVar
-from tkinter.ttk import Style, Scale, Spinbox, Label, Frame
+from tkinter import Tk, font
+from tkinter.ttk import Style, Scale, Label, Frame
 import numpy as np
 
 class  TtkScale(Scale):
@@ -39,7 +39,7 @@ class  TtkScale(Scale):
 
         data = np.arange(from_, (to+1 if tickinterval >=1 else to+tickinterval),
                         tickinterval)
-        self.data = data = np.round(data,1)
+        self.data = data = np.round(data) #np.round(data,1)
         range_vals = tuple(data)
         len_rvs = len(range_vals)
 
@@ -119,7 +119,7 @@ if __name__ == "__main__":
     from_val = 0
     to_val = 100
     tick_val = 10
-    dig_val = 2
+    dig_val = 0 #dig_val = 2
     res_val = 5
 
     style = Style()
