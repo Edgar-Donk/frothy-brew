@@ -1,8 +1,6 @@
 from PIL import Image, ImageDraw, ImageTk
 from tkinter import Tk
-from tkinter.ttk import Style, Frame, Checkbutton, Radiobutton, Label
-
-from RunStatettk import run_state
+from tkinter.ttk import Style, Frame, Checkbutton, Label
 
 checkimg = {}
 switch = 0

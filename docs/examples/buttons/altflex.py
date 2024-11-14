@@ -1,6 +1,6 @@
 from PIL import Image, ImageDraw, ImageTk
 from tkinter import Tk
-from tkinter.ttk import Style, Frame, Checkbutton, Radiobutton, Label
+from tkinter.ttk import Style, Frame, Checkbutton
 
 checkimg = {}
 radioimg = {}

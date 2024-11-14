@@ -1,7 +1,6 @@
-from tkinter import Tk, StringVar, IntVar
-from tkinter.ttk import Frame, Radiobutton, Button, Checkbutton, Separator, Style, \
-        Combobox
-
+from tkinter import Tk, StringVar
+from tkinter.ttk import Frame, Radiobutton, Checkbutton, Separator, Style
+        
 class run_state():
     def __init__(self, fr, widg, widg1=None):
         ''' Used to enable state change
