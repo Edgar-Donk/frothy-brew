@@ -9,7 +9,7 @@
 # use namespace to avoid conflict with PIL's Image
 import tkinter as tk
 import math
-import os
+
 # needs Python Image Library (PIL)
 from PIL import Image, ImageDraw
 

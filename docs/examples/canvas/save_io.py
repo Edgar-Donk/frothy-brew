@@ -1,8 +1,6 @@
 from tkinter import Tk, Canvas, Button
 from PIL import Image
 import io
-import os
-import subprocess
 
 root = Tk()
 
