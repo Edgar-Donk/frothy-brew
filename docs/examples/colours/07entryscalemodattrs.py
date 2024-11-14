@@ -1,0 +1,563 @@
+""" Construction four gradients in rgba using PPM image
+    added final colour, added entry and spinbox validation
+    working with modified Scale
+"""
+
+from tkinter import Tk, Canvas, Label, IntVar, Frame, StringVar
+from tkinter.ttk import LabelFrame, Scale, Style, Entry, Spinbox
+from PIL import Image, ImageDraw, ImageTk
+from colourTools import rgb2hash, draw_gradient, \
+    draw_agradient, vdraw_gradient, hash2rgb
+from attrs import define
+
+
+def is_okay(index, text, input_):  # '%i','%P','%S'
+    """Validation for hash, which cannot be removed,
+        hex check on input after hash
+
+    Parameters
+    ----------
+    index : str
+        index
+    text : str
+        text if accepted
+    input_ : str
+        current input
+
+    Returns
+    -------
+    boolean
+    """
+    index = int(index)  # index is string!
+    if index == 0 and text == '#':
+        return True
+    try:
+        int(input_, 16)
+        return bool(0 < index < 7)
+    except ValueError:  # not a hex
+        return False
+
+    '''
+    if index == 1:
+        try:
+            int(input, 16)  # checks text being inserted or deleted
+            return True
+        except ValueError:
+            return False
+
+    elif index > 1 and index < 7:
+        try:
+            int(text[1:], 16)
+            return True     # accept hexadecimal
+        except ValueError:  # not a hex
+            return False
+    else:
+        return False
+    '''
+
+def sb_okay(action, text, input_):  # '%i', '%P','%S'
+    """Validation for colour components
+
+    Parameters
+    ----------
+    text : str
+        text if accepted
+    input : str
+        current input
+
+    Returns
+    -------
+    boolean
+    """
+
+    if action == "1":
+        if input.isdigit():
+            return bool(0 <= int(text) <= 255)
+        return False
+    return True
+
+
+@define
+class TtkScale(Scale):
+    """Class to draw themed Scale widget
+
+    Parameters
+    ----------
+    parent : str
+        parent widget
+    from_ : int
+        start of scale
+    to : int
+        end of scale
+    length : int
+        length in pixels
+    orient : str
+        orientation
+    variable : str
+        tk variable
+    digits : int
+        length variable when converted to string
+    tickinterval : float or int
+        how many digits show up in tick interval
+    sliderlength : int
+        what it says
+    command : str
+        procedure called when slider moves
+    """
+
+    #def __init__(self, parent, from_=0, to=255, length=300, orient='horizontal',
+                 #variable=0, digits=None, tickinterval=None, sliderlength=16,
+                 #command=None, enlargement=1):
+    parent = Tk()
+    from_:int = 0
+    to:int = 255
+    length:int = 300
+    orient:str = 'horizontal'
+    variable:int = 0
+    digits:int = None
+    tickintervalint = None
+
+        #super().__init__(parent, length=length + sliderlength,
+                         #variable=variable, from_=from_, to=to, command=command)
+    sliderlength:int = 16
+    command:str = None
+    enlargement = e = 1
+
+    length:int = length + sliderlength
+
+    def __post_init__(self):
+        self.build(parent, from_, to, sliderlength, tickinterval, length)
+
+    def build(self, parent, from_, to, sliderlength, tickinterval, length):
+        """Create ticks
+
+        Parameters
+        ----------
+        parent : str
+            parent widget
+        from_ : int
+            start of scale
+        to : int
+            end of scale
+        length : int
+            length in pixels
+        tickinterval : float or int
+
+        """
+
+        # create ticks
+        sc_range = to - from_
+
+        if tickinterval:
+            for i in range(from_, to + 2, tickinterval):
+                item = Label(parent, text=i, bg='#EFFEFF')
+                item.place(in_=self, bordermode='outside',
+                           relx=sliderlength*self.e / length*self.e / 2 + i /
+                           sc_range * (1 - sliderlength*self.e / length*self.e),
+                           rely=1, anchor='n')
+
+
+class RgbSelect:
+    """Class to construct rgba gradients and final colour
+
+    Parameters
+    ----------
+    fr : str
+        parent widget
+
+    Returns
+    -------
+    None
+    """
+
+    def __init__(self, parent, enlargement):
+        self.parent = parent
+        self.e = enlargement
+
+        self.cursor_w = 16 * self.e
+
+        self.rvar = IntVar()
+        self.gvar = IntVar()
+        self.bvar = IntVar()
+        self.avar = IntVar()
+        self.evar = StringVar()
+
+        self.scale_l = 300 * self.e
+        self.canvas_w = self.scale_l
+        self.canvas_h = 26 * self.e
+        self.build()
+
+        self.rvar.set(255)
+        self.gvar.set(0)
+        self.bvar.set(0)
+        self.avar.set(255)
+        self.evar.set('#ff0000')
+
+    def rhandle(self, *args):
+        """command callback for red
+
+        Parameters
+        ----------
+        None
+
+        Results
+        -------
+        None
+        """
+
+        red = self.rvar.get()
+        self.rvar.set(red)
+        green = self.gvar.get()
+        blue = self.bvar.get()
+        alpha = self.avar.get()
+        draw_gradient(self.gcan, (red, 0, blue), (red, 255, blue),
+                      width=self.canvas_w, height=self.canvas_h)
+        draw_gradient(self.bcan, (red, green, 0), (red, green, 255),
+                      width=self.canvas_w, height=self.canvas_h)
+        draw_agradient(self.acan, (127, 127, 127), (red, green, blue),
+                       self.e, width=self.canvas_w, height=self.canvas_h)
+        vdraw_gradient(self.cmcan, (red, green, blue), self.e, alpha=alpha,
+                        width=30*self.e, height=30*self.e)
+        self.evar.set(rgb2hash(red, green, blue))
+
+    def ghandle(self, *args):
+        """command callback for green
+
+        Parameters
+        ----------
+        None
+
+        Results
+        -------
+        None
+        """
+
+        red = self.rvar.get()
+        green = self.gvar.get()
+        self.gvar.set(green)
+        blue = self.bvar.get()
+        alpha = self.avar.get()
+        draw_gradient(self.rcan, (0, green, blue), (255, green, blue),
+                      width=self.canvas_w, height=self.canvas_h)
+        draw_gradient(self.bcan, (red, green, 0), (red, green, 255),
+                      width=self.canvas_w, height=self.canvas_h)
+        draw_agradient(self.acan, (127, 127, 127), (red, green, blue), self.e,
+                       width=self.canvas_w, height=self.canvas_h)
+        vdraw_gradient(self.cmcan, (red, green, blue), self.e, alpha=alpha,
+                        width=30*self.e, height=30*self.e)
+        self.evar.set(rgb2hash(red, green, blue))
+
+    def bhandle(self, *args):
+        """command callback for blue
+
+        Parameters
+        ----------
+        None
+
+        Results
+        -------
+        None
+        """
+
+        red = self.rvar.get()
+        green = self.gvar.get()
+        blue = self.bvar.get()
+        self.bvar.set(blue)
+        alpha = self.avar.get()
+        draw_gradient(self.rcan, (0, green, blue), (255, green, blue),
+                      width=self.canvas_w, height=self.canvas_h)
+        draw_gradient(self.gcan, (red, 0, blue), (red, 255, blue),
+                      width=self.canvas_w, height=self.canvas_h)
+        draw_agradient(self.acan, (127, 127, 127), (red, green, blue),
+                       self.e, width=self.canvas_w, height=self.canvas_h)
+        vdraw_gradient(self.cmcan, (red, green, blue), self.e, alpha=alpha,
+                        width=30*self.e, height=30*self.e)
+        self.evar.set(rgb2hash(red, green, blue))
+
+    def ahandle(self, *args):
+        """command callback for opacity
+
+        Parameters
+        ----------
+        None
+
+        Results
+        -------
+        None
+        """
+
+        red = self.rvar.get()
+        green = self.gvar.get()
+        blue = self.bvar.get()
+        alpha = self.avar.get()
+        self.avar.set(alpha)
+        vdraw_gradient(self.cmcan, (red, green, blue), self.e, alpha=alpha,
+                        width=30*self.e, height=30*self.e)
+
+    def build(self):
+        """widget construction
+
+        Parameters
+        ----------
+        None
+
+        Results
+        -------
+        None
+        """
+
+        fr1 = LabelFrame(self.parent, text='rgb')
+        fr1.grid(column=0, row=0)
+
+        rl0 = Label(fr1, text='red  ')
+        rl0.grid(column=0, row=0, sticky='s')
+
+        self.rcan = Canvas(fr1, width=self.canvas_w, height=self.canvas_h, bd=0,
+                           highlightthickness=0)
+        self.rcan.grid(column=1, row=0, sticky='s')
+
+        rsc = TtkScale(fr1, from_=0, to=255, variable=self.rvar, orient='horizontal',
+                       length=self.scale_l, command=self.rhandle, tickinterval=20,
+                       enlargement=self.e)
+        rsc.grid(column=1, row=1, sticky='nw')
+
+        vcmdsb = root.register(sb_okay)
+
+        rsb = Spinbox(fr1, from_=0, to=255, textvariable=self.rvar, validate='key',
+                      validatecommand=(vcmdsb, '%i', '%P', '%S'),
+                      command=self.rhandle, width=5)
+        rsb.grid(column=2, row=1, sticky='nw')
+        rsb.bind('<KeyRelease>', self.checksb)
+
+        rel = Label(fr1, height=1)
+        rel.grid(column=2, row=2)
+
+        gl0 = Label(fr1, text='green')
+        gl0.grid(column=0, row=3)
+
+        self.gcan = Canvas(fr1, width=self.canvas_w, height=self.canvas_h, bd=0,
+                           highlightthickness=0)
+        self.gcan.grid(column=1, row=3, sticky='s')
+
+        gsc = TtkScale(fr1, from_=0, to=255, variable=self.gvar, orient='horizontal',
+                       length=self.scale_l, command=self.ghandle, tickinterval=20,
+                       enlargement=self.e)
+        gsc.grid(column=1, row=4, sticky='nw')
+
+        gsb = Spinbox(fr1, from_=0, to=255, textvariable=self.gvar, validate='key',
+                      validatecommand=(vcmdsb, '%i', '%P', '%S'),
+                      command=self.ghandle, width=5)
+        gsb.grid(column=2, row=4, sticky='nw')
+        gsb.bind('<KeyRelease>', self.checksb)
+
+        gel = Label(fr1, height=1)
+        gel.grid(column=2, row=5)
+
+        bl0 = Label(fr1, text='blue ')
+        bl0.grid(column=0, row=6, sticky='s')
+
+        self.bcan = Canvas(fr1, width=self.canvas_w, height=self.canvas_h, bd=0,
+                           highlightthickness=0)
+        self.bcan.grid(column=1, row=6, sticky='n')
+
+        bsc = TtkScale(fr1, from_=0, to=255, variable=self.bvar, orient='horizontal',
+                       length=self.scale_l, command=self.bhandle, tickinterval=20,
+                       enlargement=self.e)
+        bsc.grid(column=1, row=7, sticky='nw')
+
+        bsb = Spinbox(fr1, from_=0, to=255, textvariable=self.bvar, validate='key',
+                      validatecommand=(vcmdsb, '%i', '%P', '%S'),
+                      command=self.bhandle, width=5)
+        bsb.grid(column=2, row=7, sticky='nw')
+        bsb.bind('<KeyRelease>', self.checksb)
+
+        bel = Label(fr1, height=1)
+        bel.grid(column=2, row=8)
+
+        fr3 = LabelFrame(self.parent, text='colour mix')
+        fr3.grid(column=1, row=0, sticky='nw')
+
+        self.cmcan = cmcan = Canvas(fr3, width=30*self.e, height=30*self.e, bd=0,
+                                    highlightthickness=0)
+        cmcan.grid(column=0, row=0, sticky='n', columnspan=2)
+        cmcan.grid_propagate(0)
+        vdraw_gradient(self.cmcan, (255, 0, 0), self.e, alpha=255)
+
+        cml = Label(fr3, text='hash\nvalue')
+        cml.grid(column=0, row=1)
+
+        vcmd = root.register(is_okay)
+        self.ent0 = ent0 = Entry(fr3, width=8, validate='key',
+                                 validatecommand=(vcmd, '%i', '%P', '%S'), textvariable=self.evar)
+        ent0.grid(column=1, row=1)
+        ent0.bind('<KeyRelease>', self.checkhash)
+
+        fr2 = LabelFrame(self.parent, text='opacity')
+        fr2.grid(column=0, row=1, sticky='nsw')
+
+        al0 = Label(fr2, text='alpha')
+        al0.grid(column=0, row=0, sticky='s')
+
+        self.acan = Canvas(fr2, width=self.canvas_w, height=self.canvas_h, bd=0,
+                           highlightthickness=0)
+        self.acan.grid(column=1, row=0, sticky='n')
+
+        asc = TtkScale(fr2, from_=0, to=255, variable=self.avar, orient='horizontal',
+                       length=self.scale_l, command=self.ahandle, tickinterval=20,
+                       enlargement=self.e)
+        asc.grid(column=1, row=1, sticky='nw')
+
+        asb = Spinbox(fr2, from_=0, to=255, textvariable=self.avar, validate='key',
+                      validatecommand=(vcmdsb, '%i', '%P', '%S'),
+                      command=self.ahandle, width=5)
+        asb.grid(column=2, row=1, sticky='nw')
+        asb.bind('<KeyRelease>', self.checksba)
+
+        ael = Label(fr2, text=' ', height=1)
+        ael.grid(column=2, row=2, sticky='s')
+
+        draw_gradient(self.rcan, (0, 0, 0), (255, 0, 0),
+                      width=self.canvas_w, height=self.canvas_h)
+        draw_gradient(self.gcan, (255, 0, 0), (255, 255, 0),
+                      width=self.canvas_w, height=self.canvas_h)
+        draw_gradient(self.bcan, (255, 0, 0), (255, 0, 255),
+                      width=self.canvas_w, height=self.canvas_h)
+        draw_agradient(self.acan, (127, 127, 127), (255, 0, 0),
+                       self.e, width=self.canvas_w, height=self.canvas_h)
+
+    def checkhash(self, evt):
+        """Procedure called by entry for hash
+
+        Parameters
+        ----------
+        evt : str
+            bind handles
+
+        Results
+        -------
+        None
+        """
+
+        hash0 = self.ent0.get()
+        if len(hash0) == 7:
+            red, green, blue = hash2rgb(hash0)
+            alpha = self.avar.get()
+            self.rvar.set(red)
+            self.gvar.set(green)
+            self.bvar.set(blue)
+            draw_agradient(self.acan, (127, 127, 127), (red, green, blue), self.e,
+                           width=self.canvas_w, height=self.canvas_h)
+            draw_gradient(self.rcan, (0, green, blue), (255, green, blue),
+                          width=self.canvas_w, height=self.canvas_h)
+            draw_gradient(self.gcan, (red, 0, blue), (red, 255, blue),
+                          width=self.canvas_w, height=self.canvas_h)
+            draw_gradient(self.bcan, (red, green, 0), (red, green, 255),
+                          width=self.canvas_w, height=self.canvas_h)
+            vdraw_gradient(self.cmcan, (red, green, blue), self.e, alpha=alpha,
+                        width=30*self.e, height=30*self.e)
+
+    def checksba(self, evt):
+        """Procedure called by alpha spinbox
+
+        Parameters
+        ----------
+        evt : str
+            bind handles
+
+        Results
+        -------
+        None
+        """
+
+        alpha = self.avar.get()
+        red = self.rvar.get()
+        green = self.gvar.get()
+        blue = self.bvar.get()
+        vdraw_gradient(self.cmcan, (red, green, blue), self.e, alpha=alpha,
+                        width=30*self.e, height=30*self.e)
+
+    def checksb(self, evt):
+        """Procedure called by colour spinboxes
+
+        Parameters
+        ----------
+        evt : str
+            bind handles
+
+        Results
+        -------
+        None
+        """
+
+        alpha = self.avar.get()
+        red = self.rvar.get()
+        green = self.gvar.get()
+        blue = self.bvar.get()
+        draw_agradient(self.acan, (127, 127, 127), (red, green, blue),
+                       width=self.canvas_w, height=self.canvas_h)
+        draw_gradient(self.rcan, (0, green, blue), (255, green, blue),
+                      width=self.canvas_w, height=self.canvas_h)
+        draw_gradient(self.gcan, (red, 0, blue), (red, 255, blue),
+                      width=self.canvas_w, height=self.canvas_h)
+        draw_gradient(self.bcan, (red, green, 0), (red, green, 255),
+                      width=self.canvas_w, height=self.canvas_h)
+        vdraw_gradient(self.cmcan, (red, green, blue), self.e, alpha=alpha,
+                        width=30*self.e, height=30*self.e)
+        self.evar.set(rgb2hash(red, green, blue))
+
+
+if __name__ == "__main__":
+    root = Tk()
+    winsys = root.tk.call("tk", "windowingsystem")
+    BASELINE = 1.33398982438864281 if winsys != 'aqua' else 1.000492368291482
+    scaling = root.tk.call("tk", "scaling")
+    enlargement = e = int(scaling / BASELINE + 0.5)
+
+    img = Image.new("RGBA", (16*e, 10*e), '#00000000')
+    trough = ImageTk.PhotoImage(img)
+
+    # constants for creating upward pointing arrow
+    WIDTH = 17*e
+    HEIGHT = 17*e
+    OFFSET = 5*e
+    ST0 = WIDTH // 2, HEIGHT - 1 - OFFSET
+    LIGHT = 'GreenYellow'
+    MEDIUM = 'LawnGreen'
+    DARK = '#5D9B90'
+
+    # normal state
+    im = Image.new("RGBA", (WIDTH, HEIGHT), '#00000000')
+    rdraw = ImageDraw.Draw(im)
+    rdraw.polygon([ST0[0], ST0[1], 0, HEIGHT - 1,
+                   WIDTH - 1, HEIGHT - 1], fill=LIGHT)
+    rdraw.polygon([ST0[0], ST0[1], ST0[0], 0, 0, HEIGHT - 1], fill=MEDIUM)
+    rdraw.polygon([ST0[0], ST0[1], WIDTH - 1,
+                   HEIGHT - 1, ST0[0], 0], fill=DARK)
+    slider = ImageTk.PhotoImage(im)
+
+    # pressed state
+    imp = Image.new("RGBA", (WIDTH, HEIGHT), '#00000000')
+    draw = ImageDraw.Draw(imp)
+    draw.polygon([ST0[0], ST0[1], 0, HEIGHT - 1,
+                  WIDTH - 1, HEIGHT - 1], fill=LIGHT)
+    draw.polygon([ST0[0], ST0[1], ST0[0], 0, 0, HEIGHT - 1], fill=DARK)
+    draw.polygon([ST0[0], ST0[1], WIDTH - 1,
+                  HEIGHT - 1, ST0[0], 0], fill=MEDIUM)
+    sliderp = ImageTk.PhotoImage(imp)
+
+    style = Style()
+    style.theme_settings('default', {
+        'Horizontal.Scale.trough': {"element create":
+                                    ('image', trough,
+                                     {'border': 0, 'sticky': 'wes'})},
+        'Horizontal.Scale.slider': {"element create":
+                                    ('image', slider,
+                                     ('pressed', sliderp),
+                                     {'border': 3*e, 'sticky': 'n'})}})
+
+    style.theme_use('default')
+    style.configure('TSpinbox', arrowsize=10*e)
+    fr = Frame(root)
+    fr.grid(row=0, column=0, sticky='nsew')
+    RgbSelect(fr, enlargement)
+    root.mainloop()
