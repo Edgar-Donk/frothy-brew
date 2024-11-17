@@ -60,7 +60,7 @@ Scaleable Buttons
                     :width: 243
                     :height: 196
 
-      - .. figure:: figures/buttons/thonny_testaltflex.png
+      - .. figure:: figures/buttons/spyder_testaltflex.png
                     :width: 116
                     :height: 171
 
