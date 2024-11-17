@@ -34,7 +34,7 @@ Width: 96.000000 dpi, Height: 95.916084 dpi
 Size is 3840.000000 2160.000000
 Current DPI is 192.000000
 
-# on thonny returned opposite dpi
+# on older thonny returned opposite dpi
 Width: 3840 px, Height: 2160 px
 Width: 508 mm, Height: 286 mm
 Width: 20.000000 in, Height: 11.259843 in
@@ -42,6 +42,13 @@ Width: 192.000000 dpi, Height: 191.832168 dpi
 Size is 3840.000000 2160.000000
 Current DPI is 96.000000
 
+newer thonny
+Width: 1920 px, Height: 1080 px
+Width: 508 mm, Height: 286 mm
+Width: 20.000000 in, Height: 11.259843 in
+Width: 96.000000 dpi, Height: 95.916084 dpi
+Size is 3840.000000 2160.000000
+Current DPI is 192.000000
 '''
 
 # for Mac OS X
