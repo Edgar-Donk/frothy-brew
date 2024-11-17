@@ -16,7 +16,7 @@ Widely Used tk Widgets
 
 A medley of widgets - buttons, check buttons, radio buttons, labels and 
 label frames with a list box and entry thrown in for good measure. On the 
-left is the original on the right as shown by a DPI aware program (Thonny).
+left is the original on the right as shown by a DPI aware program (Spyder).
 The program was almost pure script, with a function to help show the selected
 variables. The two resulting images are almost comparable in size, the text
 hasn't changed much but the left-hand has heavier (darker) lettering. The 

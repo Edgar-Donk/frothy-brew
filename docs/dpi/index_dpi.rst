@@ -14,8 +14,8 @@ Not many scripts make allowance for the different monitor resolutions (dots
 per inch or DPI), as a consequence, in particular older scripts, look good 
 when run at 96dpi but look too small when run at higher resolutions. Often
 the default resolution is set by the IDE (Integrated Development Environment),
-which is 96dpi for Python directly from the OS, Idle or PyScripter but for 
-other IDEs (Thonny etc) uses the higher resolution. A lot of the problem
+which is 96dpi for Python directly from the OS, Idle, PyScripter or Thonny but 
+for other IDEs (Spyder etc) uses the higher resolution. A lot of the problem
 stems from the fact that sizes are usually in pixels which  
 are simple integers.
 

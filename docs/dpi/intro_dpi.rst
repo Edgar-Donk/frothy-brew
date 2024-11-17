@@ -12,7 +12,7 @@ Introduction to DPI Awareness
     
     tkinter buttons, differing sizes, text boldness, highlight and shadow
 
-On many IDEs (Thonny, Spider etc) older scripts produced results that are way
+On many IDEs (Spider etc) older scripts produced results that are way
 too small but look correct when started from the operating system, Idle or
 PyScripter. This is the result of applying or not applying the higher 
 resolution available on modern monitors. After updating to python 3.11 and 
