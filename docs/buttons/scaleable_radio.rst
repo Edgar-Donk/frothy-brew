@@ -8,13 +8,13 @@ Scaleable Radiobuttons
     :header-rows: 1
 
     * - Pyscripter unscaled altflex theme
-      - Thonny scaled altflex theme
+      - Spyder scaled altflex theme
 
     * - .. figure:: ../figures/buttons/pyscripter_testaltflex.png
                     :width: 243
                     :height: 196
 
-      - .. figure:: ../figures/buttons/thonny_testaltflex.png
+      - .. figure:: ../figures/buttons/Spyder_testaltflex.png
                     :width: 116
                     :height: 171
 

@@ -10,13 +10,13 @@ Check and Radio Buttons
     :header-rows: 1
 
     * - Pyscripter unscaled alt theme
-      - Thonny unscaled alt theme
+      - Spyder unscaled alt theme
 
     * - .. figure:: ../figures/buttons/pyscripter_test_check.png
                     :width: 256
                     :height: 202
 
-      - .. figure:: ../figures/buttons/thonny_test_check.png
+      - .. figure:: ../figures/buttons/Spyder_test_check.png
                     :width: 249
                     :height: 166
 
