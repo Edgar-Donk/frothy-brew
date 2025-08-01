@@ -9,17 +9,17 @@ It is assumed that `sphinx` is installed together with the required theme::
 
 Any other special requirements should also be installed prior to ``make``.
 
-Create a directory ``myproject`` with two subdirectories ``docs`` and ``scripts``.
-Assuming that we are in myproject/docs obtain documentation, which includes 
-an index that works, a module index and search page, there are a few 
-important pre-requisites. It is often useful 
-to have separate source and build directories, so when using the 
-``sphinx-quickstart`` on the first question, asking whether to build a 
-separate source directory, say yes and not the default [n].
+Create a directory ``myproject``, from here call ``sphinx-quickstart docs``
+from the desktop, this creates a subdirectory ``docs`` with the files 
+conf.py, index.rst, make.bat, Makefile and subdirectories _static,_templates
+and either _build or build depending on your choice to the question of whether
+to build separate source and build directories.
+
 
 Directory structure
 -------------------
 
+If using the default "Separate source and build directories (y/n) [n]:"
 Any changes to the body of the project run ``make html``, changes to conf.py
 _static files or templates require ``make clean`` then ``make html``::
 
@@ -36,15 +36,17 @@ _static files or templates require ``make clean`` then ``make html``::
 Sphinx Newer Structure
 ----------------------
 
-Make new directory with project name, from this location ``sphinx-quickstart docs``.
-When asked "Separate source and build directories?" <y>
-Then ``sphinx-build -b html docs/source/ docs/build/html``
+Make directory with project name, from this location ``sphinx-quickstart docs``.
+When asked "Separate source and build directories?(y/n) [n]:" <y>
 This will make a directory structure like this::
 
+    root
+    ├──.readthedocs.yaml
     docs
     ├── build
     ├── make.bat
     ├── Makefile
+    ├──requirements.txt
     └── source
         ├── conf.py
         ├── index.rst
@@ -52,6 +54,34 @@ This will make a directory structure like this::
         └── _templates
 
 The advantage is that many changes can be updated simply by  ``make html``.
+
+There are two configuration files, *requirements.txt* and *.readthedocs.yaml*.
+The first requirements.txt is for the local python program running sphinx. If 
+features are present in *conf.py* which require an installation using *pip*
+then list out the names as shown in PyPi within *requirements.txt* (this 
+assumes a virgin Python installation). *.readthedocs.yaml* must be in the root
+directory, in github this is where *README.md* is situated before any other
+configuration files are placed::
+
+   # Required
+   version: 2
+   
+   build:
+      os: ubuntu-24.04
+      tools:
+         python: "3.11"
+   
+   # Build documentation in the "docs/" directory with Sphinx
+   sphinx:
+      configuration: docs/source/conf.py
+      
+   # Optional but recommended, declare the Python requirements required
+   python:
+      install:
+        - requirements: docs/requirements.txt
+
+*yaml* files are the modern equivalent of *yml* files, the contents are no 
+different.
 
 Edit the ``conf.py`` file to show the path to the ``scripts`` directory. Add
 to the extensions sphinx.ext.autodoc, and sphinx.ext.napoleon, then within 
