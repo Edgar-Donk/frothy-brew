@@ -1,4 +1,4 @@
-# Configuration file for the Sphinx documentation builder.
+﻿# Configuration file for the Sphinx documentation builder.
 #
 # This file only contains a selection of the most common options. For a full
 # list see the documentation:
@@ -71,6 +71,7 @@ html_theme = "pydata_sphinx_theme"
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
+html_css_files = ['custom.css']
 
 html_theme_options = {
   "show_prev_next": True,
@@ -102,9 +103,16 @@ def setup(app):
 html_theme_options = {
    "logo": {
       "text": "tkinter odds and ends",
-      "image_light": 'bigbenc.png',
-      "image_dark": "bigbencneon.png",
+      "image_light": 'bigbenc.avif',
+      "image_dark": "bigbencneon.avif",
    }
 }
 
-html_favicon = '_static/ben1.ico'
+html_favicon = "_static/ben1.ico"
+
+smartquotes = False
+
+rst_prolog = f"""
+.. role:: AL
+    :class: keys
+"""
